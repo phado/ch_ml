@@ -1589,7 +1589,7 @@ ArrangePanel.prototype.init = function()
 	div.style.height = '300px';
 	div.style.width = '200px';
 	div.style.padding = '0px 15px 0px 0px';
-	div.style.backgroundColor = '#D0D0D0'
+	// div.style.backgroundColor = '#D0D0D0'
 	this.container.appendChild(div); //KPST 우측 arrange 에서 메뉴바에 정보 창 더하기
 	this.container.appendChild(this.addGroupOps(this.createPanel()));
 
@@ -1808,7 +1808,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		div.appendChild(btn);
 		count++;
 	}
-	else if (graph.getSelectionCount() > 0)
+	else if (graph.getSelectionCount() > 0 && graph.getSelectionCount() < 2)
 	{
 		if (count > 0)
 		{
@@ -1817,6 +1817,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 
 		btn = mxUtils.button('정보 입력', mxUtils.bind(this, function(evt)
 		{
+
 			var ds = mxUtils.getDocumentSize();
 
 			ds.height = window.innerHeight;
@@ -1860,6 +1861,11 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			div.style.top = (centerY - h/2) + 'px';
 			// div.style.opacity = '0.8';
 			div.style.zIndex = this.zIndex;
+
+			var buttons = document.createElement('div');
+			buttons.style.textAlign = 'right';
+			buttons.style.whiteSpace = 'nowrap';
+
 			var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
 			{
 				document.getElementById('dataset').remove()
@@ -1867,8 +1873,24 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			});
 			cancelBtn.className = 'geBtn';
 
+			var applyBtn = mxUtils.button(mxResources.get('apply'), mapperEditApply);
+			applyBtn.className = 'geBtn gePrimaryBtn';
+
+			buttons.appendChild(cancelBtn);
+			buttons.appendChild(applyBtn);
+
+			//kpst 맵퍼에 데이터 생생 및 불러오가
+			if (MxCellMapper[cell.id] == null){
+				mxCellType(cell.id, cell.value)
+			}
+			var cellData = MxCellMapper[cell.id]
+			//kpst 맵퍼에서 데이터 저장 및 가져오기
+			div.appendChild(mxCellForm(cellData['type'],cellData))
+
+
 			div = createDropdown(div);
-			div.appendChild(cancelBtn)
+			div.appendChild(buttons)
+
 			document.body.appendChild(div);
 
 		}));
