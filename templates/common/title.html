@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='/javascript/src/css/common/title.css')}}"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="title-text title-logo">충북 혁신원</div>
+      <a href="/dataset_tab" class="title-text title-tab dataset-text"
+        >데이터셋</a
+      >
+      <a href="/project_tab" class="title-text title-tab project-text"
+        >프로젝트 관리</a
+      >
+      <a href="/distribution_tab" class="title-text title-tab deployment-text"
+        >배포 관리</a
+      >
+      <img
+        src="{{url_for('static', filename='/javascript/src/images/userName.svg')}}"
+        alt="Image"
+        class="username-img"
+      />
+    </header>
+  </body>
+</html>

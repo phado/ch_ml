@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  position: relative;
+  width: 100%;
+  height: 84px;
+  background: #37466d;
+  box-shadow: 0px 4px 4px 0px #0000001a;
+}
+.title-text.title-tab {
+  text-decoration: none;
+}
+
+.title-text {
+  position: absolute;
+  text-align: left;
+  color: #fff;
+  letter-spacing: 0em;
+  font-family: Roboto;
+}
+
+.title-logo {
+  top: 24px;
+  left: 60px;
+  width: 175px;
+  height: 42px;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 42px;
+}
+
+.title-tab {
+  height: 21px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.dataset-text {
+  top: 36px;
+  left: 355px;
+  width: 67px;
+}
+
+.project-text {
+  top: 36px;
+  left: 523px;
+  width: 104px;
+}
+
+.deployment-text {
+  top: 36px;
+  left: 728px;
+  width: 71px;
+}
+
+@media screen and (max-width: 1100px) {
+  .username-img {
+    display: none; /* 500px 미만일 때 숨김 처리 */
+  }
+}
+
+@media screen and (min-width: 1101px) {
+  .username-img {
+    position: absolute;
+    top: 25px;
+    right: 37px; /* 오른쪽에서 37px 위치 */
+    width: 127px;
+    height: 35px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 35px;
+    color: #fff;
+  }
+}

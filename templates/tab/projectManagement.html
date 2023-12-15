@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='/javascript/src/css/common/title.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='/javascript/src/css/tab/projectManagement.css')}}"
+    />
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='/javascript/src/js/tab/projectManagement.js') }}"
+    ></script>
+  </head>
+  <body>
+    {% include 'common/title.html' %}
+    <div class="main-content">
+      <div class="search-content">
+        <div class="dropdown-box">
+          <select>
+            <option value="option1">전체</option>
+            <option value="option2">모델명</option>
+            <option value="option3">알고리즘</option>
+            <option value="option4">mAP</option>
+            <option value="option5">학습 진행률</option>
+          </select>
+        </div>
+        <div class="search-inputbox"></div>
+        <button class="search-button">조회</button>
+      </div>
+
+      <div class="data-table-content">
+        <div class="data-table-text">데이터 목록</div>
+        <button class="data-table-create-button" onclick="createDataset()">
+          + Create
+        </button>
+        <table class="data-table">
+          <thead>
+            <tr class="data-table-title">
+              <th class="data-cell" style="width: 300px">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
+                  style="margin-left: 24px; margin-right: 18px"
+                  alt="Image"
+                />프로젝트명
+              </th>
+              <th class="data-cell">알고리즘</th>
+              <th class="data-cell">상태</th>
+              <th class="data-cell">오류코드</th>
+              <th class="data-cell">셍성일</th>
+              <th class="data-cell">mAP</th>
+              <th class="data-cell">배포주기</th>
+              <th class="data-cell">마지막 수정일</th>
+              <th class="data-cell">상세정보</th>
+              <th class="data-cell">수정</th>
+              <th class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/delete.svg')}}"
+                  alt="Image"
+                />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for _ in range(10) %}
+            <tr>
+              <td class="data-cell">
+                <img
+                  style="margin-left: 24px; margin-right: 16px"
+                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
+                  alt="Image"
+                />project name
+              </td>
+              <td class="data-cell">algorithm</td>
+              <td class="data-cell">state</td>
+              <td class="data-cell">error code</td>
+              <td class="data-cell">create date</td>
+              <td class="data-cell">mAP</td>
+              <td class="data-cell" style="padding-left: 20px">20</td>
+              <td class="data-cell">2023-12-13 15:00:00</td>
+              <td class="data-cell">
+                <img
+                  style="padding-left: 15px"
+                  onclick=" detailDataset() "
+                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"
+                  alt="Image"
+                />
+              </td>
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"
+                  alt="Image"
+                />
+              </td>
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"
+                  alt="Image"
+                />
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <a href="#" class="page-link">&laquo; </a>
+        <a href="#" class="page-link">&lt; </a>
+        <a href="#" class="page-link active">1</a>
+        <a href="#" class="page-link">2</a>
+        <a href="#" class="page-link">3</a>
+        <a href="#" class="page-link">4</a>
+        <a href="#" class="page-link">5</a>
+        <a href="#" class="page-link">&gt; </a>
+        <a href="#" class="page-link"> &raquo;</a>
+      </div>
+    </div>
+    <!-- create 모달 -->
+    <div id="projectCreateModal" class="projectCreateModal">
+      <div class="projectCreateModal-content">
+        <div class="projectCreateModal-title">
+          <div class="projectCreateModal-title-name">데이터 생성</div>
+          <span class="projectCreateModal-close" onclick="createModalClose()"
+            >&times;</span
+          >
+        </div>
+        <div class="projectCreateModal-input-area">
+          <div class="input-title">데이터셋 명</div>
+          <input class="input-area input-dataset" />
+
+          <div class="input-title">모델 이름</div>
+          <input class="input-area input-dataset" />
+
+          <div class="input-title">배포주기</div>
+          <input class="input-area input-dataset" />
+
+          <div class="input-title">설명</div>
+          <textarea class="input-area detail-textarea"></textarea>
+
+          <img
+            src="{{url_for('static', filename='/javascript/src/images/border.svg')}}"
+            alt="Image"
+          />
+        </div>
+
+        <div class="projectCreateModalButtons">
+          <button
+            class="projectCreateModalCancelButton"
+            onclick="createModalClose()"
+          >
+            취소
+          </button>
+          <button class="projectCreateModalOkButton">생성</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- detail 모달 -->
+    <div id="projectDetailModal" class="projectDetailModal">
+      <div class="projectDetailModal-content">
+        <div class="projectDetailModal-title">
+          <div class="projectDetailModal-title-name">[모델 명]상세정보</div>
+          <span class="projectDetailModal-close" onclick="detailModalClose()"
+            >&times;</span
+          >
+        </div>
+        <div class="container">
+          <div class="area1">
+            <div class="projectDetailModal-input-area">
+              <div class="input-title">idx</div>
+              <input class="input-area input-dataset" />
+
+              <div class="input-title">날짜</div>
+              <input class="input-area input-dataset" />
+
+              <div class="input-title">데이터셋(프로젝트)</div>
+              <input class="input-area input-dataset" />
+
+              <div class="input-title">mAP</div>
+              <input class="input-area input-dataset" />
+
+              <div class="input-title">하이퍼파라미터 값</div>
+              <input class="input-area input-dataset" />
+
+              <div class="input-title">mlFlow</div>
+              <button class="output-view-button">결과보기</button>
+            </div>
+          </div>
+          <div class="area2">
+            <div class="input-title">mlFlow</div>
+            <textarea class="input-area mlflow-textarea"></textarea>
+          </div>
+        </div>
+        <img
+          style="margin-left: 26px"
+          src="{{url_for('static', filename='/javascript/src/images/longborder.svg')}}"
+          alt="Image"
+        />
+        <div class="projectDetailModalButtons">
+          <button
+            class="projectDetailModalCancelButton"
+            onclick="detailModalClose()"
+          >
+            취소
+          </button>
+          <button class="projectDetailModalOkButton">확인</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
