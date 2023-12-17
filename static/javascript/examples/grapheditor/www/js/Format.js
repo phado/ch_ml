@@ -1817,7 +1817,6 @@ ArrangePanel.prototype.addGroupOps = function(div)
 
 		btn = mxUtils.button('정보 입력', mxUtils.bind(this, function(evt)
 		{
-
 			var ds = mxUtils.getDocumentSize();
 
 			ds.height = window.innerHeight;
@@ -1888,7 +1887,6 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			div.appendChild(mxCellForm(cellData['type'],cellData))
 
 
-			div = createDropdown(div);
 			div.appendChild(buttons)
 
 			document.body.appendChild(div);
