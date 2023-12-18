@@ -42,11 +42,10 @@ function ImageData(mapperData){
     var modal = document.createElement('div');
     modal.className = 'dataModal';
 
-
     var mainCategoryLabel = document.createElement('label');
     var labelText = document.createTextNode('메인 카테고리:');
     mainCategoryLabel.appendChild(labelText);
-
+₩
 
     var mainCategoryDropdown = document.createElement('select');
     mainCategoryDropdown.id = 'mainCategory';

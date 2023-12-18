@@ -1872,7 +1872,9 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			});
 			cancelBtn.className = 'geBtn';
 
-			var applyBtn = mxUtils.button(mxResources.get('apply'), mapperEditApply);
+			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){
+				console.log('dd')
+			});
 			applyBtn.className = 'geBtn gePrimaryBtn';
 
 			buttons.appendChild(cancelBtn);
