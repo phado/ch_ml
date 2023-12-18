@@ -3709,7 +3709,7 @@ Sidebar.prototype.addPalette = function(id, title, expanded, onInit)
 	this.container.appendChild(elt);
 	
 	var div = document.createElement('div');
-	div.className = 'geSidebar';
+	div.className = 'geSidebar '+title;
 	
 	// Disables built-in pan and zoom in IE10 and later
 	if (mxClient.IS_POINTER)
