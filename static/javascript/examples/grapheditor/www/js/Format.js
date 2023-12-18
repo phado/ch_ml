@@ -596,6 +596,13 @@ Format.prototype.refresh = function()
 		addClickHandler(label3, arrangePanel, idx++);
 		addClickHandler(label2, textPanel, idx++);
 		addClickHandler(label, stylePanel, idx++);
+		// kpst edit 창닫기 강제 이벤트
+		window.addEventListener('keydown', (e) => {
+		  if (e.code === 'Escape') {
+			document.getElementById('dataset').remove()
+			document.getElementById('background').remove()
+		  }
+		});
 	}
 };
 
@@ -1895,8 +1902,10 @@ ArrangePanel.prototype.addGroupOps = function(div)
 
 			var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
 			{
+
 				document.getElementById('dataset').remove()
 				document.getElementById('background').remove()
+
 			});
 			cancelBtn.className = 'geBtn';
 			applyStyles(cancelBtn, cancelButtonStyle);
