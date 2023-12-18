@@ -1585,13 +1585,26 @@ ArrangePanel.prototype.init = function()
 	}
 
 	var div = edUI.createDiv('geFormatSection');
-	div.name = 'info_console'
+	div.classList.add('info_console');
 	div.style.height = '300px';
 	div.style.width = '200px';
 	div.style.padding = '0px 15px 0px 0px';
-	// div.style.backgroundColor = '#D0D0D0'
+
+	// kpst 셀 선택시 초기 정보 표시
+	var ui = this.editorUi;
+	var graph = ui.editor.graph;
+	var cell = graph.getSelectionCell();
+	//kpst 맵퍼에 데이터 생생 및 불러오가
+	if (MxCellMapper[cell.id] == null){
+		mxCellType(cell.id, cell.class)
+	}
+
+	div.textContent +=  MxCellMapper[cell.id]['type'];
+
+
 	this.container.appendChild(div); //KPST 우측 arrange 에서 메뉴바에 정보 창 더하기
 	this.container.appendChild(this.addGroupOps(this.createPanel()));
+
 
 	if (ss.containsLabel)
 	{
@@ -1899,12 +1912,14 @@ ArrangePanel.prototype.addGroupOps = function(div)
 
 			//kpst 맵퍼에 데이터 생생 및 불러오가
 			if (MxCellMapper[cell.id] == null){
-				mxCellType(cell.id, cell.value)
+				mxCellType(cell.id, cell.class)
 			}
 			var cellData = MxCellMapper[cell.id]
 			//kpst 맵퍼에서 데이터 저장 및 가져오기
 			div.appendChild(mxCellForm(cellData['type'],cellData))
 
+			var element = document.getElementsByClassName('info_console')[0]
+			element.textContent += '<div>'+cell.id+'<div>';
 
 			div.appendChild(buttons)
 

@@ -1053,14 +1053,14 @@ Sidebar.prototype.addGeneralPalette = function(expand)
 	this.setCurrentSearchEntryLibrary('general', 'general');
 
 	var fns = [
-	 	this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '<label>Image Data</label>', 'Image-Data', null, null, 'rect rectangle box'),
-	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '<label>Sensor Data</label>', 'Sensor-Data', null, null, 'rounded rect rectangle box'),
- 		this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;', 120, 80, '<label>KeyPoint Data</label>', 'KeyPoint-Data', null, null, 'oval ellipse state'),
+	 	this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, 'Image-Data', 'Image-Data', null, null, 'rect rectangle box'),
+	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, 'Sensor-Data', 'Sensor-Data', null, null, 'rounded rect rectangle box'),
+ 		this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;', 120, 80, 'KeyPoint-Data', 'KeyPoint-Data', null, null, 'oval ellipse state'),
 	]
 
 	var fns2 = [
-		this.createVertexTemplateEntry('shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;', 120, 60, '<label>Object-Detection</label>', 'Object-Detection'),
-	 	this.createVertexTemplateEntry('shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;', 120, 60, '<label>Classification</label>', 'Classification', null, null, 'Classification'),
+		this.createVertexTemplateEntry('shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;', 120, 60, 'Object-Detection', 'Object-Detection'),
+	 	this.createVertexTemplateEntry('shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;', 120, 60, 'Classification', 'Classification', null, null, 'Classification'),
 
 	];
 	var dt = 'uml static class ';
@@ -3709,7 +3709,7 @@ Sidebar.prototype.addPalette = function(id, title, expanded, onInit)
 	this.container.appendChild(elt);
 	
 	var div = document.createElement('div');
-	div.className = 'geSidebar';
+	div.className = 'geSidebar '+title;
 	
 	// Disables built-in pan and zoom in IE10 and later
 	if (mxClient.IS_POINTER)

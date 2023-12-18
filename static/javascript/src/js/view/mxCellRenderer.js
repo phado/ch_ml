@@ -977,7 +977,7 @@ mxCellRenderer.prototype.redrawLabel = function(state, forced)
 			//kpst 다이어그램 메뉴랑 실제 입려되는 입력 값 다르게 설정하는 곳
 			if(state.origin['x'] != 0 && state.origin['y'] != 0){
 				// state.text.value = "sdfsf"
-				console.log('다이어드램 이름 다르게 입력하는 곳')
+				// console.log('다이어드램 이름 다르게 입력하는 곳')
 			}
 			this.redrawLabelShape(state.text);
 			state.text.node.style.visibility = vis;

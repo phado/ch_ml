@@ -594,10 +594,11 @@ mxGraphHandler.prototype.mouseDown = function(sender, me)
 	if (!me.isConsumed() && this.isEnabled() && this.graph.isEnabled() &&
 		me.getState() != null && !mxEvent.isMultiTouchEvent(me.getEvent()))
 	{
+
 		var cell = this.getInitialCellForEvent(me);
 		this.delayedSelection = this.isDelayedSelection(cell, me);
 		this.cell = null;
-		
+
 		if (this.isSelectEnabled() && !this.delayedSelection)
 		{
 			this.graph.selectCellForEvent(cell, me.getEvent());
@@ -624,6 +625,7 @@ mxGraphHandler.prototype.mouseDown = function(sender, me)
 			this.consumeMouseEvent(mxEvent.MOUSE_DOWN, me);
 		}
 	}
+
 };
 
 /**
