@@ -1,33 +1,33 @@
 let MxCellFormMapper = {};
 
 let mapperList = {
-  "<label>Image Data</label>": {
-    type: "<label>Image Data</label>",
+  "Image-Data": {
+    type: "Image-Data",
     data: "",
     path: "",
   },
-  "<label>Sensor Data</label>": {
-    type: "<label>Sensor Data</label>",
+  "Sensor-Data": {
+    type: "Sensor-Data",
     data: "",
     path: "",
   },
-  "<label>KeyPoint Data</label>": {
-    type: "<label>KeyPoint Data</label>",
+  "KeyPoint-Data": {
+    type: "KeyPoint-Data",
     data: "",
     path: "",
   },
-  "<label>Object-Detection</label>": {
-    type: "<label>Object-Detection</label>",
+  "Object-Detection": {
+    type: "Object-Detection",
     data: "",
     path: "",
   },
-  "<label>Classification</label>": {
-    type: "<label>Classification</label>",
+  "Classification": {
+    type: "Classification",
     data: "",
     path: "",
   },
-  "<label>Deploy</label>": {
-    type: "<label>Deploy</label>",
+  "Deploy": {
+    type: "Deploy",
     data: "",
     path: "",
   },
@@ -43,17 +43,17 @@ function mxCellType(cellId, cellType) {
 
 function mxCellForm(cellType, mapperData) {
   // 생성된 셀 폼 생성
-  if (cellType == "<label>Image Data</label>") {
+  if (cellType == "Image-Data") {
     return ImageData(mapperData);
-  } else if (cellType == "<label>Sensor Data</label>") {
+  } else if (cellType == "Sensor-Data") {
     return SenserData(mapperData);
-  } else if (cellType == "<label>KeyPoint Data</label>") {
+  } else if (cellType == "KeyPoint-Data") {
     return KeyPointData(mapperData);
-  } else if (cellType == "<label>Object-Detection</label>") {
+  } else if (cellType == "Object-Detection") {
     return ObjectDetection(mapperData);
-  } else if (cellType == "<label>Classification</label>") {
+  } else if (cellType == "Classification") {
     return Classification(mapperData);
-  } else if (cellType == "<label>Deploy</label>") {
+  } else if (cellType == "Deploy") {
     return Deploy(mapperData);
   }
 }

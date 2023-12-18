@@ -1066,7 +1066,7 @@ Sidebar.prototype.addGeneralPalette = function(expand)
 	var dt = 'uml static class ';
 	var fns3 = [
 		this.createVertexTemplateEntry('verticalAlign=top;align=center;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;',
-			120, 60, '<label>Deploy</label>', 'Deploy', null, null, dt + 'block')
+			120, 60, 'Deploy', 'Deploy', null, null, dt + 'block')
 	];
 
 

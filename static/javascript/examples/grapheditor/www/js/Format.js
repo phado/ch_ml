@@ -1918,9 +1918,6 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			//kpst 맵퍼에서 데이터 저장 및 가져오기
 			div.appendChild(mxCellForm(cellData['type'],cellData))
 
-			var element = document.getElementsByClassName('info_console')[0]
-			element.textContent += '<div>'+cell.id+'<div>';
-
 			div.appendChild(buttons)
 
 			document.body.appendChild(div);
