@@ -1902,16 +1902,23 @@ ArrangePanel.prototype.addGroupOps = function(div)
 
 			var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
 			{
-
 				document.getElementById('dataset').remove()
 				document.getElementById('background').remove()
-
 			});
 			cancelBtn.className = 'geBtn';
 			applyStyles(cancelBtn, cancelButtonStyle);
 
 			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){
-				console.log('dds')
+				var image1Select = document.getElementById('ImageDataSelect1');
+				var image1SelectedValue = image1Select.value;
+
+// ImageDataSelect2의 선택된 값 가져오기
+				var image2Select = document.getElementById('ImageDataSelect2');
+				var image2SelectedValue = image2Select.value;
+
+// ImageDataInput1의 textarea 값 가져오기
+				var image1Input = document.getElementById('ImageDataInput1');
+				var image1InputValue = image1Input.value;
 
 			});
 			applyBtn.className = 'geBtn gePrimaryBtn';
