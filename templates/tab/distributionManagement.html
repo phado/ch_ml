@@ -68,7 +68,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for _ in range(10) %}
+            <!-- {% for _ in range(10) %}
             <tr>
               <td class="data-cell">
                 <img
@@ -109,7 +109,167 @@
                 />
               </td>
             </tr>
-            {% endfor %}
+            {% endfor %} -->
+            <tr>
+              <td class="data-cell">
+                <img
+                  style="margin-left: 24px; margin-right: 16px"
+                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
+                  alt="Image"
+                />리파코-2
+              </td>
+              <td class="data-cell">끼임</td>
+              <td class="data-cell">Running</td>
+              <td class="data-cell">2023-12-11 17:32</td>
+              <td class="data-cell">2023-12-14 17:32</td>
+              <td class="data-cell">
+                <img
+                  style="margin-left: 15px"
+                  onclick=" detailDistribution() "
+                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"
+                  alt="Image"
+                />
+              </td>
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"
+                  alt="Image"
+                />
+              </td>
+
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"
+                  alt="Image"
+                />
+              </td>
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"
+                  alt="Image"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td class="data-cell">
+                <img
+                  style="margin-left: 24px; margin-right: 16px"
+                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
+                  alt="Image"
+                />리파코-1
+              </td>
+              <td class="data-cell">낙하</td>
+              <td class="data-cell">Stop</td>
+              <td class="data-cell">2023-12-11 17:27</td>
+              <td class="data-cell">2023-12-14 17:27</td>
+              <td class="data-cell">
+                <img
+                  style="margin-left: 15px"
+                  onclick=" detailDistribution() "
+                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"
+                  alt="Image"
+                />
+              </td>
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"
+                  alt="Image"
+                />
+              </td>
+
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"
+                  alt="Image"
+                />
+              </td>
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"
+                  alt="Image"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td class="data-cell">
+                <img
+                  style="margin-left: 24px; margin-right: 16px"
+                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
+                  alt="Image"
+                />한길이에스티-TEST-2
+              </td>
+              <td class="data-cell">화재</td>
+              <td class="data-cell">Stop</td>
+              <td class="data-cell">2023-12-11 14:23</td>
+              <td class="data-cell">2023-12-14 14:23</td>
+              <td class="data-cell">
+                <img
+                  style="margin-left: 15px"
+                  onclick=" detailDistribution() "
+                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"
+                  alt="Image"
+                />
+              </td>
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"
+                  alt="Image"
+                />
+              </td>
+
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"
+                  alt="Image"
+                />
+              </td>
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"
+                  alt="Image"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td class="data-cell">
+                <img
+                  style="margin-left: 24px; margin-right: 16px"
+                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
+                  alt="Image"
+                />한길이에스티-TEST-1
+              </td>
+              <td class="data-cell">충돌</td>
+              <td class="data-cell">Stop</td>
+              <td class="data-cell">2023-12-11 10:29</td>
+              <td class="data-cell">2023-12-13 10:29</td>
+              <td class="data-cell">
+                <img
+                  style="margin-left: 15px"
+                  onclick=" detailDistribution() "
+                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"
+                  alt="Image"
+                />
+              </td>
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"
+                  alt="Image"
+                />
+              </td>
+
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"
+                  alt="Image"
+                />
+              </td>
+              <td class="data-cell">
+                <img
+                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"
+                  alt="Image"
+                />
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -145,7 +305,7 @@
 
           <div class="input-title">재해유형 추론 서비스</div>
           <select class="input-area selectbox">
-            <option>금진</option>
+            <option>이킴</option>
           </select>
 
           <div class="input-title">모델명</div>

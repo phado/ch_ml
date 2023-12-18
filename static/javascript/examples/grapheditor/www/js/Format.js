@@ -1745,6 +1745,21 @@ ArrangePanel.prototype.addLayerOps = function(div)
 /**
  * 
  */
+
+let okButtonStyle = {
+	backgroundColor: "#3D5EEC",
+	borderRadius: "5px",
+};
+let cancelButtonStyle = {
+	backgroundColor: "#9A9A9A",
+	color:"white",
+	borderRadius: "5px",
+};
+function applyStyles(element, styles) {
+	for (var property in styles) {
+		element.style[property] = styles[property];
+	}
+}
 ArrangePanel.prototype.addGroupOps = function(div)
 {
 	var ui = this.editorUi;
@@ -1852,8 +1867,8 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			// var pos = this.getPosition(50, 50, 50, 50);
 			// div.className = 'test';
 			div.id = 'dataset'
-			var w = 350;
-			var h = 500;
+			var w = 660;
+			var h = 560;
 			div.style.width =  w + 'px';
 			div.style.height = h + 'px';
 			div.style.left =  (centerX - w/2) + 'px';
@@ -1871,11 +1886,13 @@ ArrangePanel.prototype.addGroupOps = function(div)
 				document.getElementById('background').remove()
 			});
 			cancelBtn.className = 'geBtn';
+			applyStyles(cancelBtn, cancelButtonStyle);
 
 			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){
 				console.log('dd')
 			});
 			applyBtn.className = 'geBtn gePrimaryBtn';
+			applyStyles(applyBtn, okButtonStyle);
 
 			buttons.appendChild(cancelBtn);
 			buttons.appendChild(applyBtn);

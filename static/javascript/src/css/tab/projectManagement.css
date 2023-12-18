@@ -117,13 +117,12 @@ select {
   margin-top: 18px;
   margin-left: 70px;
   width: 1700px;
-  height: 600px;
   background-color: white;
 }
 
 .data-table .data-cell {
   border-bottom: 1px solid #ccc;
-  height: 40px;
+  height: 50px;
   font-family: Roboto;
   font-size: 15px;
   font-weight: 500;
