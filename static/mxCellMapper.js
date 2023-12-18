@@ -3,9 +3,9 @@
 let MxCellFormMapper = {}
 
 let mapperList = {
-    '<label>KeyPoint Data</label>' : {'type': '<label>KeyPoint Data</label>', 'data': '','path': '' },
-    '<label>Image Data</label>' : {'type': '<label>Image Data</label>','data': '','path': '' },
-    '<label>Sensor Data</label>' : {'type': '<label>Sensor Data</label>','data': '','path': '' }
+    'KeyPoint-Data' : {'type': '<label>KeyPoint Data</label>', 'data': '','path': '' },
+    'Image-Data' : {'type': '<label>Image Data</label>','data': '','path': '' },
+    'Sensor-Data' : {'type': '<label>Sensor Data</label>','data': '','path': '' }
 }
 
 

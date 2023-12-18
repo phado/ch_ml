@@ -12479,7 +12479,9 @@ mxGraph.prototype.selectCellForEvent = function(cell, evt)
 	else if (!isSelected || this.getSelectionCount() != 1)
 	{
 		this.setSelectionCell(cell);
+
 	}
+
 };
 
 /**
@@ -12556,7 +12558,11 @@ mxGraph.prototype.createHandler = function(state)
  */
 mxGraph.prototype.createVertexHandler = function(state)
 {
-	return new mxVertexHandler(state);
+	if(state.text.node.previousElementSibling.classList[0] && !state.cell.class){ //KPST 다이어그램에 클래스 이름 더하는 방법 cell 에 배치
+        state.cell.class = state.text.node.previousElementSibling.classList[0]
+    }
+    return new mxVertexHandler(state);
+
 };
 
 /**

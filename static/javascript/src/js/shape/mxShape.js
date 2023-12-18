@@ -895,7 +895,7 @@ mxShape.prototype.afterPaint = function(c) { }
 mxShape.prototype.paint = function(c)
 {
 	var strokeDrawn = false;
-	
+
 	if (c != null && this.outline)
 	{
 		var stroke = c.stroke;
@@ -998,6 +998,21 @@ mxShape.prototype.paint = function(c)
 	{
 		c.rect(x, y, w, h);
 		c.stroke();
+	}
+
+	if (this.state){ //KPST 다이어그램에 클래스 이름 더하는 방법
+		if(this.node.className){
+			try {
+				if(!this.node.classList[0]){
+					this.node.classList.add(this.state.cell.value)
+					this.node.childNodes[0].classList.add(this.state.cell.value)
+				}
+			}
+			catch (e){
+
+			}
+
+		}
 	}
 };
 
