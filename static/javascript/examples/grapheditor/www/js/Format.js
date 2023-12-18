@@ -493,7 +493,7 @@ Format.prototype.refresh = function()
 			div.appendChild(label2);
 			this.panels.push(new DiagramStylePanel(this, ui, stylePanel));
 			this.container.appendChild(stylePanel);
-			
+
 			addClickHandler(label2, stylePanel, idx++);
 		}
 		
@@ -571,7 +571,7 @@ Format.prototype.refresh = function()
 			this.panels.push(new StyleFormatPanel(this, ui, stylePanel));
 			this.container.appendChild(stylePanel);
 
-			addClickHandler(label, stylePanel, idx++);
+
 		}
 		
 		// Text
@@ -591,9 +591,11 @@ Format.prototype.refresh = function()
 		arrangePanel.style.display = 'none';
 		this.panels.push(new ArrangePanel(this, ui, arrangePanel));
 		this.container.appendChild(arrangePanel);
-		
-		addClickHandler(label2, textPanel, idx++);
+
+		// kpst 우측 메뉴바 순서 변경
 		addClickHandler(label3, arrangePanel, idx++);
+		addClickHandler(label2, textPanel, idx++);
+		addClickHandler(label, stylePanel, idx++);
 	}
 };
 
@@ -1552,27 +1554,27 @@ ArrangePanel.prototype.init = function()
 	var graph = this.editorUi.editor.graph;
 	var ss = this.format.getSelectionState();
 
-	this.container.appendChild(this.addLayerOps(this.createPanel()));
+	// this.container.appendChild(this.addLayerOps(this.createPanel()));  //kpst 우측 메뉴바 arrange 버튼 숨김
 	// Special case that adds two panels
 	this.addGeometry(this.container);
 	this.addEdgeGeometry(this.container);
 
 	if (!ss.containsLabel || ss.edges.length == 0)
 	{
-		this.container.appendChild(this.addAngle(this.createPanel()));
+		// this.container.appendChild(this.addAngle(this.createPanel()));
 	}
 	
 	if (!ss.containsLabel && ss.edges.length == 0 &&
 		ss.style.shape != 'rectangle' &&
 		ss.style.shape != 'label')
 	{
-		this.container.appendChild(this.addFlip(this.createPanel()));
+		// this.container.appendChild(this.addFlip(this.createPanel()));
 	}
 	
 	if (ss.vertices.length > 1)
 	{
-		this.container.appendChild(this.addAlign(this.createPanel()));
-		this.container.appendChild(this.addDistribute(this.createPanel()));
+		// this.container.appendChild(this.addAlign(this.createPanel()));
+		// this.container.appendChild(this.addDistribute(this.createPanel()));
 	}
 	
 	if (graph.isTable(ss.vertices[0]) ||
@@ -1581,9 +1583,16 @@ ArrangePanel.prototype.init = function()
 	{
 		this.container.appendChild(this.addTable(this.createPanel()));
 	}
-	
+
+	var div = edUI.createDiv('geFormatSection');
+	div.name = 'info_console'
+	div.style.height = '300px';
+	div.style.width = '200px';
+	div.style.padding = '0px 15px 0px 0px';
+	// div.style.backgroundColor = '#D0D0D0'
+	this.container.appendChild(div); //KPST 우측 arrange 에서 메뉴바에 정보 창 더하기
 	this.container.appendChild(this.addGroupOps(this.createPanel()));
-	
+
 	if (ss.containsLabel)
 	{
 		// Adds functions from hidden style format panel
@@ -1777,50 +1786,12 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		count++;
 	}
 	
-	if (ss.vertices.length > 0)
-	{
-		if (count > 0)
-		{
-			mxUtils.br(div);
-			count = 0;
-		}
-		
-		var btn = mxUtils.button(mxResources.get('copySize'), function(evt)
-		{
-			ui.actions.get('copySize').funct();
-		});
-		
-		btn.setAttribute('title', mxResources.get('copySize') + ' (' +
-			this.editorUi.actions.get('copySize').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
 
-		div.appendChild(btn);
-		count++;
-		
-		if (ui.copiedSize != null)
-		{
-			var btn2 = mxUtils.button(mxResources.get('pasteSize'), function(evt)
-			{
-				ui.actions.get('pasteSize').funct();
-			});
-			
-			btn2.setAttribute('title', mxResources.get('pasteSize') + ' (' +
-				this.editorUi.actions.get('pasteSize').shortcut + ')');
-			
-			div.appendChild(btn2);
-			count++;
-			
-			btn.style.width = '100px';
-			btn.style.marginBottom = '2px';
-			btn2.style.width = '100px';
-			btn2.style.marginBottom = '2px';
-		}
-	}
 	
 	if (graph.getSelectionCount() == 1 && graph.getModel().isVertex(cell) && !ss.row &&
 		!ss.cell && graph.getModel().isVertex(graph.getModel().getParent(cell)))
 	{
+
 		if (count > 0)
 		{
 			mxUtils.br(div);
@@ -1837,24 +1808,102 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		div.appendChild(btn);
 		count++;
 	}
-	else if (graph.getSelectionCount() > 0)
+	else if (graph.getSelectionCount() > 0 && graph.getSelectionCount() < 2)
 	{
 		if (count > 0)
 		{
 			mxUtils.br(div);
 		}
-		
-		btn = mxUtils.button(mxResources.get('clearWaypoints'), mxUtils.bind(this, function(evt)
+
+		btn = mxUtils.button('정보 입력', mxUtils.bind(this, function(evt)
 		{
-			this.editorUi.actions.get('clearWaypoints').funct();
+			var ds = mxUtils.getDocumentSize();
+
+			ds.height = window.innerHeight;
+
+			var dh = ds.height;
+			var left = Math.max(1, Math.round((ds.width - w - 64) / 2));
+			var top = Math.max(1, Math.round((dh - h - edUI.footerHeight) / 3));
+			w = (document.body != null) ? Math.min(w, document.body.scrollWidth - 64) : w;
+			h = Math.min(h, dh - 64);
+
+
+			var bg = edUI.createDiv('background');
+			bg.id = 'background';
+			bg.style.position = 'absolute';
+			bg.style.background = Dialog.backdropColor;
+			bg.style.height = dh + 'px';
+			bg.style.right = '0px';
+			bg.style.zIndex = this.zIndex - 2;
+
+			mxUtils.setOpacity(bg, 80);
+			var origin = mxUtils.getDocumentScrollOrigin(document);
+			bg.style.left = origin.x + 'px';
+			bg.style.top = origin.y + 'px';
+			left += origin.x;
+			top += origin.y;
+			bg.style.zIndex = this.zIndex - 2;
+			document.body.appendChild(bg);
+
+			var centerX = window.innerWidth / 2;
+			var centerY = window.innerHeight / 2;
+
+			var div = edUI.createDiv('geDialog');
+			// var pos = this.getPosition(50, 50, 50, 50);
+			// div.className = 'test';
+			div.id = 'dataset'
+			var w = 350;
+			var h = 500;
+			div.style.width =  w + 'px';
+			div.style.height = h + 'px';
+			div.style.left =  (centerX - w/2) + 'px';
+			div.style.top = (centerY - h/2) + 'px';
+			// div.style.opacity = '0.8';
+			div.style.zIndex = this.zIndex;
+
+			var buttons = document.createElement('div');
+			buttons.style.textAlign = 'right';
+			buttons.style.whiteSpace = 'nowrap';
+
+			var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+			{
+				document.getElementById('dataset').remove()
+				document.getElementById('background').remove()
+			});
+			cancelBtn.className = 'geBtn';
+
+			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){
+				console.log('dd')
+			});
+			applyBtn.className = 'geBtn gePrimaryBtn';
+
+			buttons.appendChild(cancelBtn);
+			buttons.appendChild(applyBtn);
+
+			//kpst 맵퍼에 데이터 생생 및 불러오가
+			if (MxCellMapper[cell.id] == null){
+				mxCellType(cell.id, cell.value)
+			}
+			var cellData = MxCellMapper[cell.id]
+			//kpst 맵퍼에서 데이터 저장 및 가져오기
+			div.appendChild(mxCellForm(cellData['type'],cellData))
+
+
+			div.appendChild(buttons)
+
+			document.body.appendChild(div);
+
 		}));
-		
+		btn.name = 'cellId '+cell.getId();
+
 		btn.setAttribute('title', mxResources.get('clearWaypoints') + ' (' + this.editorUi.actions.get('clearWaypoints').shortcut + ')');
 		btn.style.width = '202px';
 		btn.style.marginBottom = '2px';
 		div.appendChild(btn);
 
 		count++;
+
+
 	}
 	
 	if (graph.getSelectionCount() == 1)
@@ -2024,27 +2073,27 @@ ArrangePanel.prototype.addAngle = function(div)
 	var ss = this.format.getSelectionState();
 
 	div.style.paddingBottom = '8px';
-	
+
 	var span = document.createElement('div');
 	span.style.position = 'absolute';
 	span.style.width = '70px';
 	span.style.marginTop = '0px';
 	span.style.fontWeight = 'bold';
-	
+
 	var input = null;
 	var update = null;
 	var btn = null;
-	
+
 	if (ss.rotatable && !ss.table && !ss.row && !ss.cell)
 	{
 		mxUtils.write(span, mxResources.get('angle'));
 		div.appendChild(span);
-		
+
 		input = this.addUnitInput(div, '°', 20, 44, function()
 		{
 			update.apply(this, arguments);
 		});
-		
+
 		mxUtils.br(div);
 		div.style.paddingTop = '10px';
 	}
@@ -2056,7 +2105,7 @@ ArrangePanel.prototype.addAngle = function(div)
 	if (!ss.containsLabel)
 	{
 		var label = mxResources.get('reverse');
-		
+
 		if (ss.vertices.length > 0 && ss.edges.length > 0)
 		{
 			label = mxResources.get('turn') + ' / ' + label;
@@ -2070,17 +2119,17 @@ ArrangePanel.prototype.addAngle = function(div)
 		{
 			ui.actions.get('turn').funct(evt);
 		})
-		
+
 		btn.setAttribute('title', label + ' (' + this.editorUi.actions.get('turn').shortcut + ')');
 		btn.style.width = '202px';
 		div.appendChild(btn);
-		
+
 		if (input != null)
 		{
 			btn.style.marginTop = '8px';
 		}
 	}
-	
+
 	if (input != null)
 	{
 		var listener = mxUtils.bind(this, function(sender, evt, force)
@@ -2092,10 +2141,10 @@ ArrangePanel.prototype.addAngle = function(div)
 				input.value = (isNaN(tmp)) ? '' : tmp  + '°';
 			}
 		});
-	
+
 		update = this.installInputHandler(input, mxConstants.STYLE_ROTATION, 0, 0, 360, '°', null, true);
 		this.addKeyHandler(input, listener);
-	
+
 		graph.getModel().addListener(mxEvent.CHANGE, listener);
 		this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
 		listener();
@@ -2303,7 +2352,7 @@ ArrangePanel.prototype.addGeometry = function(container)
 	
 	if (rect.resizable || rect.row || rect.cell)
 	{
-		container.appendChild(div);
+		// container.appendChild(div); // kpst arrange 메뉴 숨김 constrainProportions
 	}
 	
 	var div2 = this.createPanel();
@@ -2412,7 +2461,7 @@ ArrangePanel.prototype.addGeometry = function(container)
 
 	if (rect.movable)
 	{
-		container.appendChild(div2);
+		// container.appendChild(div2); // kpst arrange 메뉴 숨김 position
 	}
 };
 

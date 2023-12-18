@@ -4564,6 +4564,7 @@ EditorUi.prototype.altShiftActions = {67: 'clearWaypoints', // Alt+Shift+C
 EditorUi.prototype.createKeyHandler = function(editor)
 {
 	var editorUi = this;
+	edUI = this; //KPST editorUi 객체 복사
 	var graph = this.editor.graph;
 	var keyHandler = new mxKeyHandler(graph);
 
