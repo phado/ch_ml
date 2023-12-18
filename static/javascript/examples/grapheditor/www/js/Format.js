@@ -1902,7 +1902,8 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			applyStyles(cancelBtn, cancelButtonStyle);
 
 			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){
-				console.log('dd')
+				console.log('dds')
+
 			});
 			applyBtn.className = 'geBtn gePrimaryBtn';
 			applyStyles(applyBtn, okButtonStyle);

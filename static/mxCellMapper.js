@@ -118,67 +118,68 @@ function ImageData(mapperData) {
     height: "95%",
   });
 
-  var mainCategoryLabel = document.createElement("label");
-  var labelText = document.createTextNode("메인 카테고리:");
-  mainCategoryLabel.appendChild(labelText);
-  applyStyles(mainCategoryLabel, Roboto16Style);
+  var ImageDataLabel1 = document.createElement("label");
+  var labelText = document.createTextNode("기업 선택");
+  ImageDataLabel1.appendChild(labelText);
+  applyStyles(ImageDataLabel1, Roboto16Style);
 
-  var mainCategoryDropdown = document.createElement("select");
-  mainCategoryDropdown.id = "mainCategory";
+  var ImageDataSelect1 = document.createElement("select");
+  ImageDataSelect1.id = "ImageDataSelect1";
 
   var mainCategoryOptions = ["선택 없음", "카테1", "카테2", "카테3", "카테4"];
   mainCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
     option.text = optionText;
-    mainCategoryDropdown.appendChild(option);
-    applyStyles(mainCategoryDropdown, selectBoxStyle);
+    ImageDataSelect1.appendChild(option);
+    applyStyles(ImageDataSelect1, selectBoxStyle);
   });
 
-  var subCategoryLabel = document.createElement("label");
-  labelText = document.createTextNode("서브 카테고리2:");
-  subCategoryLabel.appendChild(labelText);
-  applyStyles(subCategoryLabel, Roboto16Style);
+  var ImageDataLabel2 = document.createElement("label");
+  labelText = document.createTextNode("데이터셋 선택");
+  ImageDataLabel2.appendChild(labelText);
+  applyStyles(ImageDataLabel2, Roboto16Style);
 
 
-  var subCategoryDropdown = document.createElement("select");
-  subCategoryDropdown.id = "subCategory";
+  var ImageDataSelect2 = document.createElement("select");
+  ImageDataSelect2.id = "ImageDataSelect2";
 
   var subCategoryOptions = ["선택 없음", "서브카테1", "서브카테2", "서브카테3"];
   subCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
     option.text = optionText;
-    subCategoryDropdown.appendChild(option);
-    applyStyles(subCategoryDropdown, selectBoxStyle);
+    ImageDataSelect2.appendChild(option);
+    applyStyles(ImageDataSelect2, selectBoxStyle);
   });
 
-  var memoLabel = document.createElement("label");
-  labelText = document.createTextNode("메모:");
-  memoLabel.appendChild(labelText);
-  applyStyles(memoLabel, Roboto16Style);
+  var ImageDataLabel3 = document.createElement("label");
+  labelText = document.createTextNode("메모");
+  ImageDataLabel3.appendChild(labelText);
+  applyStyles(ImageDataLabel3, Roboto16Style);
 
-  var memoInput = document.createElement("textarea");
-  memoInput.id = "memo";
+  var ImageDataInput1 = document.createElement("textarea");
+  ImageDataInput1.id = "ImageDataInput1";
 
-  applyStyles(memoInput, textareaStyle);
+  applyStyles(ImageDataInput1, textareaStyle);
 
   // 모달에 요소 추가
-  modal.appendChild(mainCategoryLabel);
+  modal.appendChild(ImageDataLabel1);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(mainCategoryDropdown);
+  modal.appendChild(ImageDataSelect1);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(subCategoryLabel);
+  modal.appendChild(ImageDataLabel2);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(subCategoryDropdown);
+  modal.appendChild(ImageDataSelect2);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(memoLabel);
+  modal.appendChild(ImageDataLabel3);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(memoInput);
+  modal.appendChild(ImageDataInput1);
   modal.appendChild(mxUtils.br(div));
 
   return modal;
 }
+
 function SenserData(mapperData) {
   var div = document.createElement("div");
 
@@ -190,67 +191,68 @@ function SenserData(mapperData) {
     height: "95%",
   });
 
-  var mainCategoryLabel = document.createElement("label");
-  var labelText = document.createTextNode("메인 카테고리:");
-  mainCategoryLabel.appendChild(labelText);
-  applyStyles(mainCategoryLabel, Roboto16Style);
+  var SenserDataLabel1 = document.createElement("label");
+  var labelText = document.createTextNode("기업 선택");
+  SenserDataLabel1.appendChild(labelText);
+  applyStyles(SenserDataLabel1, Roboto16Style);
 
-  var mainCategoryDropdown = document.createElement("select");
-  mainCategoryDropdown.id = "mainCategory";
+  var SenserDataSelect1 = document.createElement("select");
+  SenserDataSelect1.id = "SenserDataSelect1";
 
   var mainCategoryOptions = ["선택 없음", "카테1", "카테2", "카테3", "카테4"];
   mainCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
     option.text = optionText;
-    mainCategoryDropdown.appendChild(option);
-    applyStyles(mainCategoryDropdown, selectBoxStyle);
+    SenserDataSelect1.appendChild(option);
+    applyStyles(SenserDataSelect1, selectBoxStyle);
   });
 
-  var subCategoryLabel = document.createElement("label");
-  labelText = document.createTextNode("서브 카테고리2:");
-  subCategoryLabel.appendChild(labelText);
-  applyStyles(subCategoryLabel, Roboto16Style);
+  var SenserDataLabel2 = document.createElement("label");
+  labelText = document.createTextNode("데이터셋 선택");
+  SenserDataLabel2.appendChild(labelText);
+  applyStyles(SenserDataLabel2, Roboto16Style);
 
 
-  var subCategoryDropdown = document.createElement("select");
-  subCategoryDropdown.id = "subCategory";
+  var SenserDataSelect2 = document.createElement("select");
+  SenserDataSelect2.id = "SenserDataSelect2";
 
   var subCategoryOptions = ["선택 없음", "서브카테1", "서브카테2", "서브카테3"];
   subCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
     option.text = optionText;
-    subCategoryDropdown.appendChild(option);
-    applyStyles(subCategoryDropdown, selectBoxStyle);
+    SenserDataSelect2.appendChild(option);
+    applyStyles(SenserDataSelect2, selectBoxStyle);
   });
 
-  var memoLabel = document.createElement("label");
-  labelText = document.createTextNode("메모:");
-  memoLabel.appendChild(labelText);
-  applyStyles(memoLabel, Roboto16Style);
+  var SenserDataLabel3 = document.createElement("label");
+  labelText = document.createTextNode("메모");
+  SenserDataLabel3.appendChild(labelText);
+  applyStyles(SenserDataLabel3, Roboto16Style);
 
-  var memoInput = document.createElement("textarea");
-  memoInput.id = "memo";
+  var SenserDataInput1 = document.createElement("textarea");
+  SenserDataInput1.id = "SenserDataInput1";
 
-  applyStyles(memoInput, textareaStyle);
+  applyStyles(SenserDataInput1, textareaStyle);
 
   // 모달에 요소 추가
-  modal.appendChild(mainCategoryLabel);
+  modal.appendChild(SenserDataLabel1);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(mainCategoryDropdown);
+  modal.appendChild(SenserDataSelect1);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(subCategoryLabel);
+  modal.appendChild(SenserDataLabel2);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(subCategoryDropdown);
+  modal.appendChild(SenserDataSelect2);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(memoLabel);
+  modal.appendChild(SenserDataLabel3);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(memoInput);
+  modal.appendChild(SenserDataInput1);
   modal.appendChild(mxUtils.br(div));
 
   return modal;
 }
+
 function KeyPointData(mapperData) {
   var div = document.createElement("div");
   var div = document.createElement("div");
@@ -263,63 +265,63 @@ function KeyPointData(mapperData) {
     height: "95%",
   });
 
-  var mainCategoryLabel = document.createElement("label");
-  var labelText = document.createTextNode("메인 카테고리:");
-  mainCategoryLabel.appendChild(labelText);
-  applyStyles(mainCategoryLabel, Roboto16Style);
+  var KeyPointDataLabel1 = document.createElement("label");
+  var labelText = document.createTextNode("기업 선택");
+  KeyPointDataLabel1.appendChild(labelText);
+  applyStyles(KeyPointDataLabel1, Roboto16Style);
 
-  var mainCategoryDropdown = document.createElement("select");
-  mainCategoryDropdown.id = "mainCategory";
+  var KeyPointDataSelect1 = document.createElement("select");
+  KeyPointDataSelect1.id = "KeyPointDataSelect1";
 
   var mainCategoryOptions = ["선택 없음", "카테1", "카테2", "카테3", "카테4"];
   mainCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
     option.text = optionText;
-    mainCategoryDropdown.appendChild(option);
-    applyStyles(mainCategoryDropdown, selectBoxStyle);
+    KeyPointDataSelect1.appendChild(option);
+    applyStyles(KeyPointDataSelect1, selectBoxStyle);
   });
 
-  var subCategoryLabel = document.createElement("label");
-  labelText = document.createTextNode("서브 카테고리2:");
-  subCategoryLabel.appendChild(labelText);
-  applyStyles(subCategoryLabel, Roboto16Style);
+  var KeyPointDataLabel2 = document.createElement("label");
+  labelText = document.createTextNode("데이터셋 선택");
+  KeyPointDataLabel2.appendChild(labelText);
+  applyStyles(KeyPointDataLabel2, Roboto16Style);
 
 
-  var subCategoryDropdown = document.createElement("select");
-  subCategoryDropdown.id = "subCategory";
+  var KeyPointDataSelect2 = document.createElement("select");
+  KeyPointDataSelect2.id = "KeyPointDataSelect2";
 
   var subCategoryOptions = ["선택 없음", "서브카테1", "서브카테2", "서브카테3"];
   subCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
     option.text = optionText;
-    subCategoryDropdown.appendChild(option);
-    applyStyles(subCategoryDropdown, selectBoxStyle);
+    KeyPointDataSelect2.appendChild(option);
+    applyStyles(KeyPointDataSelect2, selectBoxStyle);
   });
 
-  var memoLabel = document.createElement("label");
-  labelText = document.createTextNode("메모:");
-  memoLabel.appendChild(labelText);
-  applyStyles(memoLabel, Roboto16Style);
+  var KeyPointDataLabel3 = document.createElement("label");
+  labelText = document.createTextNode("메모");
+  KeyPointDataLabel3.appendChild(labelText);
+  applyStyles(KeyPointDataLabel3, Roboto16Style);
 
-  var memoInput = document.createElement("textarea");
-  memoInput.id = "memo";
+  var KeyPointDataInput1 = document.createElement("textarea");
+  KeyPointDataInput1.id = "KeyPointDataInput1";
 
-  applyStyles(memoInput, textareaStyle);
+  applyStyles(KeyPointDataInput1, textareaStyle);
 
   // 모달에 요소 추가
-  modal.appendChild(mainCategoryLabel);
+  modal.appendChild(KeyPointDataLabel1);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(mainCategoryDropdown);
+  modal.appendChild(KeyPointDataSelect1);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(subCategoryLabel);
+  modal.appendChild(KeyPointDataLabel2);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(subCategoryDropdown);
+  modal.appendChild(KeyPointDataSelect2);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(memoLabel);
+  modal.appendChild(KeyPointDataLabel3);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(memoInput);
+  modal.appendChild(KeyPointDataInput1);
   modal.appendChild(mxUtils.br(div));
 
   return modal;
@@ -384,68 +386,65 @@ function createInputArea(id, width, start, end) {
   return inputArea;
 }
 
-
-
 function Classification(mapperData) {var div = document.createElement("div");
 
   var modal = document.createElement("div");
   modal.className = "dataModal";
 
-  var mainCategoryLabel = document.createElement("label");
-  var labelText = document.createTextNode("메인 카테고리:");
-  mainCategoryLabel.appendChild(labelText);
+  var ClassificationLabel1 = document.createElement("label");
+  var labelText = document.createTextNode("기업 선택");
+  ClassificationLabel1.appendChild(labelText);
 
-  var mainCategoryDropdown = document.createElement("select");
-  mainCategoryDropdown.id = "mainCategory";
+  var ClassificationSelect1 = document.createElement("select");
+  ClassificationSelect1.id = "ClassificationSelect1";
 
   var mainCategoryOptions = ["선택 없음", "카테1", "카테2", "카테3", "카테4"];
   mainCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
     option.text = optionText;
-    mainCategoryDropdown.appendChild(option);
+    ClassificationSelect1.appendChild(option);
   });
 
-  var subCategoryLabel = document.createElement("label");
-  labelText = document.createTextNode("서브 카테고리2:");
-  subCategoryLabel.appendChild(labelText);
+  var ClassificationLabel2 = document.createElement("label");
+  labelText = document.createTextNode("데이터셋 선택");
+  ClassificationLabel2.appendChild(labelText);
 
-  var subCategoryDropdown = document.createElement("select");
-  subCategoryDropdown.id = "subCategory";
+  var ClassificationSelect2 = document.createElement("select");
+  ClassificationSelect2.id = "ClassificationSelect2";
 
   var subCategoryOptions = ["선택 없음", "서브카테1", "서브카테2", "서브카테3"];
   subCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
     option.text = optionText;
-    subCategoryDropdown.appendChild(option);
+    ClassificationSelect2.appendChild(option);
   });
 
-  var memoLabel = document.createElement("label");
-  labelText = document.createTextNode("메모:");
-  memoLabel.appendChild(labelText);
+  var ClassificationLabel3 = document.createElement("label");
+  labelText = document.createTextNode("메모");
+  ClassificationLabel3.appendChild(labelText);
 
-  var memoInput = document.createElement("input");
-  memoInput.type = "text";
-  memoInput.id = "memo";
+  var ClassificationInput1 = document.createElement("input");
+  ClassificationInput1.type = "text";
+  ClassificationInput1.id = "ClassificationInput1";
 
   // 모달에 요소 추가
-  modal.appendChild(mainCategoryLabel);
+  modal.appendChild(ClassificationLabel1);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(mainCategoryDropdown);
+  modal.appendChild(ClassificationSelect1);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(subCategoryLabel);
+  modal.appendChild(ClassificationLabel2);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(subCategoryDropdown);
+  modal.appendChild(ClassificationSelect2);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(memoLabel);
+  modal.appendChild(ClassificationLabel3);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(memoInput);
+  modal.appendChild(ClassificationInput1);
   modal.appendChild(mxUtils.br(div));
 
   return modal;
 }
-
 
 function Deploy(mapperData) {
   var div = document.createElement("div");
@@ -453,56 +452,68 @@ function Deploy(mapperData) {
   var modal = document.createElement("div");
   modal.className = "dataModal";
 
-  var mainCategoryLabel = document.createElement("label");
-  var labelText = document.createTextNode("메인 카테고리:");
-  mainCategoryLabel.appendChild(labelText);
+  applyStyles(modal, {
+    width: "100%",
+    height: "95%",
+  });
 
-  var mainCategoryDropdown = document.createElement("select");
-  mainCategoryDropdown.id = "mainCategory";
+  var DeployLabel1 = document.createElement("label");
+  var labelText = document.createTextNode("기업 선택");
+  DeployLabel1.appendChild(labelText);
+  applyStyles(DeployLabel1, Roboto16Style);
+
+  var DeployLabelSelect1 = document.createElement("select");
+  DeployLabelSelect1.id = "DeployLabelSelect1";
 
   var mainCategoryOptions = ["선택 없음", "카테1", "카테2", "카테3", "카테4"];
   mainCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
     option.text = optionText;
-    mainCategoryDropdown.appendChild(option);
+    DeployLabelSelect1.appendChild(option);
+    applyStyles(DeployLabelSelect1, selectBoxStyle);
   });
 
-  var subCategoryLabel = document.createElement("label");
-  labelText = document.createTextNode("서브 카테고리2:");
-  subCategoryLabel.appendChild(labelText);
+  var DeployLabel2 = document.createElement("label");
+  labelText = document.createTextNode("데이터 유형 선택 ");
+  DeployLabel2.appendChild(labelText);
+  applyStyles(DeployLabel2, Roboto16Style);
 
-  var subCategoryDropdown = document.createElement("select");
-  subCategoryDropdown.id = "subCategory";
+
+  var DeployLabelSelect2 = document.createElement("select");
+  DeployLabelSelect2.id = "DeployLabelSelect2";
 
   var subCategoryOptions = ["선택 없음", "서브카테1", "서브카테2", "서브카테3"];
   subCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
     option.text = optionText;
-    subCategoryDropdown.appendChild(option);
+    DeployLabelSelect2.appendChild(option);
+    applyStyles(DeployLabelSelect2, selectBoxStyle);
   });
 
-  var memoLabel = document.createElement("label");
-  labelText = document.createTextNode("메모:");
-  memoLabel.appendChild(labelText);
+  var DeployLabel3 = document.createElement("label");
+  labelText = document.createTextNode("메모");
+  DeployLabel3.appendChild(labelText);
+  applyStyles(DeployLabel3, Roboto16Style);
 
-  var memoInput = document.createElement("input");
-  memoInput.type = "text";
-  memoInput.id = "memo";
+  var DeployInput1 = document.createElement("textarea");
+  DeployInput1.id = "DeployInput1";
+
+  applyStyles(DeployInput1, textareaStyle);
 
   // 모달에 요소 추가
-  modal.appendChild(mainCategoryLabel);
+  modal.appendChild(DeployLabel1);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(mainCategoryDropdown);
+  modal.appendChild(DeployLabelSelect1);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(subCategoryLabel);
+  modal.appendChild(DeployLabel2);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(subCategoryDropdown);
+  modal.appendChild(DeployLabelSelect2);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(memoLabel);
+  modal.appendChild(DeployLabel3);
   modal.appendChild(mxUtils.br(div));
-  modal.appendChild(memoInput);
+  modal.appendChild(DeployInput1);
   modal.appendChild(mxUtils.br(div));
 
   return modal;
