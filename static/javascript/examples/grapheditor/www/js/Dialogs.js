@@ -2273,6 +2273,7 @@ var LayersWindow = function(editorUi, x, y, w, h)
 			mxEvent.addListener(ldiv, 'dragend', function(evt)
 			{
 				if (dragSource != null && dropIndex != null)
+				if (dragSource != null && dropIndex != null)
 				{
 					graph.addCell(child, graph.model.root, dropIndex);
 				}
