@@ -3,8 +3,9 @@ let MxCellFormMapper = {};
 let mapperList = {
   "Image-Data": {
     type: "Image-Data",
-    data: "",
-    path: "",
+    subcat1 : "",
+    subcat2 : "",
+    memo : ""
   },
   "Sensor-Data": {
     type: "Sensor-Data",
@@ -41,20 +42,20 @@ function mxCellType(cellId, cellType) {
   MxCellMapper[cellId] = mapper;
 }
 
-function mxCellForm(cellType, mapperData) {
+function mxCellForm(cellType, mapperData,cellId) {
   // 생성된 셀 폼 생성
   if (cellType == "Image-Data") {
-    return ImageData(mapperData);
+          return ImageData(mapperData,cellId);
   } else if (cellType == "Sensor-Data") {
-    return SenserData(mapperData);
+    return SenserData(mapperData,cellId);
   } else if (cellType == "KeyPoint-Data") {
-    return KeyPointData(mapperData);
+    return KeyPointData(mapperData,cellId);
   } else if (cellType == "Object-Detection") {
-    return ObjectDetection(mapperData);
+    return ObjectDetection(mapperData,cellId);
   } else if (cellType == "Classification") {
-    return Classification(mapperData);
+    return Classification(mapperData,cellId);
   } else if (cellType == "Deploy") {
-    return Deploy(mapperData);
+    return Deploy(mapperData,cellId);
   }
 }
 

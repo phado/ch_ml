@@ -1909,17 +1909,65 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			applyStyles(cancelBtn, cancelButtonStyle);
 
 			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){
-				var image1Select = document.getElementById('ImageDataSelect1');
-				var image1SelectedValue = image1Select.value;
+				if(cell.value =='Image-Data'){
+					var image1Select = document.getElementById('ImageDataSelect1');
+					var image1SelectedValue = image1Select.value;
 
-// ImageDataSelect2의 선택된 값 가져오기
-				var image2Select = document.getElementById('ImageDataSelect2');
-				var image2SelectedValue = image2Select.value;
+					var image2Select = document.getElementById('ImageDataSelect2');
+					var image2SelectedValue = image2Select.value;
 
-// ImageDataInput1의 textarea 값 가져오기
-				var image1Input = document.getElementById('ImageDataInput1');
-				var image1InputValue = image1Input.value;
+					var image1Input = document.getElementById('ImageDataInput1');
+					var image1InputValue = image1Input.value;
 
+					console.log(image1SelectedValue)
+					console.log(image2SelectedValue)
+					console.log(image1InputValue)
+				}
+
+				if(cell.value =='Sensor-Data'){
+					var image1Select = document.getElementById('SenserDataSelect1');
+					var image1SelectedValue = image1Select.value;
+
+					var image2Select = document.getElementById('SenserDataSelect2');
+					var image2SelectedValue = image2Select.value;
+
+					var image1Input = document.getElementById('SenserDataInput1');
+					var image1InputValue = image1Input.value;
+
+					console.log(image1SelectedValue)
+					console.log(image2SelectedValue)
+					console.log(image1InputValue)
+				}
+
+				if(cell.value =='KeyPoint-Data'){
+					var image1Select = document.getElementById('KeyPointDataSelect1');
+					var image1SelectedValue = image1Select.value;
+
+					var image2Select = document.getElementById('KeyPointDataSelect2');
+					var image2SelectedValue = image2Select.value;
+
+					var image1Input = document.getElementById('KeyPointDataInput1');
+					var image1InputValue = image1Input.value;
+
+					console.log(image1SelectedValue)
+					console.log(image2SelectedValue)
+					console.log(image1InputValue)
+				}
+
+				if(cell.value =='KeyPoint-Data'){
+					var image1Select = document.getElementById('KeyPointDataSelect1');
+					var image1SelectedValue = image1Select.value;
+
+					var image2Select = document.getElementById('KeyPointDataSelect2');
+					var image2SelectedValue = image2Select.value;
+
+					var image1Input = document.getElementById('KeyPointDataInput1');
+					var image1InputValue = image1Input.value;
+
+					console.log(image1SelectedValue)
+					console.log(image2SelectedValue)
+					console.log(image1InputValue)
+				}
 			});
 			applyBtn.className = 'geBtn gePrimaryBtn';
 			applyStyles(applyBtn, okButtonStyle);
@@ -1933,7 +1981,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			}
 			var cellData = MxCellMapper[cell.id]
 			//kpst 맵퍼에서 데이터 저장 및 가져오기
-			div.appendChild(mxCellForm(cellData['type'],cellData))
+			div.appendChild(mxCellForm(cellData['type'],cellData, cell.id))
 
 			div.appendChild(buttons)
 
