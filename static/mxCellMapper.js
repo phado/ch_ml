@@ -1,5 +1,7 @@
 let MxCellFormMapper = {};
 
+const arrowMapper = {"id" : -1 , 'source' : -1 , 'target' : -1 }
+
 let mapperList = {
   "Image-Data": {
     type: "Image-Data",
@@ -522,4 +524,67 @@ function Deploy(mapperData) {
 
 function mapperEditApply() {
   console.log("apply");
+}
+
+
+function cellDataBinder(cellValue){
+  if(cellValue =='Image-Data'){
+      var image1Select = document.getElementById('ImageDataSelect1');
+      var image1SelectedValue = image1Select.value;
+
+      var image2Select = document.getElementById('ImageDataSelect2');
+      var image2SelectedValue = image2Select.value;
+
+      var image1Input = document.getElementById('ImageDataInput1');
+      var image1InputValue = image1Input.value;
+
+      console.log(image1SelectedValue)
+      console.log(image2SelectedValue)
+      console.log(image1InputValue)
+  }
+
+  if(cellValue =='Sensor-Data'){
+      var image1Select = document.getElementById('SenserDataSelect1');
+      var image1SelectedValue = image1Select.value;
+
+      var image2Select = document.getElementById('SenserDataSelect2');
+      var image2SelectedValue = image2Select.value;
+
+      var image1Input = document.getElementById('SenserDataInput1');
+      var image1InputValue = image1Input.value;
+
+      console.log(image1SelectedValue)
+      console.log(image2SelectedValue)
+      console.log(image1InputValue)
+  }
+
+  if(cellValue =='KeyPoint-Data'){
+      var image1Select = document.getElementById('KeyPointDataSelect1');
+      var image1SelectedValue = image1Select.value;
+
+      var image2Select = document.getElementById('KeyPointDataSelect2');
+      var image2SelectedValue = image2Select.value;
+
+      var image1Input = document.getElementById('KeyPointDataInput1');
+      var image1InputValue = image1Input.value;
+
+      console.log(image1SelectedValue)
+      console.log(image2SelectedValue)
+      console.log(image1InputValue)
+  }
+
+  if(cellValue =='KeyPoint-Data'){
+      var image1Select = document.getElementById('KeyPointDataSelect1');
+      var image1SelectedValue = image1Select.value;
+
+      var image2Select = document.getElementById('KeyPointDataSelect2');
+      var image2SelectedValue = image2Select.value;
+
+      var image1Input = document.getElementById('KeyPointDataInput1');
+      var image1InputValue = image1Input.value;
+
+      console.log(image1SelectedValue)
+      console.log(image2SelectedValue)
+      console.log(image1InputValue)
+  }
 }
