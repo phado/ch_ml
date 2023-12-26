@@ -37,20 +37,20 @@ function mxCellType(cellId, cellType) {
   MxCellMapper[cellId] = mapper;
 }
 
-function mxCellForm(cellType, mapperData) {
+function mxCellForm(cellType, mapperData,cellId) {
   // 생성된 셀 폼 생성
   if (cellType == "Image-Data") {
-    return ImageData(mapperData);
+    return ImageData(mapperData,cellId);
   } else if (cellType == "Sensor-Data") {
-    return SenserData(mapperData);
+    return SenserData(mapperData,cellId);
   } else if (cellType == "KeyPoint-Data") {
-    return KeyPointData(mapperData);
+    return KeyPointData(mapperData,cellId);
   } else if (cellType == "Object-Detection") {
-    return ObjectDetection(mapperData);
+    return ObjectDetection(mapperData,cellId);
   } else if (cellType == "Classification") {
-    return Classification(mapperData);
+    return Classification(mapperData,cellId);
   } else if (cellType == "Deploy") {
-    return Deploy(mapperData);
+    return Deploy(mapperData,cellId);
   }
 }
 
@@ -103,7 +103,10 @@ var smallInputBoxStyle = {
   borderRadius: "5px",
   border: "1px solid #9B9B9B",
 };
-function ImageData(mapperData) {
+function ImageData(mapperData,cellId) {
+
+  console.log(mapperData)
+  console.log(cellId)
   var div = document.createElement("div");
 
   var modal = document.createElement("div");
@@ -159,6 +162,16 @@ function ImageData(mapperData) {
 
   applyStyles(ImageDataInput1, textareaStyle);
 
+  //값 불러오는 부분
+  if (mapperData.data && mapperData.data.image1SelectedValue !== undefined) {
+    ImageDataSelect1.value = mapperData.data.image1SelectedValue;
+  }
+  if (mapperData.data && mapperData.data.image2SelectedValue !== undefined) {
+    ImageDataSelect2.value = mapperData.data.image2SelectedValue;
+  }
+  if (mapperData.data && mapperData.data.image1InputValue !== undefined) {
+    ImageDataInput1.value = mapperData.data.image1InputValue;
+  }
   // 모달에 요소 추가
   modal.appendChild(ImageDataLabel1);
   modal.appendChild(mxUtils.br(div));
@@ -176,7 +189,7 @@ function ImageData(mapperData) {
   return modal;
 }
 
-function SenserData(mapperData) {
+function SenserData(mapperData,cellId) {
   var div = document.createElement("div");
 
   var modal = document.createElement("div");
@@ -232,6 +245,17 @@ function SenserData(mapperData) {
 
   applyStyles(SenserDataInput1, textareaStyle);
 
+  //값 불러오는 부분
+  if (mapperData.data && mapperData.data.sensor1SelectedValue !== undefined) {
+    SenserDataSelect1.value = mapperData.data.sensor1SelectedValue;
+  }
+  if (mapperData.data && mapperData.data.sensor2SelectedValue !== undefined) {
+    SenserDataSelect2.value = mapperData.data.sensor2SelectedValue;
+  }
+  if (mapperData.data && mapperData.data.sensor1InputValue !== undefined) {
+    SenserDataInput1.value = mapperData.data.sensor1InputValue;
+  }
+
   // 모달에 요소 추가
   modal.appendChild(SenserDataLabel1);
   modal.appendChild(mxUtils.br(div));
@@ -249,7 +273,7 @@ function SenserData(mapperData) {
   return modal;
 }
 
-function KeyPointData(mapperData) {
+function KeyPointData(mapperData,cellId) {
   var div = document.createElement("div");
   var div = document.createElement("div");
 
@@ -306,6 +330,17 @@ function KeyPointData(mapperData) {
 
   applyStyles(KeyPointDataInput1, textareaStyle);
 
+  //값 불러오는 부분
+  if (mapperData.data && mapperData.data.keypoint1SelectedValue !== undefined) {
+    KeyPointDataSelect1.value = mapperData.data.keypoint1SelectedValue;
+  }
+  if (mapperData.data && mapperData.data.keypoint2SelectedValue !== undefined) {
+    KeyPointDataSelect2.value = mapperData.data.keypoint2SelectedValue;
+  }
+  if (mapperData.data && mapperData.data.keypoint1InputValue !== undefined) {
+    KeyPointDataInput1.value = mapperData.data.keypoint1InputValue;
+  }
+
   // 모달에 요소 추가
   modal.appendChild(KeyPointDataLabel1);
   modal.appendChild(mxUtils.br(div));
@@ -323,7 +358,7 @@ function KeyPointData(mapperData) {
   return modal;
 }
 
-function ObjectDetection(mapperData) {
+function ObjectDetection(mapperData,cellId) {
   var div = document.createElement("div");
 
   var modal = document.createElement("div");
@@ -382,7 +417,7 @@ function createInputArea(id, width, start, end) {
   return inputArea;
 }
 
-function Classification(mapperData) {var div = document.createElement("div");
+function Classification(mapperData,cellId) {var div = document.createElement("div");
 
   var modal = document.createElement("div");
   modal.className = "dataModal";
@@ -425,6 +460,17 @@ function Classification(mapperData) {var div = document.createElement("div");
   ClassificationInput1.type = "text";
   ClassificationInput1.id = "ClassificationInput1";
 
+  //값 불러오는 부분
+  if (mapperData.data && mapperData.data.keypoint1SelectedValue !== undefined) {
+    ClassificationSelect1.value = mapperData.data.keypoint1SelectedValue;
+  }
+  if (mapperData.data && mapperData.data.keypoint2SelectedValue !== undefined) {
+    ClassificationSelect2.value = mapperData.data.keypoint2SelectedValue;
+  }
+  if (mapperData.data && mapperData.data.keypoint1InputValue !== undefined) {
+    ClassificationInput1.value = mapperData.data.keypoint1InputValue;
+  }
+
   // 모달에 요소 추가
   modal.appendChild(ClassificationLabel1);
   modal.appendChild(mxUtils.br(div));
@@ -442,7 +488,7 @@ function Classification(mapperData) {var div = document.createElement("div");
   return modal;
 }
 
-function Deploy(mapperData) {
+function Deploy(mapperData,cellId) {
   var div = document.createElement("div");
 
   var modal = document.createElement("div");
@@ -498,6 +544,17 @@ function Deploy(mapperData) {
 
   applyStyles(DeployInput1, textareaStyle);
 
+  //값 불러오는 부분
+  if (mapperData.data && mapperData.data.Deploy1SelectedValue !== undefined) {
+    DeployLabelSelect1.value = mapperData.data.Deploy1SelectedValue;
+  }
+  if (mapperData.data && mapperData.data.Deploy2SelectedValue !== undefined) {
+    DeployLabelSelect2.value = mapperData.data.Deploy2SelectedValue;
+  }
+  if (mapperData.data && mapperData.data.Deploy1InputValue !== undefined) {
+    DeployInput1.value = mapperData.data.Deploy1InputValue;
+  }
+
   // 모달에 요소 추가
   modal.appendChild(DeployLabel1);
   modal.appendChild(mxUtils.br(div));
@@ -539,47 +596,119 @@ function cellDataBinder(cellValue,cellId){
   }
 
   if(cellValue =='Sensor-Data'){
-      var image1Select = document.getElementById('SenserDataSelect1');
-      var image1SelectedValue = image1Select.value;
+      var sensor1Select = document.getElementById('SenserDataSelect1');
+      var sensor1SelectedValue = sensor1Select.value;
 
-      var image2Select = document.getElementById('SenserDataSelect2');
-      var image2SelectedValue = image2Select.value;
+      var sensor2Select = document.getElementById('SenserDataSelect2');
+      var sensor2SelectedValue = sensor2Select.value;
 
-      var image1Input = document.getElementById('SenserDataInput1');
-      var image1InputValue = image1Input.value;
+      var sensor1Input = document.getElementById('SenserDataInput1');
+      var sensor1InputValue = sensor1Input.value;
 
-      console.log(image1SelectedValue)
-      console.log(image2SelectedValue)
-      console.log(image1InputValue)
+      MxCellMapper[cellId].data = {
+        sensor1SelectedValue: sensor1SelectedValue,
+        sensor2SelectedValue: sensor2SelectedValue,
+        sensor1InputValue: sensor1InputValue
+      };
   }
 
   if(cellValue =='KeyPoint-Data'){
-      var image1Select = document.getElementById('KeyPointDataSelect1');
-      var image1SelectedValue = image1Select.value;
+      var keypoint1Select = document.getElementById('KeyPointDataSelect1');
+      var keypoint1SelectedValue = keypoint1Select.value;
 
-      var image2Select = document.getElementById('KeyPointDataSelect2');
-      var image2SelectedValue = image2Select.value;
+      var keypoint2Select = document.getElementById('KeyPointDataSelect2');
+      var keypoint2SelectedValue = keypoint2Select.value;
 
-      var image1Input = document.getElementById('KeyPointDataInput1');
-      var image1InputValue = image1Input.value;
+      var keypoint1Input = document.getElementById('KeyPointDataInput1');
+      var keypoint1InputValue = keypoint1Input.value;
 
-      console.log(image1SelectedValue)
-      console.log(image2SelectedValue)
-      console.log(image1InputValue)
+      MxCellMapper[cellId].data = {
+        keypoint1SelectedValue: keypoint1SelectedValue,
+        keypoint2SelectedValue: keypoint2SelectedValue,
+        keypoint1InputValue: keypoint1InputValue
+      };
   }
 
-  if(cellValue =='KeyPoint-Data'){
-      var image1Select = document.getElementById('KeyPointDataSelect1');
-      var image1SelectedValue = image1Select.value;
+  if(cellValue =='Object-Detection'){
+    var Object1Input = document.getElementById('weights');
+    var Object1InputValue = Object1Input.value;
 
-      var image2Select = document.getElementById('KeyPointDataSelect2');
-      var image2SelectedValue = image2Select.value;
+    var Object2Input = document.getElementById('cfg');
+    var Object2InputValue = Object2Input.value;
 
-      var image1Input = document.getElementById('KeyPointDataInput1');
-      var image1InputValue = image1Input.value;
+    var Object3Input = document.getElementById('data-class');
+    var Object3InputValue = Object3Input.value;
 
-      console.log(image1SelectedValue)
-      console.log(image2SelectedValue)
-      console.log(image1InputValue)
+    var Object4Input = document.getElementById('hyp');
+    var Object4InputValue = Object4Input.value;
+
+    var Object5Input = document.getElementById('epochs');
+    var Object5InputValue = Object5Input.value;
+
+    var Object6Input = document.getElementById('batch-size');
+    var Object6InputValue = Object6Input.value;
+
+    var Object7Input = document.getElementById('imgsz');
+    var Object7InputValue = Object7Input.value;
+
+    var Object8Input = document.getElementById('resume');
+    var Object8InputValue = Object8Input.value;
+
+    var Object9Input = document.getElementById('optimizer');
+    var Object9InputValue = Object9Input.value;
+
+    var Object10Input = document.getElementById('label-smoothing');
+    var Object10InputValue = Object10Input.value;
+
+    var Object11Input = document.getElementById('freeze');
+    var Object11InputValue = Object11Input.value;
+
+    MxCellMapper[cellId].data = {
+      weights: Object1InputValue,
+      cfg: Object2InputValue,
+      dataclass: Object3InputValue,
+      hyp: Object4InputValue,
+      epochs: Object5InputValue,
+      batchsize: Object6InputValue,
+      imgsz: Object7InputValue,
+      resume: Object8InputValue,
+      optimizer: Object9InputValue,
+      labelsmoothing: Object10InputValue,
+      freeze: Object11InputValue,
+    };
+  }
+
+  if(cellValue =='Classification'){
+    // var Object1Select = document.getElementById('ObjectDataSelect1');
+    // var Object1SelectedValue = Object1Select.value;
+    //
+    // var Object2Select = document.getElementById('ObjectDataSelect2');
+    // var Object2SelectedValue = Object2Select.value;
+    //
+    // var Object1Input = document.getElementById('ObjectDataInput1');
+    // var Object1InputValue = Object1Input.value;
+    //
+    // MxCellMapper[cellId].data = {
+    //   Object1SelectedValue: Object1SelectedValue,
+    //   Object2SelectedValue: Object2SelectedValue,
+    //   Object1InputValue: Object1InputValue
+    // };
+  }
+
+  if(cellValue =='Deploy'){
+    var Deploy1Select = document.getElementById('DeployLabelSelect1');
+    var Deploy1SelectedValue = Deploy1Select.value;
+
+    var Deploy2Select = document.getElementById('DeployLabelSelect2');
+    var Deploy2SelectedValue = Deploy2Select.value;
+
+    var Deploy1Input = document.getElementById('DeployInput1');
+    var Deploy1InputValue = Deploy1Input.value;
+
+    MxCellMapper[cellId].data = {
+      Deploy1SelectedValue: Deploy1SelectedValue,
+      Deploy2SelectedValue: Deploy2SelectedValue,
+      Deploy1InputValue: Deploy1InputValue
+    };
   }
 }
