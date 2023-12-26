@@ -10,27 +10,22 @@ let mapperList = {
   "Sensor-Data": {
     type: "Sensor-Data",
     data: "",
-    path: "",
   },
   "KeyPoint-Data": {
     type: "KeyPoint-Data",
     data: "",
-    path: "",
   },
   "Object-Detection": {
     type: "Object-Detection",
     data: "",
-    path: "",
   },
   "Classification": {
     type: "Classification",
     data: "",
-    path: "",
   },
   "Deploy": {
     type: "Deploy",
     data: "",
-    path: "",
   },
 };
 
@@ -525,7 +520,7 @@ function mapperEditApply() {
 }
 
 
-function cellDataBinder(cellValue){
+function cellDataBinder(cellValue,cellId){
   if(cellValue =='Image-Data'){
       var image1Select = document.getElementById('ImageDataSelect1');
       var image1SelectedValue = image1Select.value;
@@ -536,9 +531,11 @@ function cellDataBinder(cellValue){
       var image1Input = document.getElementById('ImageDataInput1');
       var image1InputValue = image1Input.value;
 
-      console.log(image1SelectedValue)
-      console.log(image2SelectedValue)
-      console.log(image1InputValue)
+      MxCellMapper[cellId].data = {
+        image1SelectedValue: image1SelectedValue,
+        image2SelectedValue: image2SelectedValue,
+        image1InputValue: image1InputValue
+      };
   }
 
   if(cellValue =='Sensor-Data'){

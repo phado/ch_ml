@@ -1921,7 +1921,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			applyStyles(cancelBtn, cancelButtonStyle);
 
 			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){ //
-				cellDataBinder(cell.class) // 민수 mxCellMapper.js 로 임시 이사 보냈습니닷, vlaue 대신 클래스 이름 보냄요
+				cellDataBinder(cell.class, cell.id) // 민수 mxCellMapper.js 로 임시 이사 보냈습니닷, vlaue 대신 클래스 이름 보냄요
 			});
 			applyBtn.className = 'geBtn gePrimaryBtn';
 			applyStyles(applyBtn, okButtonStyle);
@@ -1948,10 +1948,10 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		btn.style.width = '202px';
 		btn.style.marginBottom = '2px';
 		// console.log(this.format.getSelectionState().style.shape)  화살표는 connector 로 뜬다
-		if(this.format.getSelectionState().style.shape != 'connector'){
-			div.appendChild(btn);
+			if(this.format.getSelectionState().style.shape != 'connector'){
+				div.appendChild(btn);
 
-		}
+			}
 		}
 
 		count++;
