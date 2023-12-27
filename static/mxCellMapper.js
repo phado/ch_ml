@@ -104,9 +104,6 @@ var smallInputBoxStyle = {
   border: "1px solid #9B9B9B",
 };
 function ImageData(mapperData,cellId) {
-
-  console.log(mapperData)
-  console.log(cellId)
   var div = document.createElement("div");
 
   var modal = document.createElement("div");
