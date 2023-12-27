@@ -1,0 +1,22 @@
+@font-face {
+    font-family: "RobotoFont";
+    src: url("/static/font/Roboto-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+.main-content{
+    flex: 1;
+    background-color: #f0f0f0;
+    position: relative;
+}
+.rtsp_video{
+    width: 640px;
+    height: 360px;
+    background-color: black;
+ }

@@ -20,22 +20,32 @@ def dataInsertModal():
 
 
 @app.route('/title')
-def title_bar(): 
+def title_bar():
     return render_template('common/title.html')
 
 @app.route('/dataset_tab')
-def dataset_tab (): 
+def dataset_tab ():
     return render_template('tab/dataset.html')
 
 @app.route('/project_tab')
-def project_tab (): 
+def project_tab ():
     return render_template('tab/projectManagement.html')
 
 @app.route('/distribution_tab')
-def distribution_tab (): 
+def distribution_tab ():
     return render_template('tab/distributionManagement.html')
 
+@app.route('/resource_tab1')
+def resource_tab1 ():
+    return render_template('tab/resourceManagement.html')
 
+@app.route('/resource_tab2')
+def resource_tab2 ():
+    return render_template('tab/resourceManagement2.html')
+
+@app.route('/aax_tab')
+def aax_tab ():
+    return render_template('tab/aaxManagement.html')
 
 if __name__ == '__main__':
     app.run()
