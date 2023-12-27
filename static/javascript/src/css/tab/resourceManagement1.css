@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 .rtsp_video{
+    background-color: black;
     width: 640px;
     height: 360px;
-    background-color: black;
  }

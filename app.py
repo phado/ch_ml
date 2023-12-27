@@ -47,5 +47,6 @@ def resource_tab2 ():
 def aax_tab ():
     return render_template('tab/aaxManagement.html')
 
+
 if __name__ == '__main__':
     app.run()
