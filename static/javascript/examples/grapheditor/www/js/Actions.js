@@ -201,10 +201,24 @@ Actions.prototype.init = function()
 	
 	function deleteCells(includeEdges)
 	{
+
+		graph.getSelectionCells().forEach(function(element) {
+			// KPST cell 지우고
+			delete MxCellMapper[element.id]
+			delete MxArrowMapper[[element.id]]
+			// kpst mxArrowMapper 에있는 id -1으로 변경
+			Object.keys(MxArrowMapper).forEach(function(key) {
+			if (MxArrowMapper[key]['target'] == element.id) MxArrowMapper[key]['target'] = -1;
+			if (MxArrowMapper[key]['source'] == element.id) MxArrowMapper[key]['source'] = -1;
+			});
+
+		});
+
 		// Cancels interactive operations
 		graph.escape();
 		var select = graph.deleteCells(graph.getDeletableCells(graph.getSelectionCells()), includeEdges);
-		
+
+
 		if (select != null)
 		{
 			graph.setSelectionCells(select);

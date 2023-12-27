@@ -1591,25 +1591,37 @@ ArrangePanel.prototype.init = function()
 		this.container.appendChild(this.addTable(this.createPanel()));
 	}
 
-	var div = edUI.createDiv('geFormatSection');
-	div.classList.add('info_console');
-	div.style.height = '300px';
-	div.style.width = '200px';
-	div.style.padding = '0px 15px 0px 0px';
-
 	// kpst 셀 선택시 초기 정보 표시
 	var ui = this.editorUi;
 	var graph = ui.editor.graph;
 	var cell = graph.getSelectionCell();
-	//kpst 맵퍼에 데이터 생생 및 불러오가
-	if (MxCellMapper[cell.id] == null){
-		mxCellType(cell.id, cell.class)
+	if (cell.class) { // 화살표는 class가 없음
+		var div = edUI.createDiv('geFormatSection');
+		div.classList.add('info_console');
+		div.style.height = '300px';
+		div.style.width = '200px';
+		div.style.padding = '0px 15px 0px 0px';
+		//kpst 맵퍼에 데이터 생생 및 불러오가
+		if(cell.class != 'noClass'){
+			if (MxCellMapper[cell.id] == null) {
+				mxCellType(cell.id, cell.class)
+			}
+
+			div.textContent += MxCellMapper[cell.id]['type'];
+			this.container.appendChild(div); //KPST 우측 arrange 에서 메뉴바에 정보 창 더하기
+		}
+
+	}else {
+		//화살표 정보 맵핑
+		var arrowId = (cell.id !== undefined && cell.id !== null) ? cell.id : -1;
+		var arrowMxId = (cell.mxObjectId !== undefined && cell.mxObjectId !== null) ? cell.mxObjectId : -1;
+		var arrowSource = (cell.source !== undefined && cell.source !== null) ? cell.source.id : -1;
+		var arrowTarget = (cell.target !== undefined && cell.target !== null) ? cell.target.id : -1;
+
+		var arrowMap = {"id" : arrowId ,'MxObjId' : arrowMxId, "source" : arrowSource , "target" : arrowTarget }
+		console.log(arrowMap) // KPST 연결된 맵퍼 표시
+		MxArrowMapper[arrowId] = arrowMap
 	}
-
-	div.textContent +=  MxCellMapper[cell.id]['type'];
-
-
-	this.container.appendChild(div); //KPST 우측 arrange 에서 메뉴바에 정보 창 더하기
 	this.container.appendChild(this.addGroupOps(this.createPanel()));
 
 
@@ -1849,8 +1861,8 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		{
 			mxUtils.br(div);
 		}
-
-		btn = mxUtils.button('정보 입력', mxUtils.bind(this, function(evt)
+		if (cell.class != 'noClass') { // 이상한 다이어그램 생성시 대처
+				btn = mxUtils.button('정보 입력', mxUtils.bind(this, function(evt)
 		{
 			var ds = mxUtils.getDocumentSize();
 
@@ -1908,18 +1920,8 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			cancelBtn.className = 'geBtn';
 			applyStyles(cancelBtn, cancelButtonStyle);
 
-			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){
-				var image1Select = document.getElementById('ImageDataSelect1');
-				var image1SelectedValue = image1Select.value;
-
-// ImageDataSelect2의 선택된 값 가져오기
-				var image2Select = document.getElementById('ImageDataSelect2');
-				var image2SelectedValue = image2Select.value;
-
-// ImageDataInput1의 textarea 값 가져오기
-				var image1Input = document.getElementById('ImageDataInput1');
-				var image1InputValue = image1Input.value;
-
+			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){ //
+				cellDataBinder(cell.class, cell.id) // 민수 mxCellMapper.js 로 임시 이사 보냈습니닷, vlaue 대신 클래스 이름 보냄요
 			});
 			applyBtn.className = 'geBtn gePrimaryBtn';
 			applyStyles(applyBtn, okButtonStyle);
@@ -1927,25 +1929,30 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			buttons.appendChild(cancelBtn);
 			buttons.appendChild(applyBtn);
 
-			//kpst 맵퍼에 데이터 생생 및 불러오가
-			if (MxCellMapper[cell.id] == null){
-				mxCellType(cell.id, cell.class)
-			}
-			var cellData = MxCellMapper[cell.id]
-			//kpst 맵퍼에서 데이터 저장 및 가져오기
-			div.appendChild(mxCellForm(cellData['type'],cellData))
+				//kpst 맵퍼에 데이터 생생 및 불러오가
+				if (MxCellMapper[cell.id] == null){
+					mxCellType(cell.id, cell.class)
+				}
+				var cellData = MxCellMapper[cell.id]
+				//kpst 맵퍼에서 데이터 저장 및 가져오기
+				div.appendChild(mxCellForm(cellData['type'],cellData, cell.id))
 
-			div.appendChild(buttons)
+				div.appendChild(buttons)
+
 
 			document.body.appendChild(div);
 
 		}));
 		btn.name = 'cellId '+cell.getId();
-
 		btn.setAttribute('title', mxResources.get('clearWaypoints') + ' (' + this.editorUi.actions.get('clearWaypoints').shortcut + ')');
 		btn.style.width = '202px';
 		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
+		// console.log(this.format.getSelectionState().style.shape)  화살표는 connector 로 뜬다
+			if(this.format.getSelectionState().style.shape != 'connector'){
+				div.appendChild(btn);
+
+			}
+		}
 
 		count++;
 
@@ -2707,8 +2714,8 @@ ArrangePanel.prototype.addEdgeGeometry = function(container)
 	span.style.width = '70px';
 	span.style.marginTop = '0px';
 	span.style.fontWeight = 'bold';
-	mxUtils.write(span, 'Start');
-	divs.appendChild(span);
+	// mxUtils.write(span, 'Start');
+	// divs.appendChild(span);
 
 	var xs = this.addUnitInput(divs, 'pt', 84, 44, function()
 	{
@@ -2720,11 +2727,11 @@ ArrangePanel.prototype.addEdgeGeometry = function(container)
 	});
 
 	mxUtils.br(divs);
-	this.addLabel(divs, mxResources.get('left'), 84);
-	this.addLabel(divs, mxResources.get('top'), 20);
-	container.appendChild(divs);
-	this.addKeyHandler(xs, listener);
-	this.addKeyHandler(ys, listener);
+	// this.addLabel(divs, mxResources.get('left'), 84);
+	// this.addLabel(divs, mxResources.get('top'), 20);
+	// container.appendChild(divs);
+	// this.addKeyHandler(xs, listener);
+	// this.addKeyHandler(ys, listener);
 
 	var divt = this.createPanel();
 	divt.style.paddingBottom = '30px';
@@ -2734,8 +2741,8 @@ ArrangePanel.prototype.addEdgeGeometry = function(container)
 	span.style.width = '70px';
 	span.style.marginTop = '0px';
 	span.style.fontWeight = 'bold';
-	mxUtils.write(span, 'End');
-	divt.appendChild(span);
+	// mxUtils.write(span, 'End');
+	// divt.appendChild(span);
 
 	var xt = this.addUnitInput(divt, 'pt', 84, 44, function()
 	{
@@ -2747,11 +2754,11 @@ ArrangePanel.prototype.addEdgeGeometry = function(container)
 	});
 
 	mxUtils.br(divt);
-	this.addLabel(divt, mxResources.get('left'), 84);
-	this.addLabel(divt, mxResources.get('top'), 20);
-	container.appendChild(divt);
-	this.addKeyHandler(xt, listener);
-	this.addKeyHandler(yt, listener);
+	// this.addLabel(divt, mxResources.get('left'), 84);
+	// this.addLabel(divt, mxResources.get('top'), 20);
+	// container.appendChild(divt);
+	// this.addKeyHandler(xt, listener);
+	// this.addKeyHandler(yt, listener);
 
 	var listener = mxUtils.bind(this, function(sender, evt, force)
 	{
