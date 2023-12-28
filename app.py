@@ -308,6 +308,50 @@ def db_train_delete():
     return result_json
 
 
+@app.route('/deploy_model/db_deploy_list', methods=['POST'])
+def db_deploy_list():
+    """
+    배포 화면 리스트 
+    data[i][0] = 서비스 idx
+    data[i][1] = 서비스 이름
+    data[i][2] = 타입
+    data[i][3] = 상태
+    data[i][4] = 생성시간
+    data[i][5] = 수정일
+    """
+    
+    try:
+
+        # result_json = make_response_json([])
+        result_json = db_train_create(mariadb_pool)
+
+    except ValueError as e:
+        print(e)
+        result_json = fail_message_json(result_json)
+
+    return result_json
+
+@app.route('/deploy_model/db_deploy_detail', methods=['POST'])
+def db_deploy_detail():
+    """
+    데이터셋 삭제
+    ds_idx 데이터셋 idx
+    """
+    
+    try:
+        data = request.get_json()
+        svc_idx= data["svc_idx"]
+        # result_json = make_response_json([])
+        result_json = db_train_create(mariadb_pool,svc_idx)
+
+    except ValueError as e:
+        print(e)
+        result_json = fail_message_json(result_json)
+
+    return result_json
+
+
+
 
 
 

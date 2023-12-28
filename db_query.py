@@ -330,6 +330,85 @@ def db_train_delete(mariadb_pool, tr_idx):
         if connection: connection.close()
 
         return json_result
+    
+def db_deploy_list(mariadb_pool):
+    """
+    배포 화면 리스트 
+    data[i][0] = 서비스 idx
+    data[i][1] = 서비스 이름
+    data[i][2] = 타입
+    data[i][3] = 상태
+    data[i][4] = 생성시간
+    data[i][5] = 수정일
+    
+    
+    """
+    try:
+        json_result = make_response_json([])
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+
+        query = f"select ts.svc_idx, ts.svc_name ,tst.svc_type_name ,tss.svc_stat_nm_kr, ts.svc_create_date ,ts.svc_modifiy_date\
+                from tb_service ts\
+                left join tb_svc_state tss on ts.svc_stat_idx  = tss.svc_stat_idx\
+                left join tb_svc_type tst on ts.svc_type_idx = tst.svc_type_idx;"
+                # where ts.company_idx = {company_idx};"
+
+        cursor.execute(query)
+        json_result['data'] = cursor.fetchall()
+        connection.commit()
+
+        json_result = success_message_json(json_result)
+        
+    except Exception as e:
+        print(e)
+        json_result = fail_message_json(json_result)
+
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+        return json_result
+    
+def db_deploy_detail(mariadb_pool, svc_idx):
+    """
+    배포 서비스 상세정보
+    svc_idx
+    data[i][0]서비스 명
+    data[i][1]재해유형 타입
+    data[i][2]재해유형 이름
+    data[i][3]모델 idx
+    data[i][4]모델 이름
+    data[i][5]cctv
+    """
+    try:
+        json_result = make_response_json([])
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+
+        query = f"SELECT ts.svc_name, tst.svc_type_idx, tst.svc_type_name,trm.md_idx ,trm.md_name ,ts.svc_cctv\
+                from tb_service ts\
+                left join tb_svc_type tst on ts.svc_type_idx = tst.svc_type_idx\
+                left join tb_res_model trm on ts.md_idx = trm.md_idx\
+                where ts.svc_idx = {svc_idx} ;"
+
+        cursor.execute(query)
+        json_result['data'] = cursor.fetchall()
+        connection.commit()
+
+        json_result = success_message_json(json_result)
+    except Exception as e:
+        print(e)
+        json_result = fail_message_json(json_result)
+
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+        return json_result
+    
 
 
 if __name__ == "__main__":
@@ -345,6 +424,10 @@ if __name__ == "__main__":
     # print(db_train_create(mariadb_pool,1))
     # print(db_train_create(mariadb_pool,'sample test1','tr_name_airaaa','1','20',"descrition",'1'))
     # print(db_train_delete(mariadb_pool,'3'))
+    # print(db_deploy_list(mariadb_pool))
+    print(db_deploy_detail(mariadb_pool,'0'))
+    
+    
     
     
     
