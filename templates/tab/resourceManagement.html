@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='/javascript/src/css/common/title.css')}}"
+    />
+    <link rel="stylesheet" href="../../static/javascript/src/css/tab/resourceManagement1.css">
+</head>
+<body>
+{% include 'common/title.html' %}
+<div class="main-content">
+    <div class="rtsp_video">
+        <video id="rtspVideo" controls autoplay width="640" height="360"></video>
+    </div>
+</div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const videoElement = document.getElementById('rtspVideo');
+
+        const ws = new WebSocket('ws://localhost:8080'); // WebSocket 서버 주소
+
+        ws.addEventListener('open', () => {
+            // 연결이 열리면 RTSP 스트림의 URL을 전송
+            ws.send('rtsp://119.204.166.131:10002/kpst');
+        });
+
+        const mediaSource = new MediaSource();
+
+        videoElement.src = URL.createObjectURL(mediaSource);
+
+        mediaSource.addEventListener('sourceopen', () => {
+            const sourceBuffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.42E01E"');
+
+            ws.addEventListener('message', (event) => {
+                // WebSocket에서 데이터를 받아 SourceBuffer에 추가
+                sourceBuffer.appendBuffer(new Uint8Array(event.data));
+            });
+        });
+
+        ws.addEventListener('close', () => {
+            console.log('WebSocket 연결이 닫혔습니다.');
+        });
+    });
+</script>
+</html>

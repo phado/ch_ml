@@ -34,7 +34,7 @@ function mxCellType(cellId, cellType) {
   var mapper = mapperList[cellType];
 
   // 생성된 셀 타입으로 맴퍼 생성
-  MxCellMapper[cellId] = mapper;
+  MxCellMapper[cellId] = {...mapper };
 }
 
 function mxCellForm(cellType, mapperData,cellId) {
