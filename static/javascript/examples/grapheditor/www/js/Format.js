@@ -1862,72 +1862,74 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			mxUtils.br(div);
 		}
 		if (cell.class != 'noClass') { // 이상한 다이어그램 생성시 대처
-				btn = mxUtils.button('정보 입력', mxUtils.bind(this, function(evt)
-		{
-			var ds = mxUtils.getDocumentSize();
-
-			ds.height = window.innerHeight;
-
-			var dh = ds.height;
-			var left = Math.max(1, Math.round((ds.width - w - 64) / 2));
-			var top = Math.max(1, Math.round((dh - h - edUI.footerHeight) / 3));
-			w = (document.body != null) ? Math.min(w, document.body.scrollWidth - 64) : w;
-			h = Math.min(h, dh - 64);
-
-
-			var bg = edUI.createDiv('background');
-			bg.id = 'background';
-			bg.style.position = 'absolute';
-			bg.style.background = Dialog.backdropColor;
-			bg.style.height = dh + 'px';
-			bg.style.right = '0px';
-			bg.style.zIndex = this.zIndex - 2;
-
-			mxUtils.setOpacity(bg, 80);
-			var origin = mxUtils.getDocumentScrollOrigin(document);
-			bg.style.left = origin.x + 'px';
-			bg.style.top = origin.y + 'px';
-			left += origin.x;
-			top += origin.y;
-			bg.style.zIndex = this.zIndex - 2;
-			document.body.appendChild(bg);
-
-			var centerX = window.innerWidth / 2;
-			var centerY = window.innerHeight / 2;
-
-			var div = edUI.createDiv('geDialog');
-			// var pos = this.getPosition(50, 50, 50, 50);
-			// div.className = 'test';
-			div.id = 'dataset'
-			var w = 660;
-			var h = 560;
-			div.style.width =  w + 'px';
-			div.style.height = h + 'px';
-			div.style.left =  (centerX - w/2) + 'px';
-			div.style.top = (centerY - h/2) + 'px';
-			// div.style.opacity = '0.8';
-			div.style.zIndex = this.zIndex;
-
-			var buttons = document.createElement('div');
-			buttons.style.textAlign = 'right';
-			buttons.style.whiteSpace = 'nowrap';
-
-			var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+			btn = mxUtils.button('정보 입력', mxUtils.bind(this, function(evt)
 			{
-				document.getElementById('dataset').remove()
-				document.getElementById('background').remove()
-			});
-			cancelBtn.className = 'geBtn';
-			applyStyles(cancelBtn, cancelButtonStyle);
+				var ds = mxUtils.getDocumentSize();
 
-			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){ //
-				cellDataBinder(cell.class, cell.id) // 민수 mxCellMapper.js 로 임시 이사 보냈습니닷, vlaue 대신 클래스 이름 보냄요
-			});
-			applyBtn.className = 'geBtn gePrimaryBtn';
-			applyStyles(applyBtn, okButtonStyle);
+				ds.height = window.innerHeight;
 
-			buttons.appendChild(cancelBtn);
-			buttons.appendChild(applyBtn);
+				var dh = ds.height;
+				var left = Math.max(1, Math.round((ds.width - w - 64) / 2));
+				var top = Math.max(1, Math.round((dh - h - edUI.footerHeight) / 3));
+				w = (document.body != null) ? Math.min(w, document.body.scrollWidth - 64) : w;
+				h = Math.min(h, dh - 64);
+
+
+				var bg = edUI.createDiv('background');
+				bg.id = 'background';
+				bg.style.position = 'absolute';
+				bg.style.background = Dialog.backdropColor;
+				bg.style.height = dh + 'px';
+				bg.style.right = '0px';
+				bg.style.zIndex = this.zIndex - 2;
+
+				mxUtils.setOpacity(bg, 80);
+				var origin = mxUtils.getDocumentScrollOrigin(document);
+				bg.style.left = origin.x + 'px';
+				bg.style.top = origin.y + 'px';
+				left += origin.x;
+				top += origin.y;
+				bg.style.zIndex = this.zIndex - 2;
+				document.body.appendChild(bg);
+
+				var centerX = window.innerWidth / 2;
+				var centerY = window.innerHeight / 2;
+
+				var div = edUI.createDiv('geDialog');
+				// var pos = this.getPosition(50, 50, 50, 50);
+				// div.className = 'test';
+				div.id = 'dataset'
+				var w = 660;
+				var h = 560;
+				div.style.width =  w + 'px';
+				div.style.height = h + 'px';
+				div.style.left =  (centerX - w/2) + 'px';
+				div.style.top = (centerY - h/2) + 'px';
+				// div.style.opacity = '0.8';
+				div.style.zIndex = this.zIndex;
+
+				var buttons = document.createElement('div');
+				buttons.style.textAlign = 'right';
+				buttons.style.whiteSpace = 'nowrap';
+
+				var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+				{
+					document.getElementById('dataset').remove()
+					document.getElementById('background').remove()
+				});
+				cancelBtn.className = 'geBtn';
+				applyStyles(cancelBtn, cancelButtonStyle);
+
+				var applyBtn = mxUtils.button(mxResources.get('apply'), function (){ //
+					cellDataBinder(cell.class, cell.id) // 민수 mxCellMapper.js 로 임시 이사 보냈습니닷, vlaue 대신 클래스 이름 보냄요
+					document.getElementById('dataset').remove()
+					document.getElementById('background').remove()
+				});
+				applyBtn.className = 'geBtn gePrimaryBtn';
+				applyStyles(applyBtn, okButtonStyle);
+
+				buttons.appendChild(applyBtn);
+				buttons.appendChild(cancelBtn);
 
 				//kpst 맵퍼에 데이터 생생 및 불러오가
 				if (MxCellMapper[cell.id] == null){
@@ -1940,9 +1942,9 @@ ArrangePanel.prototype.addGroupOps = function(div)
 				div.appendChild(buttons)
 
 
-			document.body.appendChild(div);
-
-		}));
+				document.body.appendChild(div);
+			}
+		));
 		btn.name = 'cellId '+cell.getId();
 		btn.setAttribute('title', mxResources.get('clearWaypoints') + ' (' + this.editorUi.actions.get('clearWaypoints').shortcut + ')');
 		btn.style.width = '202px';

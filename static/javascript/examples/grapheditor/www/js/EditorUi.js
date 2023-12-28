@@ -3620,7 +3620,7 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 	
 	if (this.toolbar != null)
 	{
-		this.toolbarContainer.style.top = this.menubarHeight + 'px';
+		this.toolbarContainer.style.top = this.menubarHeight + 84 + 'px';
 		this.toolbarContainer.style.height = this.toolbarHeight + 'px';
 		tmp += this.toolbarHeight;
 	}
@@ -3642,16 +3642,16 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 	}
 	
 	var fw = (this.format != null) ? this.formatWidth : 0;
-	this.sidebarContainer.style.top = tmp + 'px';
+	this.sidebarContainer.style.top = tmp + 84 +'px'; // 좌측 사이드바 조절
 	this.sidebarContainer.style.width = effHsplitPosition + 'px';
-	this.formatContainer.style.top = tmp + 'px';
+	this.formatContainer.style.top = tmp + 84 +'px'; // 우측 사이드바 조절
 	this.formatContainer.style.width = fw + 'px';
 	this.formatContainer.style.display = (this.format != null) ? '' : 'none';
 	
 	var diagContOffset = this.getDiagramContainerOffset();
 	var contLeft = (this.hsplit.parentNode != null) ? (effHsplitPosition + this.splitSize) : 0;
-	this.diagramContainer.style.left =  (contLeft + diagContOffset.x) + 'px';
-	this.diagramContainer.style.top = (tmp + diagContOffset.y) + 'px';
+	this.diagramContainer.style.left =  (contLeft + diagContOffset.x) + 'px'; //캔버스 조절
+	this.diagramContainer.style.top = (tmp + diagContOffset.y) + 84 + 'px';
 	this.footerContainer.style.height = this.footerHeight + 'px';
 	this.hsplit.style.top = this.sidebarContainer.style.top;
 	this.hsplit.style.bottom = (this.footerHeight + off) + 'px';
@@ -3735,7 +3735,7 @@ EditorUi.prototype.createDivs = function()
 	this.hsplit.setAttribute('title', mxResources.get('collapseExpand'));
 
 	// Sets static style for containers
-	this.menubarContainer.style.top = '0px';
+	this.menubarContainer.style.top = '84px';
 	this.menubarContainer.style.left = '0px';
 	this.menubarContainer.style.right = '0px';
 	this.toolbarContainer.style.left = '0px';
