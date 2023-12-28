@@ -10,16 +10,9 @@ body {
     height: 100vh;
     margin: 0;
 }
-.main-content{
+.main-content {
     flex: 1;
     background-color: #f0f0f0;
     position: relative;
-}
-.rtsp_video{
-    background-color: black;
-    height: 100%;
     overflow: hidden;
- }
-#rtspVideo{
-    height: 100%;
 }

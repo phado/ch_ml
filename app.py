@@ -132,26 +132,26 @@ def get_ds_list():
     return result_json
 
 
-@app.route('/dataset/db_ds_get_detail', methods=['POST'])
-def db_ds_get_detail():
+@app.route('/dataset/db_ds_get_detail', methods=['GET', 'POST'])
+def db_dataset_get_detail():
     """
     데이터셋 상세정보 조회
     ds_idx
     데이터셋 idx
-    data[i][0] = 데이터셋 인덱스 
+    data[i][0] = 데이터셋 인덱스
     data[i][1] = 타입(ex: [화재,끼임] )
     data[i][2] = 생성 시간
     data[i][3] = 수정 시간
     data[i][4] = 다운로드 시간
     data[i][5] = 설명
     """
-    
+
     try:
         data = request.get_json()
         ds_idx = data["ds_idx"]
-      
+
         # result_json = make_response_json([])
-        result_json = db_ds_create(mariadb_pool,ds_idx)
+        result_json = db_ds_get_detail(mariadb_pool,ds_idx)
 
     except ValueError as e:
         print(e)
@@ -159,17 +159,18 @@ def db_ds_get_detail():
 
     return result_json
 
+
 @app.route('/dataset/db_ds_create', methods=['POST'])
-def db_ds_create():
+def db_dataset_create():
     """
     데이터셋 생성
     ds_name 데이터셋 이름
     ds_path 데이터셋 경로[]
+    ds_type_idx 데이터 타입
     ds_description 데이터셋 설명
     company_idx 실증 기업명
-    ds_type_idx 데이터 타입
     """
-    
+
     try:
         data = request.get_json()
         ds_name = data["ds_name"]
@@ -185,6 +186,7 @@ def db_ds_create():
         result_json = fail_message_json(result_json)
 
     return result_json
+
 
 @app.route('/dataset/db_ds_delete', methods=['POST'])
 def db_ds_delete():
