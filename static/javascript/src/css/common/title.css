@@ -29,13 +29,14 @@ header {
 }
 
 .title-logo {
-  top: 24px;
-  left: 60px;
-  width: 175px;
+  top: 25px;
+  left: 10px;
+  width: 300px;
   height: 42px;
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 600;
   line-height: 42px;
+  text-align: center;
 }
 
 .title-tab {
@@ -78,7 +79,7 @@ header {
 .resource-text{
   top: 36px;
   left: 928px;
-  width: 71px;
+  width: 82px;
 }
 
 .resource-text2{
@@ -93,9 +94,9 @@ header {
   width: 71px;
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1560px) {
   .username-img {
-    display: none; /* 500px 미만일 때 숨김 처리 */
+    display: none;
   }
 }
 

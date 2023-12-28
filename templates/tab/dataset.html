@@ -16,21 +16,28 @@
       type="text/javascript"
       src="{{ url_for('static', filename='/javascript/src/js/tab/dataset.js') }}"
     ></script>
+
+    <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='/javascript/src/js/tab/commonUse.js') }}"
+    ></script>
     <link rel="stylesheet" href="../../static/javascript/src/css/tab/dataset.css">
+    <script src="../../static/javascript/src/js/tab/dataset.js"></script>
   </head>
   <body>
     {% include 'common/title.html' %}
     <div class="main-content">
       <div class="search-content">
         <div class="dropdown-box">
-          <select>
-            <option value="option1">전체</option>
-            <option value="option2">데이터셋명</option>
-            <option value="option3">타입</option>
-          </select>
+          <div class="select-text">전체</div>
+<!--          <select>-->
+<!--            <option value="option1">전체</option>-->
+<!--            <option value="option2">데이터셋명</option>-->
+<!--            <option value="option3">타입</option>-->
+<!--          </select>-->
         </div>
         <div class="search-inputbox"></div>
-        <button class="search-button">조회</button>
+        <button class="search-button" >조회</button>
       </div>
 
       <div class="data-table-content">
@@ -68,243 +75,48 @@
               </th>
             </tr>
           </thead>
-          <tbody>
-        {% for _ in range(10) %}
-            <tr>
-              <td class="data-cell">
-                <img
-                  style="margin-left: 24px; margin-right: 16px"
-                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
-                  alt="Image"
-                />dataset name
-              </td>
-              <td class="data-cell center">type</td>
-              <td class="data-cell center">dataset</td>
-              <td class="data-cell center">last modify date</td>
-              <td class="data-cell center">download count</td>
-              <td class="data-cell center">
-                <img
-                  onclick=" detailDataset() "
-                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"
-                  alt="Image"
-                />
-              </td>
-              <td class="data-cell center">
-                <img
-                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"
-                  alt="Image"
-                />
-              </td>
-
-              <td class="data-cell center">
-                <img
-                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"
-                  alt="Image"
-                />
-              </td>
-              <td class="data-cell center">
-                <img
-                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"
-                  alt="Image"
-                />
-              </td>
-            </tr>
-            {% endfor %}
+          <tbody  id="datasetTableBody">
+<!--        {% for _ in range(10) %}-->
 <!--            <tr>-->
 <!--              <td class="data-cell">-->
 <!--                <img-->
 <!--                  style="margin-left: 24px; margin-right: 16px"-->
 <!--                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"-->
 <!--                  alt="Image"-->
-<!--                />금진_끼임-->
+<!--                />dataset name-->
 <!--              </td>-->
-<!--              <td class="data-cell">끼임</td>-->
-<!--              <td class="data-cell">yolov7</td>-->
-<!--              <td class="data-cell">2023-11-30</td>-->
-<!--              <td class="data-cell">0</td>-->
-<!--              <td class="data-cell">-->
+<!--              <td class="data-cell center">type</td>-->
+<!--              <td class="data-cell center">dataset</td>-->
+<!--              <td class="data-cell center">last modify date</td>-->
+<!--              <td class="data-cell center">download count</td>-->
+<!--              <td class="data-cell center">-->
 <!--                <img-->
 <!--                  onclick=" detailDataset() "-->
 <!--                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"-->
 <!--                  alt="Image"-->
 <!--                />-->
 <!--              </td>-->
-<!--              <td class="data-cell">-->
+<!--              <td class="data-cell center">-->
 <!--                <img-->
 <!--                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"-->
 <!--                  alt="Image"-->
 <!--                />-->
 <!--              </td>-->
 
-<!--              <td class="data-cell">-->
+<!--              <td class="data-cell center">-->
 <!--                <img-->
 <!--                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"-->
 <!--                  alt="Image"-->
 <!--                />-->
 <!--              </td>-->
-<!--              <td class="data-cell">-->
+<!--              <td class="data-cell center">-->
 <!--                <img-->
 <!--                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"-->
 <!--                  alt="Image"-->
 <!--                />-->
 <!--              </td>-->
 <!--            </tr>-->
-<!--            <tr>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  style="margin-left: 24px; margin-right: 16px"-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />금진_낙하-->
-<!--              </td>-->
-<!--              <td class="data-cell">낙하</td>-->
-<!--              <td class="data-cell">yolov7</td>-->
-<!--              <td class="data-cell">2023-11-30</td>-->
-<!--              <td class="data-cell">0</td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  onclick=" detailDataset() "-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  style="margin-left: 24px; margin-right: 16px"-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />금진_충돌-->
-<!--              </td>-->
-<!--              <td class="data-cell">충돌</td>-->
-<!--              <td class="data-cell">yolov7</td>-->
-<!--              <td class="data-cell">2023-11-30</td>-->
-<!--              <td class="data-cell">0</td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  onclick=" detailDataset() "-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  style="margin-left: 24px; margin-right: 16px"-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />리파코_화재-->
-<!--              </td>-->
-<!--              <td class="data-cell">화재</td>-->
-<!--              <td class="data-cell">yolov7</td>-->
-<!--              <td class="data-cell">2023-11-30</td>-->
-<!--              <td class="data-cell">0</td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  onclick=" detailDataset() "-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  style="margin-left: 24px; margin-right: 16px"-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />리파코_쓰러짐-->
-<!--              </td>-->
-<!--              <td class="data-cell">쓰러짐</td>-->
-<!--              <td class="data-cell">yolov7</td>-->
-<!--              <td class="data-cell">2023-11-30</td>-->
-<!--              <td class="data-cell">0</td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  onclick=" detailDataset() "-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--            </tr>-->
+<!--            {% endfor %}-->
           </tbody>
         </table>
       </div>
@@ -331,12 +143,12 @@
         </div>
         <div class="datasetCreateModal-input-area">
           <div class="input-title">기관명</div>
-          <select class="input-area">
+          <select class="input-area" id="agencySelect">
             <option>금진</option>
           </select>
 
           <div class="input-title">데이터셋 명</div>
-          <input class="input-area input-dataset" />
+          <input class="input-area input-dataset" id="datasetCreateName"/>
 
           <div class="input-title-container">
             <div class="input-title">데이터셋</div>
@@ -388,7 +200,7 @@
           </div>
 
           <div class="input-title">설명</div>
-          <textarea class="input-area detail-textarea"></textarea>
+          <textarea class="input-area detail-textarea" id="datasetCreateComment"></textarea>
 
           <img
             src="{{url_for('static', filename='/javascript/src/images/border.svg')}}"
@@ -403,7 +215,7 @@
           >
             취소
           </button>
-          <button class="datasetCreateModalOkButton">생성</button>
+          <button class="datasetCreateModalOkButton" onclick="datasetCreate()">생성</button>
         </div>
       </div>
     </div>
@@ -418,22 +230,22 @@
         </div>
         <div class="datasetCreateModal-input-area">
           <div class="input-title">데이터셋 명</div>
-          <input class="input-area input-dataset" />
+          <input class="input-area input-dataset"  id="datasetName"/>
 
           <div class="input-title">데이터 타입</div>
-          <input class="input-area input-dataset" />
+          <input class="input-area input-dataset" id="datasetType" />
 
           <div class="input-title">업로드 시간</div>
-          <input class="input-area input-dataset" />
+          <input class="input-area input-dataset"  id="datasetUploadTime"/>
 
           <div class="input-title">마지막 수정일</div>
-          <input class="input-area input-dataset" />
+          <input class="input-area input-dataset"  id="datasetModifyTime"/>
 
-          <div class="input-title">다운로드 횟수</div>
-          <input class="input-area input-dataset" />
+          <div class="input-title" >다운로드 횟수</div>
+          <input class="input-area input-dataset" id="datasetDownloadCount"/>
 
           <div class="input-title">설명</div>
-          <textarea class="input-area detail-textarea"></textarea>
+          <textarea class="input-area detail-textarea" id="datasetComments"></textarea>
 
           <img
             src="{{url_for('static', filename='/javascript/src/images/border.svg')}}"
