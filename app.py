@@ -188,8 +188,8 @@ def db_dataset_create():
     return result_json
 
 
-@app.route('/dataset/db_ds_delete', methods=['POST'])
-def db_ds_delete():
+@app.route('/dataset/db_ds_delete', methods=['GET', 'POST'])
+def db_dataset_delete():
     """
     데이터셋 삭제
     ds_idx 데이터셋 idx
@@ -199,7 +199,7 @@ def db_ds_delete():
         data = request.get_json()
         ds_idx= data["ds_idx"]
         # result_json = make_response_json([])
-        result_json = db_ds_create(mariadb_pool,ds_idx)
+        result_json = db_ds_delete(mariadb_pool,ds_idx)
 
     except ValueError as e:
         print(e)

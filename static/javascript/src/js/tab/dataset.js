@@ -50,7 +50,6 @@ function getDatasetTableData() {
           detailImage.setAttribute("style", "margin-left: 24px; margin-right: 16px");
           detailImage.setAttribute("src", detailImageSrc);
           detailImage.setAttribute("alt", "Image");
-
           detailImage.onclick = (function(index) {
             return function() {
               detailDataset(datasetList[index][0]); // 이 부분에서 인덱스를 사용
@@ -60,13 +59,46 @@ function getDatasetTableData() {
 
           cell7.innerHTML = '<img style="margin-left: 24px; margin-right: 16px" src="/static/javascript/src/images/modify.svg" alt="Image" />' ;
           cell8.innerHTML = '<img style="margin-left: 24px; margin-right: 16px" src="/static/javascript/src/images/download_2.svg" alt="Image" />' ;
-          cell9.innerHTML = '<img style="margin-left: 24px; margin-right: 16px" src="/static/javascript/src/images/delete_2.svg" alt="Image" />' ;
-
+          var deleteImageSrc = "/static/javascript/src/images/delete_2.svg";
+          var deleteImage = document.createElement("img");
+          deleteImage.setAttribute("style", "margin-left: 24px; margin-right: 16px");
+          deleteImage.setAttribute("src", deleteImageSrc);
+          deleteImage.setAttribute("alt", "Image");
+            deleteImage.onclick = (function(index) {
+                return function() {
+                    deleteDataset(datasetList[index][0]); // 이 부분에서 인덱스를 사용
+                };
+            })(i);
+            cell9.appendChild(deleteImage);
         }
       })
       .catch((error) => {
         console.error(error);
       });
+}
+
+function deleteDataset(index) {
+    console.log(index + "번 데이터 삭제!");
+
+    var requestData = {
+        ds_idx: index
+    };
+
+    fetch("/dataset/db_ds_delete", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Server response:", data);
+            alert("삭제완료")
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
 }
 
 function createDataset() {
