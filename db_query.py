@@ -251,10 +251,12 @@ def db_train_detail(mariadb_pool, tr_idx):
 def db_train_create(mariadb_pool,tr_name,tr_name_air,company_idx,tr_deploy_cycle,tr_description,ds_idx):
     """
     데이터셋 목록 조회
-    전체 조회
-    group by tpd.ds_idx;"
-    부분 조회
-    where tpd.ds_idx={ds_idx} group by tpd.ds_idx;"
+    tr_name  :학습 프로젝트 이름
+    tr_name_air : airflow 경로
+    company_idx : 회사 idx
+    tr_deploy_cycle :학습 주기
+    tr_description : 설명
+    ds_idx : 데이터셋 
     """
     try:
         json_result = make_response_json([])
@@ -303,8 +305,8 @@ def db_train_create(mariadb_pool,tr_name,tr_name_air,company_idx,tr_deploy_cycle
 
 def db_train_delete(mariadb_pool, tr_idx):
     """
-    데이터셋 삭제
-    ds_idx 데이터셋 idx
+    학습 프로젝트 삭제
+    tr_idx 학습 idx
     """
     try:
         json_result = make_response_json([])
@@ -335,7 +337,7 @@ if __name__ == "__main__":
 
     mariadb_pool = db_conn.get_pool_conn()
     # print(db_ds_create(mariadb_pool,'asdjjjjj','/temp/data','ds_description','1','3'))
-    print(db_ds_get_list(mariadb_pool))
+    # print(db_ds_get_list(mariadb_pool))
     # print(db_ds_get_detail(mariadb_pool,1))
     # print(db_ds_delete(mariadb_pool,27))
     # print(db_train_list(mariadb_pool))
