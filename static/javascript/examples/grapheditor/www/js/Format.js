@@ -1881,6 +1881,8 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			bg.style.background = Dialog.backdropColor;
 			bg.style.height = dh + 'px';
 			bg.style.right = '0px';
+			bg.style.zIndex = 10003;
+
 			bg.style.zIndex = this.zIndex - 2;
 
 			mxUtils.setOpacity(bg, 80);
@@ -1906,6 +1908,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			div.style.left =  (centerX - w/2) + 'px';
 			div.style.top = (centerY - h/2) + 'px';
 			// div.style.opacity = '0.8';
+			div.style.zIndex = 10005;
 			div.style.zIndex = this.zIndex;
 
 			var buttons = document.createElement('div');
@@ -1921,6 +1924,8 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			applyStyles(cancelBtn, cancelButtonStyle);
 
 			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){ //
+				var cellDataTemp = cellDataBinder(cell.class, cell.id) // 민수 mxCellMapper.js 로 임시 이사 보냈습니닷, vlaue 대신 클래스 이름 보냄요
+				cell.kpstData = cellDataTemp
 				cellDataBinder(cell.class, cell.id) // 민수 mxCellMapper.js 로 임시 이사 보냈습니닷, vlaue 대신 클래스 이름 보냄요
 			});
 			applyBtn.className = 'geBtn gePrimaryBtn';
@@ -1933,8 +1938,11 @@ ArrangePanel.prototype.addGroupOps = function(div)
 				if (MxCellMapper[cell.id] == null){
 					mxCellType(cell.id, cell.class)
 				}
+				cell.kpstData = MxCellMapper[cell.id] //
+
 				var cellData = MxCellMapper[cell.id]
 				//kpst 맵퍼에서 데이터 저장 및 가져오기
+				div.appendChild(mxCellForm(cell.kpstData['type'],cell.kpstData, cell.id))
 				div.appendChild(mxCellForm(cellData['type'],cellData, cell.id))
 
 				div.appendChild(buttons)
