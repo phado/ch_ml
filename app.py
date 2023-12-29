@@ -84,6 +84,9 @@ def resource_tab2 ():
 def aax_tab ():
     return render_template('tab/aaxManagement.html')
 
+@app.route('/modelingRun')
+def modelingRun ():
+    return render_template('tab/modelingRun.html')
 '''
 장재명 데이터 처리 관련 코드
 '''

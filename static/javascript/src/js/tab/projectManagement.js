@@ -8,11 +8,173 @@ function createModalClose() {
   createModal.style.display = "none";
 }
 
-function detailDataset() {
-  var detailModal = document.getElementById("projectDetailModal");
-  detailModal.style.display = "block";
-}
+
 function detailModalClose() {
   var detailModal = document.getElementById("projectDetailModal");
   detailModal.style.display = "none";
+}
+
+window.onload = function() {
+  getProjectTableData();
+};
+
+//dataset 테이블 정보 가져오는 함수
+function getProjectTableData() {
+  fetch("/train_project/db_train_list", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+      .then((response) => response.json())
+      .then((data) => {
+        var datasetList = data.data;
+
+        var tableBody = document.getElementById("ProjectTableBody");
+        for (var i = 0; i < datasetList.length; i++) {
+          var row = tableBody.insertRow(i);
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+          var cell4 = row.insertCell(3);
+          var cell5 = row.insertCell(4);
+          var cell6 = row.insertCell(5);
+          var cell7 = row.insertCell(6);
+          var cell8 = row.insertCell(7);
+          var cell9 = row.insertCell(8);
+          var cell10 = row.insertCell(9);
+          var cell11 = row.insertCell(10);
+
+          cell1.classList.add("data-cell");
+          cell2.classList.add("data-cell", "center");
+          cell3.classList.add("data-cell", "center");
+          cell4.classList.add("data-cell", "center");
+          cell5.classList.add("data-cell", "center");
+          cell6.classList.add("data-cell", "center");
+          cell7.classList.add("data-cell", "center");
+          cell8.classList.add("data-cell", "center");
+          cell9.classList.add("data-cell", "center");
+          cell10.classList.add("data-cell", "center");
+          cell11.classList.add("data-cell", "center");
+
+          cell1.innerHTML = '<img style="margin-left: 24px; margin-right: 16px" src="/static/javascript/src/images/box.svg" alt="Image" />' + datasetList[i][1];
+          cell2.innerHTML = datasetList[i][2];
+          cell3.innerHTML = datasetList[i][3];
+          cell4.innerHTML = datasetList[i][4];
+          cell5.innerHTML = convertDateType(datasetList[i][5]);
+          cell6.innerHTML = datasetList[i][6]
+          cell7.innerHTML = datasetList[i][7]
+          cell8.innerHTML = convertDateType(datasetList[i][8])
+
+          var detailImageSrc = "/static/javascript/src/images/detail.svg";
+          var detailImage = document.createElement("img");
+          detailImage.setAttribute("style", "margin-left: 15px;");
+          detailImage.setAttribute("src", detailImageSrc);
+          detailImage.setAttribute("alt", "Image");
+          detailImage.onclick = (function(index) {
+            return function() {
+              detailProject(datasetList[index][0]); // 이 부분에서 인덱스를 사용
+            };
+          })(i);
+          cell9.appendChild(detailImage);
+
+          cell10.innerHTML = '<img style="margin-left: 3px; " src="/static/javascript/src/images/modify.svg" alt="Image" />' ;
+          var deleteImageSrc = "/static/javascript/src/images/delete_2.svg";
+          var deleteImage = document.createElement("img");
+          deleteImage.setAttribute("src", deleteImageSrc);
+          deleteImage.setAttribute("alt", "Image");
+          deleteImage.onclick = (function(index) {
+            return function() {
+              deleteProject(datasetList[index][0]); // 이 부분에서 인덱스를 사용
+            };
+          })(i);
+          cell11.appendChild(deleteImage);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+}
+
+function detailProject(index) {
+  var detailModal = document.getElementById("projectDetailModal");
+  detailModal.style.display = "block";
+
+  index = index.toString()
+  fetch("/dataset/db_ds_get_detail", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ds_idx: index,
+    }),
+  })
+      .then((response) => response.json())
+      .then((data) => {
+        projectDetailData = data.data[0]
+        projectIdx = projectDetailData[0]
+        projectUploadTime = projectDetailData[1]
+        projectDataset = projectDetailData[2]
+        projectMAP = projectDetailData[3]
+        projectMlflow = projectDetailData[4]
+
+        var projectIndexInput = document.getElementById("projectIndex");
+        var projectDateInput = document.getElementById("projectDate");
+        var projectDatasetInput = document.getElementById("projectDataset");
+        var projectMapInput = document.getElementById("projectMap");
+        var projectHyperInput = document.getElementById("projectHyper");
+        var projectMlflowTextarea = document.getElementById("projectMlflow");
+
+        if (projectIndexInput) {
+          projectIndexInput.value = projectIdx;
+        }
+
+        if (projectDateInput) {
+          projectDateInput.value =  convertDateType(projectUploadTime);
+        }
+
+        if (projectDatasetInput) {
+          projectDatasetInput.value = projectDataset;
+        }
+
+        if (projectMapInput) {
+          projectMapInput.value = projectMAP;
+        }
+
+        if (projectHyperInput) {
+          projectHyperInput.value = "hyper";
+        }
+
+        if (projectMlflowTextarea) {
+          projectMlflowTextarea.value = projectMlflow;
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+}
+
+function deleteProject(index) {
+
+  var requestData = {
+    ds_idx: index
+  };
+
+  fetch("/train_project/db_train_delete", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(requestData)
+  })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Server response:", data);
+        alert("삭제완료")
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
 }

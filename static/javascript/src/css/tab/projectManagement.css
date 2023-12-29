@@ -13,7 +13,7 @@ body {
 
 .main-content {
   flex: 1;
-  background-color: #f0f0f0; /* 예시로 배경색 추가 */
+  background-color: #f0f0f0;
   position: relative;
 }
 .data-table-content {
