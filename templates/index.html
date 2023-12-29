@@ -12,6 +12,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" type="text/css" href="../static/javascript/examples/grapheditor/www/styles/grapheditor.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/javascript/src/css/common/title.css')}}"/>
+	<link rel="stylesheet" type="text/css"href="{{ url_for('static', filename='/javascript/src/css/common/title.css')}}"/>
 	<script type="text/javascript">
 
 		// Parses URL parameters. Supported parameters are:
@@ -68,6 +70,7 @@
 	<script type="text/javascript" src="../static/javascript/examples/grapheditor/www/js/Dialogs.js"></script>
 </head>
 <body class="geEditor">
+	{% include 'common/title.html' %}
 <script type="text/javascript">
 	// Extends EditorUi to update I/O action states based on availability of backend
 	(function()
