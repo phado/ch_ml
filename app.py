@@ -1,6 +1,6 @@
 import os
 import urllib
-
+from flask_cors import CORS
 from flask import Flask, render_template, request, jsonify
 import postgres_curd
 import requests
@@ -15,6 +15,7 @@ from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,d
 
 
 app = Flask(__name__)
+CORS(app)
 mariadb_pool = get_pool_conn()
 
 

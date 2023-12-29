@@ -175,7 +175,11 @@ Toolbar.prototype.init = function()
 	// this.addButton('run',null, null,) // kpst 실행 버튼 생성
 	this.addButton('geIcon run',null , function()
 	{
-		alert('실행 페이지 이동 ')
+
+		if(confirm('생성 된 프로젝트를 실행 하시겠습니까?')){
+			location.replace('/modelingRun')
+		}
+
 	});
 
 };

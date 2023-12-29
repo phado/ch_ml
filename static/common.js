@@ -45,5 +45,5 @@ function updateSelectedValue() {
 
 
 function runPorject(){
-    console.log('시작')
+    loaction.href = '/modelingRun'
 }
