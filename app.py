@@ -208,7 +208,7 @@ def db_dataset_delete():
     return result_json
 
 @app.route('/train_project/db_train_list', methods=['POST'])
-def db_train_list():
+def database_train_list():
     """
   학습 프로젝트 목록조회
     company_idx
@@ -237,7 +237,7 @@ def db_train_list():
 
 
 @app.route('/train_project/db_train_detail', methods=['POST'])
-def db_train_detail():
+def database_train_detail():
     """
     학습 프로젝트 상세 정보 표시
     tr_idx
@@ -291,7 +291,7 @@ def db_train_create():
     return result_json
 
 @app.route('/train_project/db_train_delete', methods=['POST'])
-def db_train_delete():
+def database_train_delete():
     """
     데이터셋 삭제
     ds_idx 데이터셋 idx
@@ -301,7 +301,7 @@ def db_train_delete():
         data = request.get_json()
         tr_idx= data["tr_idx"]
         # result_json = make_response_json([])
-        result_json = db_train_create(mariadb_pool,tr_idx)
+        result_json = db_train_delete(mariadb_pool,tr_idx)
 
     except ValueError as e:
         print(e)
