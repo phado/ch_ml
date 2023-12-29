@@ -23,10 +23,6 @@ mariadb_pool = get_pool_conn()
 def modeling():  # put application's code here
     return render_template('index.html')
 
-@app.route('/modelingRun')
-def modelingRun():  # put application's code here
-    return render_template('modelingRun.html')
-
 @app.route('/open', methods=['GET', 'POST'])
 def projectOpen():
     return render_template('open.html')
