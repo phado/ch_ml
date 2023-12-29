@@ -1,6 +1,5 @@
 import os
 import urllib
-from flask_cors import CORS
 from flask import Flask, render_template, request, jsonify
 import postgres_curd
 import requests
@@ -15,7 +14,6 @@ from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,d
 
 
 app = Flask(__name__)
-CORS(app)
 mariadb_pool = get_pool_conn()
 
 
@@ -52,7 +50,9 @@ def save_to_server():
         #     return '', 204 
         # except Exception as e:
         #     return jsonify({'message': f'Error: {str(e)}'}), 500
-
+@app.route('/rtspTest')
+def rtsp_test():  # put application's code here
+    return render_template('rtspTest.html')
 @app.route('/title')
 def title_bar():
     return render_template('common/title.html')
