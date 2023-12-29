@@ -17,7 +17,7 @@ from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,d
 app = Flask(__name__)
 mariadb_pool = get_pool_conn()
 
-# drawIO
+# dfdf
 @app.route('/')
 def hello_world():  # put application's code here
     return render_template('index.html')
@@ -30,26 +30,6 @@ def projectOpen():
 def dataInsertModal():
     return render_template('dataInsertModal.html')
 
-@app.route('/export' , methods=['POST'])
-@app.route('/save' , methods=['POST'])
-def save_to_server():
-    format = request.form.get('format')
-    data = request.form.get('xml')
-    if format == 'svg':
-            decoding_svg_data = urllib.parse.unquote(data)
-            # try:
-            #     with open(download_path, 'w') as file:
-            #         file.write(decoding_svg_data)
-            #     return '', 204 
-            # except Exception as e:
-            #     return jsonify({'message': f'Error: {str(e)}'}), 500
-    elif format == 'png':
-        # try:
-        decoding_svg_data = urllib.parse.unquote(data)
-        #     cairosvg.svg2png(bytestring=decoding_svg_data, write_to=download_path + '.png')
-        #     return '', 204 
-        # except Exception as e:
-        #     return jsonify({'message': f'Error: {str(e)}'}), 500
 
 @app.route('/title')
 def title_bar():
@@ -79,6 +59,9 @@ def resource_tab2 ():
 def aax_tab ():
     return render_template('tab/aaxManagement.html')
 
+@app.route('/modelingRun')
+def modelingRun ():
+    return render_template('tab/modelingRun.html')
 '''
 장재명 데이터 처리 관련 코드
 '''
