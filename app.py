@@ -17,10 +17,15 @@ from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,d
 app = Flask(__name__)
 mariadb_pool = get_pool_conn()
 
+
 # drawIO
-@app.route('/')
-def hello_world():  # put application's code here
+@app.route('/modeling')
+def modeling():  # put application's code here
     return render_template('index.html')
+
+@app.route('/modelingRun')
+def modelingRun():  # put application's code here
+    return render_template('modelingRun.html')
 
 @app.route('/open', methods=['GET', 'POST'])
 def projectOpen():

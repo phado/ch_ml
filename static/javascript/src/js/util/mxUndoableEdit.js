@@ -171,7 +171,7 @@ mxUndoableEdit.prototype.undo = function()
 		this.redone = false;
 		this.source.fireEvent(new mxEventObject(mxEvent.END_EDIT));
 	}
-	
+	console.log('다녀감2')
 	this.notify();
 };
 

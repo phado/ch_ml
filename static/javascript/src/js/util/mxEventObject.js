@@ -28,6 +28,7 @@
 function mxEventObject(name)
 {
 	this.name = name;
+	console.log(name)
 	this.properties = [];
 	
 	for (var i = 1; i < arguments.length; i += 2)

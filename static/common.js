@@ -41,3 +41,9 @@ function updateSelectedValue() {
 
     selectedTag.textContent = 'Selected: ' + selectedValue;
 }
+
+
+
+function runPorject(){
+    console.log('시작')
+}

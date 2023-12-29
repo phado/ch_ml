@@ -1919,9 +1919,12 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			});
 			cancelBtn.className = 'geBtn';
 			applyStyles(cancelBtn, cancelButtonStyle);
-
+			
+			// cell 정보에 데이터를 추가 하는 방식으로 변경 
 			var applyBtn = mxUtils.button(mxResources.get('apply'), function (){ //
-				cellDataBinder(cell.class, cell.id) // 민수 mxCellMapper.js 로 임시 이사 보냈습니닷, vlaue 대신 클래스 이름 보냄요
+				cell.kpstCellData = cellDataBinder(cell.class, cell.id) // 민수 mxCellMapper.js 로 이전
+				document.getElementById('dataset').remove()
+				document.getElementById('background').remove()
 			});
 			applyBtn.className = 'geBtn gePrimaryBtn';
 			applyStyles(applyBtn, okButtonStyle);
@@ -1933,9 +1936,9 @@ ArrangePanel.prototype.addGroupOps = function(div)
 				if (MxCellMapper[cell.id] == null){
 					mxCellType(cell.id, cell.class)
 				}
-				var cellData = MxCellMapper[cell.id]
+				cell.kpstCellData = MxCellMapper[cell.id]
 				//kpst 맵퍼에서 데이터 저장 및 가져오기
-				div.appendChild(mxCellForm(cellData['type'],cellData, cell.id))
+				div.appendChild(mxCellForm(cell.kpstCellData['type'],cell.kpstCellData, cell.id))
 
 				div.appendChild(buttons)
 

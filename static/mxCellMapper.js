@@ -708,4 +708,6 @@ function cellDataBinder(cellValue,cellId){
       Deploy1InputValue: Deploy1InputValue
     };
   }
+
+  return MxCellMapper[cellId].data
 }
