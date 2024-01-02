@@ -12,9 +12,53 @@
 <body>
 {% include 'common/title.html' %}
 <div class="main-content">
-    <div class="rtsp_video">
-        <video id="rtspVideo" controls autoplay ></video>
+    <div class="main-content">
+        <div class="section" id="section1">
+            <div class="section_title">CCTV 목록</div>
+<!--            <iframe class="airflowIframe iframe" src="http://210.178.0.65:31151/"></iframe>-->
+            <table class="cctvTable cctv" id="cctvTable">
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="section" id="section2">
+            <div class="section_title">CCTV 영상</div>
+                <div class="rtsp_video cctv">
+                    <video id="rtspVideo" controls autoplay ></video>
+                </div>
+        </div>
+
     </div>
 </div>
 </body>
 </html>
+<script>
+    // 가정된 JSON 데이터
+    const cctvData = [
+        { id: 1, url: "/1" },
+        { id: 2, url: "/2" },
+        { id: 3, url: "/3" },
+        { id: 4, url: "/4" },
+        { id: 5, url: "/5" },
+        { id: 6, url: "/6" },
+        { id: 7, url: "/7" },
+        { id: 8, url: "/8" },
+        { id: 9, url: "/9" },
+        { id: 10, url: "/10" },
+    ];
+
+    // 테이블 요소와 tbody 요소 가져오기
+    const cctvTable = document.getElementById("cctvTable");
+    const tbody = cctvTable.querySelector("tbody");
+
+    // CCTV 데이터를 테이블에 추가
+    cctvData.forEach(cctv => {
+        const row = tbody.insertRow();
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+
+        cell1.textContent = cctv.id;
+        cell2.textContent = cctv.url;
+    });
+</script>

@@ -57,7 +57,7 @@ def resource_tab2 ():
 
 @app.route('/aax_tab')
 def aax_tab ():
-    return render_template('tab/aaxManagement.html')
+    return render_template('tab/aasManagement.html')
 
 @app.route('/modelingRun')
 def modelingRun ():
