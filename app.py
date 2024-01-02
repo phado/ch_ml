@@ -16,7 +16,9 @@ from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,d
 app = Flask(__name__)
 mariadb_pool = get_pool_conn()
 
-
+@app.route('/')
+def index():  # put application's code here
+    return render_template('tab/dataset.html')
 # drawIO
 @app.route('/modeling')
 def modeling():  # put application's code here
