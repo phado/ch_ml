@@ -23,7 +23,7 @@
 <div class="main-content">
   <div class="section" id="section1">
     <div class="section_title">Airflow</div>
-    <iframe class="airflowIframe iframe" src="http://210.178.0.65:31151/"></iframe>
+    <iframe class="airflowIframe iframe" src="http://210.178.0.65:31151/" id = 'airflow'></iframe>
   </div>
   <div class="section" id="section2">
     <div class="section_title">MLflow</div>
@@ -36,4 +36,18 @@
   </div>
 </div>
 </body>
+<script>
+    var iframe = document.getElementById("airflow");
+
+    iframe.onload = function() {
+        // iframe 내부의 document 객체를 가져와서 작업 수행
+        var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+        var usernameElement = iframeDocument.getElementById("username");
+
+        if (usernameElement) {
+            usernameElement.value = 'dddd'
+        }
+    };
+
+</script>
 </html>

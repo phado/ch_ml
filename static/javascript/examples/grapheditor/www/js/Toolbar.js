@@ -171,6 +171,17 @@ Toolbar.prototype.init = function()
 	var insertMenu = this.addMenu('', mxResources.get('insert') + ' (' + mxResources.get('doubleClickTooltip') + ')', true, 'insert', null, true);
 	this.addDropDownArrow(insertMenu, 'geSprite-plus', 38, 48, -4, -3, 36, -8);
 	this.addTableDropDown();
+
+	// this.addButton('run',null, null,) // kpst 실행 버튼 생성
+	this.addButton('geIcon run',null , function()
+	{
+
+		if(confirm('생성 된 프로젝트를 실행 하시겠습니까?')){
+			location.replace('/modelingRun')
+		}
+
+	});
+
 };
 
 /**
@@ -302,7 +313,7 @@ Toolbar.prototype.addTableDropDown = function()
 			menuElt.setEnabled(menu.enabled);
 		});
 	}
-	
+
 	return menuElt;
 };
 
@@ -927,13 +938,33 @@ Toolbar.prototype.addItem = function(sprite, key, c, ignoreDisabled)
  */
 Toolbar.prototype.addButton = function(classname, tooltip, funct, c)
 {
-	var elt = this.createButton(classname);
-	c = (c != null) ? c : this.container;
-	
-	this.initElement(elt, tooltip);
-	this.addClickHandler(elt, funct);
-	c.appendChild(elt);
-	
+	if (classname == 'geIcon run'){
+		var button = document.createElement("button");
+        button.setAttribute("id", "run");
+
+	 	button.innerHTML = " 실 행 ";
+		button.style.position =  'absolute';
+		button.style.right = '72px';
+		button.style.width = '72px';
+		button.style.color = 'white' ;
+		button.style.backgroundColor = 'red' ;
+		var elt = button
+
+		c = (c != null) ? c : this.container;
+
+		this.initElement(elt, tooltip);
+		this.addClickHandler(elt, funct);
+		c.appendChild(elt);
+
+	}else {
+		var elt = this.createButton(classname);
+		c = (c != null) ? c : this.container;
+
+		this.initElement(elt, tooltip);
+		this.addClickHandler(elt, funct);
+		c.appendChild(elt);
+	}
+
 	return elt;
 };
 

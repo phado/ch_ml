@@ -1,6 +1,5 @@
 import os
 import urllib
-
 from flask import Flask, render_template, request, jsonify
 import postgres_curd
 import requests
@@ -17,9 +16,10 @@ from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,d
 app = Flask(__name__)
 mariadb_pool = get_pool_conn()
 
-# dfdf
-@app.route('/')
-def hello_world():  # put application's code here
+
+# drawIO
+@app.route('/modeling')
+def modeling():  # put application's code here
     return render_template('index.html')
 
 @app.route('/open', methods=['GET', 'POST'])
@@ -30,7 +30,29 @@ def projectOpen():
 def dataInsertModal():
     return render_template('dataInsertModal.html')
 
-
+@app.route('/export' , methods=['POST'])
+@app.route('/save' , methods=['POST'])
+def save_to_server():
+    format = request.form.get('format')
+    data = request.form.get('xml')
+    if format == 'svg':
+            decoding_svg_data = urllib.parse.unquote(data)
+            # try:
+            #     with open(download_path, 'w') as file:
+            #         file.write(decoding_svg_data)
+            #     return '', 204 
+            # except Exception as e:
+            #     return jsonify({'message': f'Error: {str(e)}'}), 500
+    elif format == 'png':
+        # try:
+        decoding_svg_data = urllib.parse.unquote(data)
+        #     cairosvg.svg2png(bytestring=decoding_svg_data, write_to=download_path + '.png')
+        #     return '', 204 
+        # except Exception as e:
+        #     return jsonify({'message': f'Error: {str(e)}'}), 500
+@app.route('/rtspTest')
+def rtsp_test():  # put application's code here
+    return render_template('rtspTest.html')
 @app.route('/title')
 def title_bar():
     return render_template('common/title.html')

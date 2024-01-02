@@ -10,7 +10,7 @@
   </head>
   <body>
     <header>
-      <div class="title-text title-logo">AI 메타버스 재난안전 플랫폼</div>
+      <div class="title-text title-logo" onclick="goHome()">AI 메타버스 재난안전 플랫폼</div>
       <a href="/dataset_tab" class="title-text title-tab dataset-text"
         >데이터셋</a
       >
@@ -38,5 +38,10 @@
         class="username-img"
       />
     </header>
+  <script>
+      function goHome(){
+          location.replace("/dataset_tab")
+      }
+  </script>
   </body>
 </html>

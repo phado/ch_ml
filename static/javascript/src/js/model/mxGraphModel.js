@@ -1993,6 +1993,7 @@ mxGraphModel.prototype.createUndoableEdit = function(significant)
 	
 	edit.notify = function()
 	{
+
 		// LATER: Remove changes property (deprecated)
 		edit.source.fireEvent(new mxEventObject(mxEvent.CHANGE,
 			'edit', edit, 'changes', edit.changes));
