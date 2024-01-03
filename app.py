@@ -9,12 +9,13 @@ import os
 from werkzeug.utils import secure_filename
 from common_management import make_response_json, success_message_json, fail_message_json
 from db_conn import get_pool_conn
-from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,db_train_list,db_train_detail,db_train_create,db_train_delete
+from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,db_train_list,db_train_detail,db_train_create,db_train_delete,db_deploy_list,db_deploy_detail,db_cctv_list,db_acc_result
 
 
 
 app = Flask(__name__)
 mariadb_pool = get_pool_conn()
+mariadb_pool_origin = get_pool_conn_origin()
 
 @app.route('/')
 def index():  # put application's code here
@@ -352,7 +353,7 @@ def db_deploy_list():
     try:
 
         # result_json = make_response_json([])
-        result_json = db_train_create(mariadb_pool)
+        result_json = db_deploy_create(mariadb_pool)
 
     except ValueError as e:
         print(e)
@@ -371,7 +372,41 @@ def db_deploy_detail():
         data = request.get_json()
         svc_idx= data["svc_idx"]
         # result_json = make_response_json([])
-        result_json = db_train_create(mariadb_pool,svc_idx)
+        result_json = db_deploy_detail(mariadb_pool,svc_idx)
+
+    except ValueError as e:
+        print(e)
+        result_json = fail_message_json(result_json)
+
+    return result_json
+
+@app.route('/acc_cctv/db_get_cctv', methods=['POST'])
+def db_get_cctv():
+    """
+    cctv 리스트 가져오기
+    
+    """
+    
+    try:
+      
+        # result_json = make_response_json([])
+        result_json = db_cctv_list(mariadb_pool_origin)
+
+    except ValueError as e:
+        print(e)
+        result_json = fail_message_json(result_json)
+
+    return result_json
+
+@app.route('/cctv/db_acc_result', methods=['POST'])
+def db_deploy_detail():
+    """
+    재해 결과 로그 가져오기
+    """
+    
+    try:
+        # result_json = make_response_json([])
+        result_json = db_acc_result(mariadb_pool_origin)
 
     except ValueError as e:
         print(e)
