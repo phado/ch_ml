@@ -1006,6 +1006,7 @@ mxShape.prototype.paint = function(c)
 				if(!this.node.classList[0]){
 					this.node.classList.add(this.state.cell.value)
 					this.node.childNodes[0].classList.add(this.state.cell.value)
+
 				}
 			}
 			catch (e){

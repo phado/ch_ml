@@ -709,5 +709,5 @@ function cellDataBinder(cellValue,cellId){
     };
   }
 
-  return MxCellMapper[cellId].data
+  return MxCellMapper[cellId]
 }

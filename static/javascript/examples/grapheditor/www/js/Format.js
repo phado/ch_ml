@@ -599,8 +599,10 @@ Format.prototype.refresh = function()
 		// kpst edit 창닫기 강제 이벤트
 		window.addEventListener('keydown', (e) => {
 		  if (e.code === 'Escape') {
-			document.getElementById('dataset').remove()
-			document.getElementById('background').remove()
+			if (document.getElementById('dataset')){
+				document.getElementById('dataset').remove()
+				document.getElementById('background').remove()
+			}
 		  }
 		});
 	}
@@ -1612,15 +1614,15 @@ ArrangePanel.prototype.init = function()
 		}
 
 	}else {
-		//화살표 정보 맵핑
-		var arrowId = (cell.id !== undefined && cell.id !== null) ? cell.id : -1;
-		var arrowMxId = (cell.mxObjectId !== undefined && cell.mxObjectId !== null) ? cell.mxObjectId : -1;
-		var arrowSource = (cell.source !== undefined && cell.source !== null) ? cell.source.id : -1;
-		var arrowTarget = (cell.target !== undefined && cell.target !== null) ? cell.target.id : -1;
-
-		var arrowMap = {"id" : arrowId ,'MxObjId' : arrowMxId, "source" : arrowSource , "target" : arrowTarget }
-		console.log(arrowMap) // KPST 연결된 맵퍼 표시
-		MxArrowMapper[arrowId] = arrowMap
+		//화살표 정보 맵핑 최종 실행에서 바인딩
+		// var arrowId = (cell.id !== undefined && cell.id !== null) ? cell.id : -1;
+		// var arrowMxId = (cell.mxObjectId !== undefined && cell.mxObjectId !== null) ? cell.mxObjectId : -1;
+		// var arrowSource = (cell.source !== undefined && cell.source !== null) ? cell.source.id : -1;
+		// var arrowTarget = (cell.target !== undefined && cell.target !== null) ? cell.target.id : -1;
+		//
+		// var arrowMap = {"id" : arrowId ,'MxObjId' : arrowMxId, "source" : arrowSource , "target" : arrowTarget }
+		// // console.log(arrowMap) // KPST 연결된 맵퍼 표시
+		// MxArrowMapper[arrowId] = arrowMap
 	}
 	this.container.appendChild(this.addGroupOps(this.createPanel()));
 
@@ -1933,7 +1935,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			buttons.appendChild(applyBtn);
 
 				//kpst 맵퍼에 데이터 생생 및 불러오가
-				if (MxCellMapper[cell.id] == null){
+				if (cell.kpstCellData == null){
 					mxCellType(cell.id, cell.class)
 				}
 				cell.kpstCellData = MxCellMapper[cell.id]
