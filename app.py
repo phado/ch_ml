@@ -354,7 +354,7 @@ def db_deploy_list():
     data[i][0] = 서비스 idx
     data[i][1] = 서비스 이름
     data[i][2] = 타입
-    data[i][3] = 상태
+    data[i][3] = 상태포
     data[i][4] = 생성시간
     data[i][5] = 수정일
     """
@@ -362,7 +362,7 @@ def db_deploy_list():
     try:
 
         # result_json = make_response_json([])
-        result_json = db_deploy_create(mariadb_pool)
+        result_json = db_deploy_list(mariadb_pool)
 
     except ValueError as e:
         print(e)
@@ -408,7 +408,7 @@ def db_get_cctv():
     return result_json
 
 @app.route('/cctv/db_acc_result', methods=['POST'])
-def database_deploy_detail():
+def database_acc_result():
     """
     재해 결과 로그 가져오기
     """

@@ -469,7 +469,7 @@ def db_acc_result(mariadb_pool):
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor()
 
-        query = f"SELECT tic2.cp_name ,tiwp.wp_name ,tir.rz_name, tia.acc_name1,ttar.cctv_sanpshot,ttar.acc_detection_time \
+        query = f"SELECT tic2.cp_name ,tiwp.wp_name ,tir.rz_name, tia.acc_name1, TO_BASE64(ttar.cctv_sanpshot),ttar.acc_detection_time \
                 FROM tbl_trend_analysis_result AS ttar\
                 LEFT JOIN tbl_rel_redzone_accident AS trra ON trra.rz_acc_idx  = ttar.rz_acc_idx\
                 LEFT JOIN tbl_info_accident AS tia ON trra.acc_idx   = tia.acc_idx \

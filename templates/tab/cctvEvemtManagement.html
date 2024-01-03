@@ -6,6 +6,10 @@
   <link rel="stylesheet" type="text/css" href="/static//javascript/src/css/tab/cctvEventManagement.css" />
   <script type="text/javascript" src="/static//javascript/src/js/tab/modelingRun.js"></script>
   <script type="text/javascript" src="/static//javascript/src/js/tab/commonUse.js"></script>
+  <script
+          type="text/javascript"
+          src="{{ url_for('static', filename='/javascript/src/js/tab/cctvEventManagement.js') }}"
+  ></script>
 </head>
 <body>
 <!DOCTYPE html>
@@ -23,14 +27,14 @@
 <div class="main-content">
   <div class="section" id="section1">
     <div class="section_title">리스트</div>
-      <div class="eventList event">
+      <div class="eventList event" id="eventListContainer">
 
       </div>
   </div>
   <div class="section" id="section2">
     <div class="section_title">사진</div>
     <div class="eventPhoto event">
-
+      <div id="imageContainer"></div>
     </div>
   </div>
   <div class="section" id="section3">
@@ -41,18 +45,5 @@
   </div>
 </div>
 </body>
-<script>
-    var iframe = document.getElementById("airflow");
 
-    iframe.onload = function() {
-        // iframe 내부의 document 객체를 가져와서 작업 수행
-        var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-        var usernameElement = iframeDocument.getElementById("username");
-
-        if (usernameElement) {
-            usernameElement.value = 'dddd'
-        }
-    };
-
-</script>
 </html>

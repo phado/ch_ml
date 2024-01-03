@@ -8,6 +8,10 @@
             href="{{ url_for('static', filename='/javascript/src/css/common/title.css')}}"
     />
     <link rel="stylesheet" href="../../static/javascript/src/css/tab/cctvManagement.css">
+    <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='/javascript/src/js/tab/cctvManagement.js') }}"
+    ></script>
 </head>
 <body>
 {% include 'common/title.html' %}
@@ -17,13 +21,16 @@
             <div class="section_title">CCTV 목록</div>
             <div class="cctvTableWrapper">
             <table class="cctvTable cctv" id="cctvTable">
-                <thead>
+                <thead id="cctvTableThead">
                 <tr>
-                    <td>IDX</td>
-                    <td>URL</td>
+                    <td>기업 이름</td>
+                    <td>공장 이름</td>
+                    <td>레드존 이름</td>
+                    <td>CCTV 이름</td>
+                    <td>CCTV URL</td>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="cctvTableTbody">
                 </tbody>
             </table>
             </div>
@@ -32,32 +39,3 @@
 </div>
 </body>
 </html>
-<script>
-    // 가정된 JSON 데이터
-    const cctvData = [
-        { id: 1, url: "/rtsp://119.204.166.131:10002/kpst" },
-        { id: 2, url: "/rtsp://119.204.166.131:10002/kpst" },
-        { id: 3, url: "/rtsp://119.204.166.131:10002/kpst" },
-        { id: 4, url: "/rtsp://119.204.166.131:10002/kpst" },
-        { id: 5, url: "/rtsp://119.204.166.131:10002/kpst" },
-        { id: 6, url: "/rtsp://119.204.166.131:10002/kpst" },
-        { id: 7, url: "/rtsp://119.204.166.131:10002/kpst" },
-        { id: 8, url: "/rtsp://119.204.166.131:10002/kpst" },
-        { id: 9, url: "/rtsp://119.204.166.131:10002/kpst" },
-        { id: 10, url: "/rtsp://119.204.166.131:10002/kpst" },
-    ];
-
-    // 테이블 요소와 tbody 요소 가져오기
-    const cctvTable = document.getElementById("cctvTable");
-    const tbody = cctvTable.querySelector("tbody");
-
-    // CCTV 데이터를 테이블에 추가
-    cctvData.forEach(cctv => {
-        const row = tbody.insertRow();
-        const cell1 = row.insertCell(0);
-        cell1.textContent = cctv.id;
-
-        const cell2 = row.insertCell(1);
-        cell2.textContent = cctv.url;
-    });
-</script>
