@@ -71,17 +71,26 @@ def project_tab ():
 def distribution_tab ():
     return render_template('tab/distributionManagement.html')
 
-@app.route('/resource_tab1')
-def resource_tab1 ():
-    return render_template('tab/resourceManagement.html')
-
 @app.route('/resource_tab2')
 def resource_tab2 ():
     return render_template('tab/resourceManagement2.html')
 
-@app.route('/aax_tab')
-def aax_tab ():
+@app.route('/aas_tab')
+def aas_tab ():
     return render_template('tab/aasManagement.html')
+
+@app.route('/grafana_tab')
+def grafana_tab ():
+    return render_template('tab/grafana.html')
+
+@app.route('/cctv_tab')
+def cctv_tab ():
+    return render_template('tab/cctvManagement.html')
+
+@app.route('/cctv_event_tab')
+def cctv_event_tab ():
+    return render_template('tab/cctvEvemtManagement.html')
+
 
 @app.route('/modelingRun')
 def modelingRun ():

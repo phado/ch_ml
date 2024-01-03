@@ -41,63 +41,50 @@ header {
 
 .title-tab {
   height: 21px;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   line-height: 21px;
 }
 
 .dataset-text {
   top: 36px;
-  left: 355px;
-  width: 67px;
+  left: 400px;
 }
 
 .project-text {
   top: 36px;
-  left: 523px;
-  width: 104px;
+  left: 520px;
 }
 
 .deployment-text {
   top: 36px;
-  left: 728px;
-  width: 71px;
-}
-
-.deployment-text {
-  top: 36px;
-  left: 728px;
-  width: 71px;
-}
-
-.deployment-text {
-  top: 36px;
-  left: 728px;
-  width: 71px;
-}
-
-.resource-text{
-  top: 36px;
-  left: 928px;
-  width: 100px;
-}
-
-.resource-text2{
-  top: 36px;
-  left: 1128px;
-  width: 104px;
+  left: 660px;
 }
 
 .aax-text{
   top: 36px;
-  left: 1328px;
-  width: 71px;
+  left: 780px;
 }
 
-.project2-text{
+.resource-text2{
   top: 36px;
-  left: 1490px;
-  width: 71px;
+  left: 860px;
+  width: 104px;
+}
+
+.grafana-text{
+  top: 36px;
+  left: 980px;
+  width: 104px;
+}
+
+.cctv-text{
+  top: 36px;
+  left: 1080px;
+}
+.cctv-event-text{
+  top: 36px;
+  left: 1200px;
 }
 
 @media screen and (max-width: 1560px) {
