@@ -15,7 +15,7 @@ def get_pool_conn():
         , 'host':  '210.178.0.65'
         , 'port': '31401'
         , 'database': 'isamp_prj'
-    }
+                }
     # Mariadb 커넥션 풀 설정
     mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
     return mariadb_pool
@@ -28,7 +28,7 @@ def get_pool_conn_origin():
         , 'host':  '210.178.0.65'
         , 'port': '31401'
         , 'database': 'isamp'
-    }
+                }
     # Mariadb 커넥션 풀 설정
     mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool_origin", pool_size=5, **config)
     return mariadb_pool
