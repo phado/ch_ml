@@ -299,7 +299,7 @@ def database_train_detail():
     return result_json
 
 @app.route('/train_project/db_train_create', methods=['POST'])
-def db_train_create():
+def database_train_create():
     """
     tr_name  :학습 프로젝트 이름
     tr_name_air : airflow 경로

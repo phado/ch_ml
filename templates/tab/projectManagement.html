@@ -98,17 +98,17 @@
           >
         </div>
         <div class="projectCreateModal-input-area">
-          <div class="input-title">데이터셋 명</div>
-          <input class="input-area input-dataset" />
+          <div class="input-title">데이터셋 IDX</div>
+          <input class="input-area input-dataset" id="datasetCreateIdx"/>
 
           <div class="input-title">모델 이름</div>
-          <input class="input-area input-dataset" />
+          <input class="input-area input-dataset" id="datasetCreateName"/>
 
-          <div class="input-title">배포주기</div>
-          <input class="input-area input-dataset" />
+          <div class="input-title">학습 주기</div>
+          <input class="input-area input-dataset" id="datasetCreateCycle"/>
 
           <div class="input-title">설명</div>
-          <textarea class="input-area detail-textarea"></textarea>
+          <textarea class="input-area detail-textarea" id="datasetCreateDescription"></textarea>
 
           <img
             src="{{url_for('static', filename='/javascript/src/images/border.svg')}}"
@@ -123,7 +123,9 @@
           >
             취소
           </button>
-          <button class="projectCreateModalOkButton" onclick="location.href='/modeling' ">생성</button>
+<!--          <button class="projectCreateModalOkButton" onclick="location.href='/modeling' ">생성</button>-->
+            <button class="projectCreateModalOkButton" onclick="createProject()">생성</button>
+
         </div>
       </div>
     </div>
@@ -141,19 +143,19 @@
           <div class="area1">
             <div class="projectDetailModal-input-area">
               <div class="input-title">idx</div>
-              <input class="input-area input-dataset" />
+              <input class="input-area input-dataset" id="projectIndex"/>
 
               <div class="input-title">날짜</div>
-              <input class="input-area input-dataset" />
+              <input class="input-area input-dataset" id="projectDate"/>
 
               <div class="input-title">데이터셋(프로젝트)</div>
-              <input class="input-area input-dataset" />
+              <input class="input-area input-dataset" id="projectDataset"/>
 
               <div class="input-title">mAP</div>
-              <input class="input-area input-dataset" />
+              <input class="input-area input-dataset" id="projectMap"/>
 
               <div class="input-title">하이퍼파라미터 값</div>
-              <input class="input-area input-dataset" />
+              <input class="input-area input-dataset" id="projectHyper"/>
 
               <div class="input-title">mlFlow</div>
               <button class="output-view-button">결과보기</button>
@@ -161,7 +163,7 @@
           </div>
           <div class="area2">
             <div class="input-title">mlFlow</div>
-            <textarea class="input-area mlflow-textarea"></textarea>
+            <textarea class="input-area mlflow-textarea" id="projectMlflow"></textarea>
           </div>
         </div>
         <img
