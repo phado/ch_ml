@@ -78,28 +78,36 @@ function getDatasetTableData() {
 }
 
 function deleteDataset(index) {
-    console.log(index + "번 데이터 삭제!");
+    var isConfirmed = confirm("데이터를 삭제하시겠습니까?");
+    if (isConfirmed) {
+        console.log(index + "번 데이터 삭제!");
 
-    var requestData = {
-        ds_idx: index
-    };
+        var requestData = {
+            ds_idx: index
+        };
 
-    fetch("/dataset/db_ds_delete", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(requestData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Server response:", data);
-            alert("삭제완료")
+        fetch("/dataset/db_ds_delete", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestData)
         })
-        .catch(error => {
-            console.error("Error:", error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log("Server response:", data);
+                alert("삭제완료");
+                location.reload();
+                alert("삭제완료");
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    } else {
+        console.log("삭제 취소");
+    }
 }
+
 
 function createDataset() {
   var createModal = document.getElementById("datasetCreateModal");
@@ -182,7 +190,7 @@ function detailDataset(index) {
 
 function datasetCreate() {
     var agencySelect = document.getElementById("agencySelect");
-    var company_idx = agencySelect.value;
+    var company_name = agencySelect.value;
 
     var datasetCreateName = document.getElementById("datasetCreateName");
     var ds_name = datasetCreateName.value;
@@ -190,8 +198,11 @@ function datasetCreate() {
     var datasetCreateComment = document.getElementById("datasetCreateComment");
     var ds_description = datasetCreateComment.value;
 
+    if (company_name === '금진') {
+        company_idx = 2;
+    }
     var ds_path = "/../../..";
-    var ds_type_idx = "type";
+    var ds_type_idx = 11;
 
     var requestData = {
         ds_name: ds_name,

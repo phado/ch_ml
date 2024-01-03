@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='/javascript/src/css/common/title.css')}}"
+    />
+    <link rel="stylesheet" href="../../static/javascript/src/css/tab/cctvManagement.css">
+    <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='/javascript/src/js/tab/cctvManagement.js') }}"
+    ></script>
+</head>
+<body>
+{% include 'common/title.html' %}
+<div class="main-content">
+    <div class="main-content">
+        <div class="section" id="section1">
+            <div class="section_title">CCTV 목록</div>
+            <div class="cctvTableWrapper">
+            <table class="cctvTable cctv" id="cctvTable">
+                <thead id="cctvTableThead">
+                <tr>
+                    <td>기업 이름</td>
+                    <td>공장 이름</td>
+                    <td>레드존 이름</td>
+                    <td>CCTV 이름</td>
+                    <td>CCTV URL</td>
+                </tr>
+                </thead>
+                <tbody id="cctvTableTbody">
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

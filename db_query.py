@@ -409,12 +409,104 @@ def db_deploy_detail(mariadb_pool, svc_idx):
 
         return json_result
     
+    
+def db_cctv_list(mariadb_pool):
+    """
+    카메라 리스트 정보
+    data[0]=기업코드
+    data[1]=기업이름
+    data[2]=공장이름
+    data[3]=공장코드
+    data[4]=레드존이름
+    data[5]=레드존코드
+    data[6]=cctv이름
+    data[7]=cctv url
+    data[8]=cctv 원본
+
+    """
+    try:
+        json_result = make_response_json([])
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+
+        query = f"SELECT \
+                E.cp_code, E.cp_name, D.wp_name, D.wp_code, B.rz_name, B.rz_code, C.cctv_name, C.cctv_url, C.cctv_url_raw, C.cctv_description, A.rz_cctv_idx, C.cctv_idx, B.rz_idx\
+                FROM tbl_rel_redzone_cctv AS A \
+                LEFT JOIN tbl_info_redzone AS B ON B.rz_idx = A.rz_idx \
+                LEFT JOIN tbl_info_cctv AS C ON C.cctv_idx = A.cctv_idx \
+                LEFT JOIN tbl_info_work_place AS D ON D.wp_idx = B.wp_idx \
+                LEFT JOIN tbl_info_company AS E ON E.cp_idx = D.cp_idx;"
+
+        cursor.execute(query)
+        json_result['data'] = cursor.fetchall()
+        connection.commit()
+
+        json_result = success_message_json(json_result)
+    except Exception as e:
+        print(e)
+        json_result = fail_message_json(json_result)
+
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+        return json_result
+    
+def db_acc_result(mariadb_pool):
+    """
+    재해 로그 정보
+    data[0]=기업이름
+    data[1]=공장이름 
+    data[2]=레드존
+    data[3]=재해유형
+    data[4]=스냅샷
+    data[5]=발생시간
+    """
+    try:
+        json_result = make_response_json([])
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+
+        query = f"SELECT tic2.cp_name ,tiwp.wp_name ,tir.rz_name, tia.acc_name1, TO_BASE64(ttar.cctv_sanpshot),ttar.acc_detection_time \
+                FROM tbl_trend_analysis_result AS ttar\
+                LEFT JOIN tbl_rel_redzone_accident AS trra ON trra.rz_acc_idx  = ttar.rz_acc_idx\
+                LEFT JOIN tbl_info_accident AS tia ON trra.acc_idx   = tia.acc_idx \
+                LEFT JOIN tbl_info_redzone AS tir ON trra.acc_idx  = tir.rz_idx \
+                LEFT JOIN tbl_info_work_place AS tiwp ON tir.wp_idx  = tiwp.wp_idx\
+                LEFT JOIN tbl_info_company AS tic2 ON tiwp.cp_idx  = tic2.cp_idx \
+                LEFT JOIN tbl_rel_redzone_cctv AS trrc ON ttar.rz_cctv_idx = trrc.rz_cctv_idx\
+                LEFT JOIN tbl_info_cctv AS tic ON trrc.cctv_idx = tic.cctv_idx \
+                LEFT JOIN tbl_rel_redzone_sensor_data AS trrsd ON ttar.rz_sen_dt_idx  = trrsd.rz_sen_dt_idx \
+                LEFT JOIN tbl_info_sensor_data AS tisd ON trrsd.sen_dt_idx =tisd.sen_dt_idx \
+                LEFT JOIN tbl_rel_redzone_sensor AS trrs ON trrsd.rz_sen_idx  = trrs.rz_sen_idx \
+                LEFT JOIN tbl_info_sensor  AS tis ON trrs.sen_idx  = tis.sen_idx LIMIT 300;"
+
+        cursor.execute(query)
+        json_result['data'] = cursor.fetchall()
+        connection.commit()
+
+        json_result = success_message_json(json_result)
+    except Exception as e:
+        print(e)
+        json_result = fail_message_json(json_result)
+
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+        return json_result
+    
+
+    
 
 
 if __name__ == "__main__":
     import db_conn
 
     mariadb_pool = db_conn.get_pool_conn()
+    mariadb_pool_origin = db_conn.get_pool_conn_origin()
     # print(db_ds_create(mariadb_pool,'asdjjjjj','/temp/data','ds_description','1','3'))
     # print(db_ds_get_list(mariadb_pool))
     # print(db_ds_get_detail(mariadb_pool,1))
@@ -425,7 +517,9 @@ if __name__ == "__main__":
     # print(db_train_create(mariadb_pool,'sample test1','tr_name_airaaa','1','20',"descrition",'1'))
     # print(db_train_delete(mariadb_pool,'3'))
     # print(db_deploy_list(mariadb_pool))
-    print(db_deploy_detail(mariadb_pool,'0'))
+    # print(db_deploy_detail(mariadb_pool,'0'))
+    # print(db_acc_result(mariadb_pool_origin))
+    # print(db_cctv_list(mariadb_pool_origin))
     
     
     
