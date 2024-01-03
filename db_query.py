@@ -481,7 +481,7 @@ def db_acc_result(mariadb_pool):
                 LEFT JOIN tbl_rel_redzone_sensor_data AS trrsd ON ttar.rz_sen_dt_idx  = trrsd.rz_sen_dt_idx \
                 LEFT JOIN tbl_info_sensor_data AS tisd ON trrsd.sen_dt_idx =tisd.sen_dt_idx \
                 LEFT JOIN tbl_rel_redzone_sensor AS trrs ON trrsd.rz_sen_idx  = trrs.rz_sen_idx \
-                LEFT JOIN tbl_info_sensor  AS tis ON trrs.sen_idx  = tis.sen_idx LIMIT 300;"
+                LEFT JOIN tbl_info_sensor  AS tis ON trrs.sen_idx  = tis.sen_idx ORDER BY ttar.acc_detection_time DESC LIMIT 300; "
 
         cursor.execute(query)
         json_result['data'] = cursor.fetchall()
