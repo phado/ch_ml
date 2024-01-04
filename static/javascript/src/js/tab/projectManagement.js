@@ -201,7 +201,7 @@ function createProject(){
             tr_description: datasetCreateDescription,
             ds_idx: datasetCreateIdx,
             tr_name_air : "/../..",
-            company_idx : 2,  // 이 부분 이름을 company_idx로 수정
+            company_idx : 2,
         }),
     })
         .then(response => response.json())

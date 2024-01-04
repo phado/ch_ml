@@ -348,7 +348,7 @@ def database_train_delete():
 
 
 @app.route('/deploy_model/db_deploy_list', methods=['POST'])
-def db_deploy_list():
+def database_deploy_list():
     """
     배포 화면 리스트 
     data[i][0] = 서비스 idx

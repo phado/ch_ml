@@ -253,6 +253,7 @@ select {
   border: 1px solid #9b9b9b;
   background: white;
   box-shadow: 0px 4px 10px 0px #00000040;
+  padding-left: 8px;
 }
 
 .input-title-container {
