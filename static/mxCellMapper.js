@@ -29,6 +29,35 @@ let mapperList = {
   },
 };
 
+document.addEventListener("DOMContentLoaded", function() {
+  var dataToSend = { 'tr_idx': 1 };
+
+  fetch('/diagramDataLoad', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(dataToSend)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const xmlData = data.xmlData;
+
+    processGraphxml = xmlData.slice(1, -1);;
+    uploadXML(processGraphxml);
+  })
+  .catch(error => {
+    console.error('Error during fetch:', error);
+  });
+});
+ 
+
+
 function mxCellType(cellId, cellType) {
   // 생성된 셀 타입 확인
   var mapper = mapperList[cellType];
@@ -709,5 +738,27 @@ function cellDataBinder(cellValue,cellId){
     };
   }
 
-  return MxCellMapper[cellId].data
+  return MxCellMapper[cellId]
+}
+
+function uploadXML(xmlData) {
+  let xml = xmlData;
+
+  if (xml == "") {
+      return;
+  }
+  let doc = mxUtils.parseXml(xml);
+  let codec = new mxCodec(doc);
+
+  if (universalGraph && universalGraph !== "") {
+      codec.decode(doc.documentElement, universalGraph.getModel());
+  }
+
+  //MxCellMapper에 값 불러오기
+  edUI.editor.graph.getChildCells().forEach(function (parsCell) {
+    // edge가 아닌 cell인 경우
+    if(parsCell.class){
+      MxCellMapper[parsCell.id] = parsCell.kpstCellData
+    }
+	});
 }

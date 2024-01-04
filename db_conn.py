@@ -12,7 +12,7 @@ def get_pool_conn():
     config = {
         'user':  'root'
         , 'password': 'root'
-        , 'host':  '210.178.0.65'
+        , 'host':  '210.178.0.64'
         , 'port': '31401'
         , 'database': 'isamp_prj'
                 }
@@ -25,7 +25,7 @@ def get_pool_conn_origin():
     config = {
         'user':  'root'
         , 'password': 'root'
-        , 'host':  '210.178.0.65'
+        , 'host':  '210.178.0.64'
         , 'port': '31401'
         , 'database': 'isamp'
                 }

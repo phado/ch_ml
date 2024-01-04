@@ -3,13 +3,13 @@ import urllib
 from flask import Flask, render_template, request, jsonify
 import postgres_curd
 import requests
-import json    
+import json   
 from flask import Flask,request, jsonify
 import os
 from werkzeug.utils import secure_filename
 from common_management import make_response_json, success_message_json, fail_message_json
-from db_conn import get_pool_conn
-from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,db_train_list,db_train_detail,db_train_create,db_train_delete,db_deploy_list,db_deploy_detail,db_cctv_list,db_acc_result
+from db_conn import get_pool_conn,  get_pool_conn_origin
+from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete, db_load_xml, db_save_xml,db_train_list,db_train_detail,db_train_create,db_train_delete,db_deploy_list,db_deploy_detail,db_cctv_list,db_acc_result
 
 
 
@@ -87,6 +87,43 @@ def aax_tab ():
 @app.route('/modelingRun')
 def modelingRun ():
     return render_template('tab/modelingRun.html')
+
+@app.route('/diagramDataSave', methods=['POST'])
+def runSubmit():
+    """
+    now_xml  : 작성한 다이어그램 xml 데이터
+    mx_cell_mapper : 각 cell에 저장 된 속성 정보
+    mx_arrow_mapper : 각 cell끼리 연결 된 화살표 정보
+    tr_idx : 현재 작성 중인 프로젝트 idx
+    """
+    data = request.get_json()
+    now_xml = data['nowXml']
+    mx_cell_mapper = data["MxCellMapper"]
+    mx_arrow_mapper = data["MxArrowMapper"]
+    tr_idx = data['tr_idx_value']
+
+    try:
+        response_data = {
+            'now_xml': now_xml,
+            'mx_cell_mapper': json.dumps(mx_cell_mapper),
+            'mx_arrow_mapper':json.dumps(mx_arrow_mapper),
+            'redirect_url': '/modelingRun'
+        }
+        db_save_xml(mariadb_pool, now_xml, tr_idx)
+    except ValueError as e:
+        print(e)
+    return jsonify(response_data)
+
+@app.route('/diagramDataLoad', methods = ['POST'])
+def getXmlData():
+    try:
+        data = request.get_json()
+        tr_idx = data['tr_idx']
+        xmlData = db_load_xml(mariadb_pool, tr_idx)
+    except ValueError as e:
+        print(e)
+    return xmlData
+
 '''
 장재명 데이터 처리 관련 코드
 '''
@@ -398,21 +435,21 @@ def db_get_cctv():
 
     return result_json
 
-@app.route('/cctv/db_acc_result', methods=['POST'])
-def db_deploy_detail():
-    """
-    재해 결과 로그 가져오기
-    """
+# @app.route('/cctv/db_acc_result', methods=['POST'])
+# def db_deploy_detail():
+#     """
+#     재해 결과 로그 가져오기
+#     """
     
-    try:
-        # result_json = make_response_json([])
-        result_json = db_acc_result(mariadb_pool_origin)
+#     try:
+#         # result_json = make_response_json([])
+#         result_json = db_acc_result(mariadb_pool_origin)
 
-    except ValueError as e:
-        print(e)
-        result_json = fail_message_json(result_json)
+#     except ValueError as e:
+#         print(e)
+#         result_json = fail_message_json(result_json)
 
-    return result_json
+#     return result_json
 
 
 

@@ -499,8 +499,42 @@ def db_acc_result(mariadb_pool):
         return json_result
     
 
-    
+# def db_company_list(mariadb_pool_origin):
+#     connection = mariadb_pool_origin.get_connection()
+#     cursor = connection.cursor()
+#     query = f"SELECT * from tb_company;"
+#     cursor.execute(query)
+#     result = cursor.fetchall() 
+#     return result
 
+def db_save_xml(mariadb_pool, xml_string, tr_idx_value):
+    try:
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+        query = f"UPDATE tb_prj_training SET tr_xml = %s WHERE tr_idx = %s;"
+        cursor.execute(query, (xml_string,tr_idx_value,))
+        cursor.fetchone()
+        connection.commit()
+    except Exception as e:
+        print(e)
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+def db_load_xml(mariadb_pool, tr_idx_value):
+    try:
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+        query = f"SELECT tr_xml from tb_prj_training WHERE tr_idx = %s;"
+        cursor.execute(query, (tr_idx_value,))
+        result = cursor.fetchone()
+        result_json = {}
+        result_json['xmlData'] = result[0]
+    except Exception as e:
+        print(e)
+    finally:
+        if cursor: cursor.close()
+        return result_json
 
 if __name__ == "__main__":
     import db_conn

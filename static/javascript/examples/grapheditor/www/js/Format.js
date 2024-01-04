@@ -1606,8 +1606,30 @@ ArrangePanel.prototype.init = function()
 			if (MxCellMapper[cell.id] == null) {
 				mxCellType(cell.id, cell.class)
 			}
+			var clickedCell = edUI.editor.graph.getSelectionCell().kpstCellData;
+			
+			if(clickedCell == undefined || clickedCell.data == ""){
+				div.textContent += MxCellMapper[cell.id]['type'];
+				// kpst 값이 없는 경우 출력 안함
+			}
+			else{
+				div.textContent += MxCellMapper[cell.id]['type'];
+				for (let key in clickedCell.data) {
+					if (clickedCell.data.hasOwnProperty(key)) {
+						var attributeKey = document.createElement('div');
+						var attributeValue = document.createElement('div');
 
-			div.textContent += MxCellMapper[cell.id]['type'];
+						attributeKey.innerHTML = key;
+						attributeKey.class = 'attributeKey';
+						attributeValue.innerHTML = clickedCell.data[key];
+						attributeValue.class = 'attributeValue';
+
+						div.appendChild(attributeKey);
+						div.appendChild(attributeValue);
+					}
+				}
+				
+			}
 			this.container.appendChild(div); //KPST 우측 arrange 에서 메뉴바에 정보 창 더하기
 		}
 
