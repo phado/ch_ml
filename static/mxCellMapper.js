@@ -738,7 +738,7 @@ function cellDataBinder(cellValue,cellId){
     };
   }
 
-  return MxCellMapper[cellId]
+  return MxCellMapper[cellId].data
 }
 
 function uploadXML(xmlData) {

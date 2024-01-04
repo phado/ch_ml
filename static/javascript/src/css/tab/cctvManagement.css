@@ -1,0 +1,92 @@
+@font-face {
+    font-family: "RobotoFont";
+    src: url("/static/font/Roboto-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+.main-content {
+    display: flex;
+    background-color: white;
+    position: relative;
+}
+
+#section1 {
+    margin-left: 32px;
+}
+
+
+.section_title{
+    margin-top: 32px;
+    font-family: RobotoFont;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.cctvTable{
+    width: 1850px;
+    border-radius: 5px;
+    background: #F3F3F3;
+    box-shadow: 2px 2px 4px 0px #00000033;
+    border: none;
+}
+
+.cctv{
+    margin-top: 10px;
+}
+
+.section_title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.cctvTable {
+    border-collapse: collapse;
+    overflow-y: auto;
+    max-height: 800px;
+}
+
+.cctvTable, .cctvTable th, .cctvTable td {
+    border-bottom: 1px solid #9B9B9B;
+}
+
+.cctvTable th, .cctvTable td {
+    text-align: center;
+    height: 40px;
+}
+
+.cctvTableWrapper {
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+#cctvTableThead{
+    font-family: RobotoFont;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.notification {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}

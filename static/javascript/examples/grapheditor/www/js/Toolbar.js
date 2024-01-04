@@ -245,9 +245,7 @@ Toolbar.prototype.init = function()
 				console.error('Error during fetch:', error);
 			});
 		}
-
 	});
-
 };
 
 /**

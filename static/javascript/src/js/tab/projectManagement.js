@@ -101,13 +101,13 @@ function detailProject(index) {
   detailModal.style.display = "block";
 
   index = index.toString()
-  fetch("/dataset/db_ds_get_detail", {
+  fetch("/train_project/db_train_detail", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      ds_idx: index,
+        tr_idx: index,
     }),
   })
       .then((response) => response.json())
@@ -157,24 +157,58 @@ function detailProject(index) {
 }
 
 function deleteProject(index) {
+    var isConfirmed = confirm("프로젝트를 삭제하시겠습니까?");
+    if (isConfirmed) {
+        var requestData = {
+            ds_idx: index
+        };
 
-  var requestData = {
-    ds_idx: index
-  };
+        fetch("/train_project/db_train_delete", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                location.reload();
+                alert("삭제완료");
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    } else {
+        console.log("삭제 취소");
+    }
+}
 
-  fetch("/train_project/db_train_delete", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(requestData)
-  })
-      .then(response => response.json())
-      .then(data => {
-        console.log("Server response:", data);
-        alert("삭제완료")
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
+function createProject(){
+    var datasetCreateIdx = document.getElementById("datasetCreateIdx").value;
+    var datasetCreateName = document.getElementById("datasetCreateName").value;
+    var datasetCreateCycle = document.getElementById("datasetCreateCycle").value;
+    var datasetCreateDescription = document.getElementById("datasetCreateDescription").value;
+
+    // 데이터를 서버로 전송
+    fetch('/train_project/db_train_create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            tr_name: datasetCreateName,
+            tr_deploy_cycle: datasetCreateCycle,
+            tr_description: datasetCreateDescription,
+            ds_idx: datasetCreateIdx,
+            tr_name_air : "/../..",
+            company_idx : 2,  // 이 부분 이름을 company_idx로 수정
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            window.location.href = '/modeling';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }

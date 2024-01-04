@@ -469,7 +469,7 @@ def db_acc_result(mariadb_pool):
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor()
 
-        query = f"SELECT tic2.cp_name ,tiwp.wp_name ,tir.rz_name, tia.acc_name1,ttar.cctv_sanpshot,ttar.acc_detection_time \
+        query = f"SELECT tic2.cp_name ,tiwp.wp_name ,tir.rz_name, tia.acc_name1, TO_BASE64(ttar.cctv_sanpshot),ttar.acc_detection_time \
                 FROM tbl_trend_analysis_result AS ttar\
                 LEFT JOIN tbl_rel_redzone_accident AS trra ON trra.rz_acc_idx  = ttar.rz_acc_idx\
                 LEFT JOIN tbl_info_accident AS tia ON trra.acc_idx   = tia.acc_idx \
@@ -481,7 +481,7 @@ def db_acc_result(mariadb_pool):
                 LEFT JOIN tbl_rel_redzone_sensor_data AS trrsd ON ttar.rz_sen_dt_idx  = trrsd.rz_sen_dt_idx \
                 LEFT JOIN tbl_info_sensor_data AS tisd ON trrsd.sen_dt_idx =tisd.sen_dt_idx \
                 LEFT JOIN tbl_rel_redzone_sensor AS trrs ON trrsd.rz_sen_idx  = trrs.rz_sen_idx \
-                LEFT JOIN tbl_info_sensor  AS tis ON trrs.sen_idx  = tis.sen_idx;"
+                LEFT JOIN tbl_info_sensor  AS tis ON trrs.sen_idx  = tis.sen_idx ORDER BY ttar.acc_detection_time DESC LIMIT 300; "
 
         cursor.execute(query)
         json_result['data'] = cursor.fetchall()

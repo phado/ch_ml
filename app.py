@@ -8,8 +8,8 @@ from flask import Flask,request, jsonify
 import os
 from werkzeug.utils import secure_filename
 from common_management import make_response_json, success_message_json, fail_message_json
-from db_conn import get_pool_conn,  get_pool_conn_origin
-from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete, db_load_xml, db_save_xml,db_train_list,db_train_detail,db_train_create,db_train_delete,db_deploy_list,db_deploy_detail,db_cctv_list,db_acc_result
+from db_conn import get_pool_conn, get_pool_conn_origin
+from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,db_train_list,db_train_detail,db_train_create,db_train_delete,db_deploy_list,db_deploy_detail,db_cctv_list,db_acc_result,db_load_xml, db_save_xml
 
 
 
@@ -72,17 +72,26 @@ def project_tab ():
 def distribution_tab ():
     return render_template('tab/distributionManagement.html')
 
-@app.route('/resource_tab1')
-def resource_tab1 ():
-    return render_template('tab/resourceManagement.html')
-
 @app.route('/resource_tab2')
 def resource_tab2 ():
     return render_template('tab/resourceManagement2.html')
 
-@app.route('/aax_tab')
-def aax_tab ():
+@app.route('/aas_tab')
+def aas_tab ():
     return render_template('tab/aasManagement.html')
+
+@app.route('/grafana_tab')
+def grafana_tab ():
+    return render_template('tab/grafana.html')
+
+@app.route('/cctv_tab')
+def cctv_tab ():
+    return render_template('tab/cctvManagement.html')
+
+@app.route('/cctv_event_tab')
+def cctv_event_tab ():
+    return render_template('tab/cctvEvemtManagement.html')
+
 
 @app.route('/modelingRun')
 def modelingRun ():
@@ -328,7 +337,7 @@ def database_train_detail():
     return result_json
 
 @app.route('/train_project/db_train_create', methods=['POST'])
-def db_train_create():
+def database_train_create():
     """
     tr_name  :학습 프로젝트 이름
     tr_name_air : airflow 경로
@@ -382,7 +391,7 @@ def db_deploy_list():
     data[i][0] = 서비스 idx
     data[i][1] = 서비스 이름
     data[i][2] = 타입
-    data[i][3] = 상태
+    data[i][3] = 상태포
     data[i][4] = 생성시간
     data[i][5] = 수정일
     """
@@ -390,7 +399,7 @@ def db_deploy_list():
     try:
 
         # result_json = make_response_json([])
-        result_json = db_deploy_create(mariadb_pool)
+        result_json = db_deploy_list(mariadb_pool)
 
     except ValueError as e:
         print(e)
@@ -435,22 +444,21 @@ def db_get_cctv():
 
     return result_json
 
-# @app.route('/cctv/db_acc_result', methods=['POST'])
-# def db_deploy_detail():
-#     """
-#     재해 결과 로그 가져오기
-#     """
+@app.route('/cctv/db_acc_result', methods=['POST'])
+def db_deploy_detail():
+    """
+    재해 결과 로그 가져오기
+    """
     
-#     try:
-#         # result_json = make_response_json([])
-#         result_json = db_acc_result(mariadb_pool_origin)
+    try:
+        # result_json = make_response_json([])
+        result_json = db_acc_result(mariadb_pool_origin)
 
-#     except ValueError as e:
-#         print(e)
-#         result_json = fail_message_json(result_json)
+    except ValueError as e:
+        print(e)
+        result_json = fail_message_json(result_json)
 
-#     return result_json
-
+    return result_json
 
 
 
@@ -460,4 +468,5 @@ def db_get_cctv():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0',port=5000) # 0.0.0.0 , 5000 ,
+    # app.run()
