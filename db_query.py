@@ -267,11 +267,11 @@ def db_train_create(mariadb_pool,tr_name,tr_name_air,company_idx,tr_deploy_cycle
         query = f"INSERT INTO tb_prj_training\
                 ( tr_name, tr_name_air, company_idx, tr_deploy_cycle, tr_description)\
                 VALUES('{tr_name}','{tr_name_air}','{company_idx}','{tr_deploy_cycle}','{tr_description}');"
-                
         cursor.execute(query)
-        query = f"SELECT LAST_INSERT_ID();"
 
+        query = f"SELECT LAST_INSERT_ID();"
         cursor.execute(query)
+
         data = cursor.fetchall()
         print(data)
                 
@@ -509,19 +509,27 @@ def db_acc_result(mariadb_pool):
 
 def db_save_xml(mariadb_pool, xml_string, tr_idx_value):
     try:
+        json_result = make_response_json([])
+
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor()
         query = f"UPDATE tb_prj_training SET tr_xml = %s WHERE tr_idx = %s;"
         cursor.execute(query, (xml_string,tr_idx_value,))
         cursor.fetchone()
         connection.commit()
+        json_result = success_message_json(json_result)
     except Exception as e:
         print(e)
+        json_result = fail_message_json(json_result)
     finally:
         if cursor: cursor.close()
         if connection: connection.close()
 
+        return json_result
+
 def db_load_xml(mariadb_pool, tr_idx_value):
+    cursor = None
+    result_json = None
     try:
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor()

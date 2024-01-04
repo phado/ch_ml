@@ -129,9 +129,13 @@ def getXmlData():
         data = request.get_json()
         tr_idx = data['tr_idx']
         xmlData = db_load_xml(mariadb_pool, tr_idx)
+        if xmlData == None:
+            return fail_message_json({})
+        else:
+            return xmlData
     except ValueError as e:
         print(e)
-    return xmlData
+        return fail_message_json({})
 
 '''
 장재명 데이터 처리 관련 코드
@@ -444,21 +448,21 @@ def db_get_cctv():
 
     return result_json
 
-@app.route('/cctv/db_acc_result', methods=['POST'])
-def db_deploy_detail():
-    """
-    재해 결과 로그 가져오기
-    """
+# @app.route('/cctv/db_acc_result', methods=['POST'])
+# def db_deploy_detail():
+#     """
+#     재해 결과 로그 가져오기
+#     """
     
-    try:
-        # result_json = make_response_json([])
-        result_json = db_acc_result(mariadb_pool_origin)
+#     try:
+#         # result_json = make_response_json([])
+#         result_json = db_acc_result(mariadb_pool_origin)
 
-    except ValueError as e:
-        print(e)
-        result_json = fail_message_json(result_json)
+#     except ValueError as e:
+#         print(e)
+#         result_json = fail_message_json(result_json)
 
-    return result_json
+#     return result_json
 
 
 

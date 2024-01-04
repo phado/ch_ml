@@ -1600,10 +1600,11 @@ ArrangePanel.prototype.init = function()
 	if (cell.class) { // 화살표는 class가 없음
 		var div = edUI.createDiv('geFormatSection');
 		div.classList.add('info_console');
-		div.style.height = '300px';
-		div.style.width = '200px';
-		div.style.padding = '0px 15px 0px 0px';
-		//kpst 맵퍼에 데이터 생생 및 불러오가
+		// div.style.height = '648px';
+		// div.style.width = '200px';
+		// div.style.padding = '0px 15px 0px 0px';
+		div.style.cssText = 'border-radius: 5px;border: 1px solid rgb(155, 155, 155);height:648px; width:200px; padding:10px 10px 10px 10px;margin-left: 8px;margin-top: 4px;overflow-y: auto;'
+		//kpst 맵퍼에 데이터 생생 및 불러오기
 		if(cell.class != 'noClass'){
 			if (MxCellMapper[cell.id] == null) {
 				mxCellType(cell.id, cell.class)
@@ -1623,8 +1624,11 @@ ArrangePanel.prototype.init = function()
 
 						attributeKey.innerHTML = key;
 						attributeKey.class = 'attributeKey';
+						attributeKey.style.cssText = 'color:black; padding-bottom:5px; padding-top:15px;'
+
 						attributeValue.innerHTML = clickedCell.data[key];
 						attributeValue.class = 'attributeValue';
+						attributeValue.style.cssText = 'padding-bottom:15px;border-bottom: 1px solid rgb(214, 214, 214);overflow-wrap: break-word;white-space: pre-wrap;'
 
 						div.appendChild(attributeKey);
 						div.appendChild(attributeValue);
@@ -1827,6 +1831,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 	
 	div.style.paddingTop = '8px';
 	div.style.paddingBottom = '6px';
+	// div.style.marginTop = '377px' // 정보입력 버튼 높이 조절
 
 	if (graph.getSelectionCount() > 1)
 	{

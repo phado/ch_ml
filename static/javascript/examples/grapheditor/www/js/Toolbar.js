@@ -214,7 +214,7 @@ Toolbar.prototype.init = function()
 				"nowXml" : xmlString, 
 				"MxCellMapper" : MxCellMapper, 
 				"MxArrowMapper" : MxArrowMapper, 
-				"tr_idx_value": '@@@@@@@@@@@id 가져가야함'
+				"tr_idx_value": '1'//id 가져가야함
 			}; 
 
 			fetch('/diagramDataSave',{
