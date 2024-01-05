@@ -228,3 +228,62 @@ function datasetCreate() {
             console.error("Error:", error);
         });
 }
+
+
+
+fetch('/common/agency_list', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+    .then(response => response.json())
+    .then(data => {
+        var agencyList = data.data;
+        var selectElement = document.getElementById('agencySelect');
+
+        // 기존의 option 삭제
+        selectElement.innerHTML = '';
+
+        // 조회한 데이터로 option을 생성하여 추가
+        agencyList.forEach(item => {
+            var option = document.createElement('option');
+            option.value = item[0];  // item의 속성에 따라 변경
+            option.textContent = item[0];  // item의 속성에 따라 변경
+            selectElement.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error('데이터 가져오기 오류:', error);
+    });
+
+function openFileUploader() {
+    document.getElementById('fileInput').click();
+}
+
+// 파일이 선택되면 호출되는 함수
+function handleFileUpload() {
+    var fileInput = document.getElementById('fileInput');
+    var selectedFile = fileInput.files[0];
+
+    if (selectedFile) {
+        // 선택된 파일에 대한 추가 처리
+        console.log('Selected file:', selectedFile);
+
+        // 새로운 행을 만들어 테이블에 첫 번째 자식으로 추가
+        var table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+        var newRow = table.insertRow(0);
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+
+        // 이미지 엘리먼트 생성 및 속성 설정
+        var imgElement = document.createElement('img');
+        imgElement.src = URL.createObjectURL(selectedFile);
+        imgElement.alt = 'Uploaded Image';
+        cell1.appendChild(imgElement);
+
+        // 텍스트 엘리먼트 생성 및 파일 이름 표시
+        var textNode = document.createTextNode(selectedFile.name);
+        cell2.appendChild(textNode);
+    }
+}

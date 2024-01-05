@@ -1009,10 +1009,14 @@ Toolbar.prototype.addButton = function(classname, tooltip, funct, c)
 
 	 	button.innerHTML = " 실 행 ";
 		button.style.position =  'absolute';
-		button.style.right = '72px';
+		button.style.right = '25px';
 		button.style.width = '72px';
+		button.style.height = '25px';
 		button.style.color = 'white' ;
-		button.style.backgroundColor = 'red' ;
+		button.style.backgroundColor = '#4C5FD6' ;
+		button.style.border = 'none';
+		button.style.borderRadius = '5px';
+
 		var elt = button
 
 		c = (c != null) ? c : this.container;

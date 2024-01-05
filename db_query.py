@@ -491,15 +491,34 @@ def db_acc_result(mariadb_pool):
         return json_result
     
 
-# def db_company_list(mariadb_pool_origin):
-#     connection = mariadb_pool_origin.get_connection()
-#     cursor = connection.cursor()
-#     query = f"SELECT * from tb_company;"
-#     cursor.execute(query)
-#     result = cursor.fetchall() 
-#     return result
+def db_agency_result(mariadb_pool):
+    """
+    """
+    try:
+        json_result = make_response_json([])
 
-def db_save_xml(mariadb_pool, xml_string, projectName):
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+
+        query = f"SELECT cp_name from tbl_info_company;"
+
+        cursor.execute(query)
+        json_result['data'] = cursor.fetchall()
+        connection.commit()
+
+        json_result = success_message_json(json_result)
+    except Exception as e:
+        print(e)
+        json_result = fail_message_json(json_result)
+
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+        return json_result
+
+#xml관련
+def db_save_xml(mariadb_pool, xml_string, tr_idx_value):
     try:
         json_result = make_response_json([])
 

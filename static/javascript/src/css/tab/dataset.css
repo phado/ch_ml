@@ -279,16 +279,26 @@ select {
 }
 .table-area {
   height: 204px;
+  overflow: auto;
 }
 .datasetCreateModal-table {
   margin-top: 8px;
   width: 438px;
+  height: 196px;
   max-height: 204px;
   overflow-y: auto;
   border-radius: 5px;
   background: white;
   border: 1px solid #9b9b9b;
   box-shadow: 0px 4px 10px 0px #00000040;
+}
+
+.datasetCreateModal-table tbody tr {
+  height: 30px; /* 각 행의 높이를 30px로 고정 */
+}
+
+.datasetCreateModal-table img {
+  max-height: 100%; /* 이미지의 높이를 최대로 설정 */
 }
 
 .detail-textarea {

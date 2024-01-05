@@ -76,16 +76,22 @@ function displayBlobImage(base64Data, container) {
         var img = document.createElement('img');
         img.src = "data:image/png;base64," + binaryData;
 
-        container.appendChild(img);
 
-        if (img.height > img.width) {
-            img.style.height = "100%";
-        } else {
-            img.style.width = "100%";
-        }
+        img.onload = function() {
+            if (img.height > img.width) {
+                img.style.height = "100%";
+            } else {
+                img.style.width = "100%";
+            }
+            img.style.objectFit = "cover";
+        };
+
+        img.alt = "등록된 이미지가 없습니다.";
+        container.appendChild(img);
 
         img.style.objectFit = "cover";
     } catch (error) {
         console.error("Error displaying image:", error);
     }
 }
+

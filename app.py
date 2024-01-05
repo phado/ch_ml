@@ -3,16 +3,15 @@ import urllib
 from flask import Flask, render_template, request, jsonify
 import postgres_curd
 import requests
-import json   
+import json
 from flask import Flask,request, jsonify
 import os
 from werkzeug.utils import secure_filename
 from common_management import make_response_json, success_message_json, fail_message_json
-from db_conn import get_pool_conn, get_pool_conn_origin
-from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,db_train_list,db_train_detail,db_train_create,db_train_delete,db_deploy_list,db_deploy_detail,db_cctv_list,db_acc_result,db_load_xml, db_save_xml
-
-
-
+from db_conn import get_pool_conn,get_pool_conn_origin
+from db_query import db_ds_get_list, db_ds_get_detail, db_ds_create, db_ds_delete, db_train_list, db_train_detail, \
+    db_train_create, db_train_delete, db_deploy_list, db_deploy_detail, db_cctv_list, db_acc_result, db_agency_result\
+,db_load_xml, db_save_xml
 app = Flask(__name__)
 mariadb_pool = get_pool_conn()
 mariadb_pool_origin = get_pool_conn_origin()
@@ -90,8 +89,11 @@ def cctv_tab ():
 
 @app.route('/cctv_event_tab')
 def cctv_event_tab ():
-    return render_template('tab/cctvEvemtManagement.html')
+    return render_template('tab/cctvEventManagement.html')
 
+@app.route('/development_environment')
+def development_environment ():
+    return render_template('tab/developmentEnviroment.html')
 
 @app.route('/modelingRun')
 def modelingRun ():
@@ -387,7 +389,7 @@ def database_train_delete():
 
 
 @app.route('/deploy_model/db_deploy_list', methods=['POST'])
-def db_deploy_list():
+def database_deploy_list():
     """
     배포 화면 리스트 
     data[i][0] = 서비스 idx
@@ -446,21 +448,36 @@ def db_get_cctv():
 
     return result_json
 
-# @app.route('/cctv/db_acc_result', methods=['POST'])
-# def db_deploy_detail():
-#     """
-#     재해 결과 로그 가져오기
-#     """
-    
-#     try:
-#         # result_json = make_response_json([])
-#         result_json = db_acc_result(mariadb_pool_origin)
+@app.route('/cctv/db_acc_result', methods=['POST'])
+def database_acc_result():
+    """
+    재해 결과 로그 가져오기
+    """
 
-#     except ValueError as e:
-#         print(e)
-#         result_json = fail_message_json(result_json)
+    try:
+        result_json = db_acc_result(mariadb_pool_origin)
 
-#     return result_json
+    except ValueError as e:
+        print(e)
+        result_json = fail_message_json(result_json)
+
+    return result_json
+
+
+@app.route('/common/agency_list', methods=['POST'])
+def database_agency_result():
+    """
+    기업 결과 로그 가져오기
+    """
+
+    try:
+        result_json = db_agency_result(mariadb_pool_origin)
+
+    except ValueError as e:
+        print(e)
+        result_json = fail_message_json(result_json)
+
+    return result_json
 
 
 
@@ -470,5 +487,4 @@ def db_get_cctv():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5000) # 0.0.0.0 , 5000 ,
-    # app.run()
+    app.run()

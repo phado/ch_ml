@@ -196,11 +196,11 @@ function createProject(){
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            tr_name: projectName,
-            tr_name_air: projectModelName,
-            tr_deploy_cycle: projectCycle,
-            tr_description: projectDescription,
-            // ds_idx: datasetCreateIdx,
+          tr_name: projectName,
+          tr_name_air: projectModelName,
+          tr_deploy_cycle: projectCycle,
+          tr_description: projectDescription,
+          // ds_idx: datasetCreateIdx,
         }),
     })
         .then(response => response.json())
