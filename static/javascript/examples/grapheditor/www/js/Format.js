@@ -599,8 +599,10 @@ Format.prototype.refresh = function()
 		// kpst edit 창닫기 강제 이벤트
 		window.addEventListener('keydown', (e) => {
 		  if (e.code === 'Escape') {
-			document.getElementById('dataset').remove()
-			document.getElementById('background').remove()
+			if (document.getElementById('dataset')){
+				document.getElementById('dataset').remove()
+				document.getElementById('background').remove()
+			}
 		  }
 		});
 	}
@@ -1598,29 +1600,55 @@ ArrangePanel.prototype.init = function()
 	if (cell.class) { // 화살표는 class가 없음
 		var div = edUI.createDiv('geFormatSection');
 		div.classList.add('info_console');
-		div.style.height = '300px';
-		div.style.width = '200px';
-		div.style.padding = '0px 15px 0px 0px';
-		//kpst 맵퍼에 데이터 생생 및 불러오가
+		// div.style.height = '648px';
+		// div.style.width = '200px';
+		// div.style.padding = '0px 15px 0px 0px';
+		div.style.cssText = 'border-radius: 5px;border: 1px solid rgb(155, 155, 155);height:648px; width:200px; padding:10px 10px 10px 10px;margin-left: 8px;margin-top: 4px;overflow-y: auto;'
+		//kpst 맵퍼에 데이터 생생 및 불러오기
 		if(cell.class != 'noClass'){
 			if (MxCellMapper[cell.id] == null) {
 				mxCellType(cell.id, cell.class)
 			}
+			var clickedCell = edUI.editor.graph.getSelectionCell().kpstCellData;
+			
+			if(clickedCell == undefined || clickedCell.data == ""){
+				div.textContent += MxCellMapper[cell.id]['type'];
+				// kpst 값이 없는 경우 출력 안함
+			}
+			else{
+				div.textContent += MxCellMapper[cell.id]['type'];
+				for (let key in clickedCell.data) {
+					if (clickedCell.data.hasOwnProperty(key)) {
+						var attributeKey = document.createElement('div');
+						var attributeValue = document.createElement('div');
 
-			div.textContent += MxCellMapper[cell.id]['type'];
+						attributeKey.innerHTML = key;
+						attributeKey.class = 'attributeKey';
+						attributeKey.style.cssText = 'color:black; padding-bottom:5px; padding-top:15px;'
+
+						attributeValue.innerHTML = clickedCell.data[key];
+						attributeValue.class = 'attributeValue';
+						attributeValue.style.cssText = 'padding-bottom:15px;border-bottom: 1px solid rgb(214, 214, 214);overflow-wrap: break-word;white-space: pre-wrap;'
+
+						div.appendChild(attributeKey);
+						div.appendChild(attributeValue);
+					}
+				}
+				
+			}
 			this.container.appendChild(div); //KPST 우측 arrange 에서 메뉴바에 정보 창 더하기
 		}
 
 	}else {
-		//화살표 정보 맵핑
-		var arrowId = (cell.id !== undefined && cell.id !== null) ? cell.id : -1;
-		var arrowMxId = (cell.mxObjectId !== undefined && cell.mxObjectId !== null) ? cell.mxObjectId : -1;
-		var arrowSource = (cell.source !== undefined && cell.source !== null) ? cell.source.id : -1;
-		var arrowTarget = (cell.target !== undefined && cell.target !== null) ? cell.target.id : -1;
-
-		var arrowMap = {"id" : arrowId ,'MxObjId' : arrowMxId, "source" : arrowSource , "target" : arrowTarget }
-		console.log(arrowMap) // KPST 연결된 맵퍼 표시
-		MxArrowMapper[arrowId] = arrowMap
+		//화살표 정보 맵핑 최종 실행에서 바인딩
+		// var arrowId = (cell.id !== undefined && cell.id !== null) ? cell.id : -1;
+		// var arrowMxId = (cell.mxObjectId !== undefined && cell.mxObjectId !== null) ? cell.mxObjectId : -1;
+		// var arrowSource = (cell.source !== undefined && cell.source !== null) ? cell.source.id : -1;
+		// var arrowTarget = (cell.target !== undefined && cell.target !== null) ? cell.target.id : -1;
+		//
+		// var arrowMap = {"id" : arrowId ,'MxObjId' : arrowMxId, "source" : arrowSource , "target" : arrowTarget }
+		// // console.log(arrowMap) // KPST 연결된 맵퍼 표시
+		// MxArrowMapper[arrowId] = arrowMap
 	}
 	this.container.appendChild(this.addGroupOps(this.createPanel()));
 
@@ -1803,6 +1831,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 	
 	div.style.paddingTop = '8px';
 	div.style.paddingBottom = '6px';
+	// div.style.marginTop = '377px' // 정보입력 버튼 높이 조절
 
 	if (graph.getSelectionCount() > 1)
 	{
@@ -1933,7 +1962,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			buttons.appendChild(applyBtn);
 
 				//kpst 맵퍼에 데이터 생생 및 불러오가
-				if (MxCellMapper[cell.id] == null){
+				if (cell.kpstCellData == null){
 					mxCellType(cell.id, cell.class)
 				}
 				cell.kpstCellData = MxCellMapper[cell.id]

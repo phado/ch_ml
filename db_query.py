@@ -267,11 +267,11 @@ def db_train_create(mariadb_pool,tr_name,tr_name_air,company_idx,tr_deploy_cycle
         query = f"INSERT INTO tb_prj_training\
                 ( tr_name, tr_name_air, company_idx, tr_deploy_cycle, tr_description)\
                 VALUES('{tr_name}','{tr_name_air}','{company_idx}','{tr_deploy_cycle}','{tr_description}');"
-                
         cursor.execute(query)
-        query = f"SELECT LAST_INSERT_ID();"
 
+        query = f"SELECT LAST_INSERT_ID();"
         cursor.execute(query)
+
         data = cursor.fetchall()
         print(data)
                 
@@ -481,7 +481,7 @@ def db_acc_result(mariadb_pool):
                 LEFT JOIN tbl_rel_redzone_sensor_data AS trrsd ON ttar.rz_sen_dt_idx  = trrsd.rz_sen_dt_idx \
                 LEFT JOIN tbl_info_sensor_data AS tisd ON trrsd.sen_dt_idx =tisd.sen_dt_idx \
                 LEFT JOIN tbl_rel_redzone_sensor AS trrs ON trrsd.rz_sen_idx  = trrs.rz_sen_idx \
-                LEFT JOIN tbl_info_sensor  AS tis ON trrs.sen_idx  = tis.sen_idx LIMIT 300;"
+                LEFT JOIN tbl_info_sensor  AS tis ON trrs.sen_idx  = tis.sen_idx ORDER BY ttar.acc_detection_time DESC LIMIT 300; "
 
         cursor.execute(query)
         json_result['data'] = cursor.fetchall()
@@ -499,8 +499,48 @@ def db_acc_result(mariadb_pool):
         return json_result
 
 
+# def db_company_list(mariadb_pool_origin):
+#     connection = mariadb_pool_origin.get_connection()
+#     cursor = connection.cursor()
+#     query = f"SELECT * from tb_company;"
+#     cursor.execute(query)
+#     result = cursor.fetchall() 
+#     return result
+
+def db_save_xml(mariadb_pool, xml_string, tr_idx_value):
+    try:
+        json_result = make_response_json([])
 
 def db_agency_result(mariadb_pool):
+    """
+    기업 리스트 정보
+    data[0]=기업이름
+    data[1]=공장이름
+    data[2]=레드존
+    data[3]=재해유형
+    data[4]=스냅샷
+    data[5]=발생시간
+    """
+    try:
+        json_result = make_response_json([])
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+        query = f"UPDATE tb_prj_training SET tr_xml = %s WHERE tr_idx = %s;"
+        cursor.execute(query, (xml_string,tr_idx_value,))
+        cursor.fetchone()
+        connection.commit()
+        json_result = success_message_json(json_result)
+    except Exception as e:
+        print(e)
+        json_result = fail_message_json(json_result)
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+        return json_result
+
+def db_agencylist_result(mariadb_pool):
     """
     기업 리스트 정보
     data[0]=기업이름
@@ -534,7 +574,22 @@ def db_agency_result(mariadb_pool):
         return json_result
 
 
-
+def db_load_xml(mariadb_pool, tr_idx_value):
+    cursor = None
+    result_json = None
+    try:
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+        query = f"SELECT tr_xml from tb_prj_training WHERE tr_idx = %s;"
+        cursor.execute(query, (tr_idx_value,))
+        result = cursor.fetchone()
+        result_json = {}
+        result_json['xmlData'] = result[0]
+    except Exception as e:
+        print(e)
+    finally:
+        if cursor: cursor.close()
+        return result_json
 
 if __name__ == "__main__":
     import db_conn

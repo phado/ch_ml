@@ -409,7 +409,7 @@ Editor.prototype.createGraph = function(themes, model)
 			return !this.isExternalProtocol(href);
 		};
 	}
-	
+	uniGraph = graph //KPST graph 할당 하는 곳
 	return graph;
 };
 

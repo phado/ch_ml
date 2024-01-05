@@ -29,6 +29,37 @@ let mapperList = {
   },
 };
 
+document.addEventListener("DOMContentLoaded", function() {
+  var dataToSend = { 'tr_idx': 1 };
+
+  fetch('/diagramDataLoad', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(dataToSend)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const xmlData = data.xmlData;
+
+    // if(xmlData[1] ==)
+    // processGraphxml = xmlData.slice(1, -1);
+    processGraphxml = xmlData.replace(/\\/g, '');
+    uploadXML(processGraphxml);
+  })
+  .catch(error => {
+    console.error('Error during fetch:', error);
+  });
+});
+ 
+
+
 function mxCellType(cellId, cellType) {
   // 생성된 셀 타입 확인
   var mapper = mapperList[cellType];
@@ -375,6 +406,22 @@ function ObjectDetection(mapperData,cellId) {
   var inputArea2 = createInputArea("input-area2", "50%", 7, 11);
   modal.appendChild(inputArea2);
 
+  var keysArray = Object.keys(mapperData.data);
+
+  // input area 1 값 불러오는 부분
+  var inputArea1Keys = inputArea1.getElementsByTagName('input');
+  for(var i = 0; i < inputArea1Keys.length; i++){
+    if (mapperData.data && mapperData.data[keysArray[i]] !== undefined) {
+      inputArea1Keys[i].value = mapperData.data[keysArray[i]];
+    }
+  }
+  // input area 2 값 불러오는 부분
+  var inputArea2Keys = inputArea2.getElementsByTagName('input');
+  for(var i = 0; i < keysArray.length - inputArea1Keys.length; i++){
+    if (mapperData.data && mapperData.data[keysArray[i]] !== undefined) {
+      inputArea2Keys[i].value = mapperData.data[keysArray[i]];
+    }
+  }
   return modal;
 }
 
@@ -414,14 +461,21 @@ function createInputArea(id, width, start, end) {
   return inputArea;
 }
 
-function Classification(mapperData,cellId) {var div = document.createElement("div");
+function Classification(mapperData,cellId) {
+  var div = document.createElement("div");
 
   var modal = document.createElement("div");
   modal.className = "dataModal";
 
+  applyStyles(modal, {
+    width: "100%",
+    height: "95%",
+  });
+
   var ClassificationLabel1 = document.createElement("label");
   var labelText = document.createTextNode("기업 선택");
   ClassificationLabel1.appendChild(labelText);
+  applyStyles(ClassificationLabel1, Roboto16Style);
 
   var ClassificationSelect1 = document.createElement("select");
   ClassificationSelect1.id = "ClassificationSelect1";
@@ -432,11 +486,13 @@ function Classification(mapperData,cellId) {var div = document.createElement("di
     option.value = optionText;
     option.text = optionText;
     ClassificationSelect1.appendChild(option);
+    applyStyles(ClassificationSelect1, selectBoxStyle);
   });
 
   var ClassificationLabel2 = document.createElement("label");
   labelText = document.createTextNode("데이터셋 선택");
   ClassificationLabel2.appendChild(labelText);
+  applyStyles(ClassificationLabel2, Roboto16Style);
 
   var ClassificationSelect2 = document.createElement("select");
   ClassificationSelect2.id = "ClassificationSelect2";
@@ -447,18 +503,22 @@ function Classification(mapperData,cellId) {var div = document.createElement("di
     option.value = optionText;
     option.text = optionText;
     ClassificationSelect2.appendChild(option);
+    applyStyles(ClassificationSelect2, selectBoxStyle);
   });
 
   var ClassificationLabel3 = document.createElement("label");
   labelText = document.createTextNode("메모");
   ClassificationLabel3.appendChild(labelText);
+  applyStyles(ClassificationLabel3, Roboto16Style);
 
   var ClassificationInput1 = document.createElement("input");
   ClassificationInput1.type = "text";
   ClassificationInput1.id = "ClassificationInput1";
+  applyStyles(ClassificationInput1, textareaStyle);
+
 
   //값 불러오는 부분
-  if (mapperData.data && mapperData.data.keypoint1SelectedValue !== undefined) {
+  if (mapperData.data && mapperData.data.ClassificationSelect1 !== undefined) {
     ClassificationSelect1.value = mapperData.data.keypoint1SelectedValue;
   }
   if (mapperData.data && mapperData.data.keypoint2SelectedValue !== undefined) {
@@ -627,52 +687,11 @@ function cellDataBinder(cellValue,cellId){
   }
 
   if(cellValue =='Object-Detection'){
-    var Object1Input = document.getElementById('weights');
-    var Object1InputValue = Object1Input.value;
-
-    var Object2Input = document.getElementById('cfg');
-    var Object2InputValue = Object2Input.value;
-
-    var Object3Input = document.getElementById('data-class');
-    var Object3InputValue = Object3Input.value;
-
-    var Object4Input = document.getElementById('hyp');
-    var Object4InputValue = Object4Input.value;
-
-    var Object5Input = document.getElementById('epochs');
-    var Object5InputValue = Object5Input.value;
-
-    var Object6Input = document.getElementById('batch-size');
-    var Object6InputValue = Object6Input.value;
-
-    var Object7Input = document.getElementById('imgsz');
-    var Object7InputValue = Object7Input.value;
-
-    var Object8Input = document.getElementById('resume');
-    var Object8InputValue = Object8Input.value;
-
-    var Object9Input = document.getElementById('optimizer');
-    var Object9InputValue = Object9Input.value;
-
-    var Object10Input = document.getElementById('label-smoothing');
-    var Object10InputValue = Object10Input.value;
-
-    var Object11Input = document.getElementById('freeze');
-    var Object11InputValue = Object11Input.value;
-
-    MxCellMapper[cellId].data = {
-      weights: Object1InputValue,
-      cfg: Object2InputValue,
-      dataclass: Object3InputValue,
-      hyp: Object4InputValue,
-      epochs: Object5InputValue,
-      batchsize: Object6InputValue,
-      imgsz: Object7InputValue,
-      resume: Object8InputValue,
-      optimizer: Object9InputValue,
-      labelsmoothing: Object10InputValue,
-      freeze: Object11InputValue,
-    };
+    var deployDataInput = document.getElementsByClassName('geDialog')[0].getElementsByTagName('input');
+    MxCellMapper[cellId].data = {};
+    for(var i = 0 ; i < deployDataInput.length; i++){
+      MxCellMapper[cellId].data[deployDataInput[i].id] = deployDataInput[i].value;
+    }
   }
 
   if(cellValue =='Classification'){
@@ -693,21 +712,60 @@ function cellDataBinder(cellValue,cellId){
   }
 
   if(cellValue =='Deploy'){
-    var Deploy1Select = document.getElementById('DeployLabelSelect1');
-    var Deploy1SelectedValue = Deploy1Select.value;
+    // var weightsValue = document.getElementById("weights").value;
+    // var cfgValue = document.getElementById("cfg").value;
+    // var dataClassValue = document.getElementById("data-class").value;
+    // var hypValue = document.getElementById("hyp").value;
+    // var epochsValue = document.getElementById("epochs").value;
+    // var batchSizeValue = document.getElementById("batch-size").value;
 
-    var Deploy2Select = document.getElementById('DeployLabelSelect2');
-    var Deploy2SelectedValue = Deploy2Select.value;
+    // var imgszValue = document.getElementById('imgsz').value;
+    // var resumeValue = document.getElementById("resume").value;
+    // var optimizerValue = document.getElementById("optimizer").value;
+    // var labelSmoothingValue = document.getElementById("label-smoothing").value;
+    // var freezeValue = document.getElementById("freeze").value;
+    // var deployDataInput = document.getElementsByClassName('geDialog')[0].getElementsByTagName('input');
+    // xCellMapper[cellId].data = {};
+    // for(var i = 0 ; i <deployDataInput.length; i++){
+    //   MxCellMapper[cellId].data[deployDataInput[i].id] = deployDataInput[i].value;
+    // }
 
-    var Deploy1Input = document.getElementById('DeployInput1');
-    var Deploy1InputValue = Deploy1Input.value;
-
-    MxCellMapper[cellId].data = {
-      Deploy1SelectedValue: Deploy1SelectedValue,
-      Deploy2SelectedValue: Deploy2SelectedValue,
-      Deploy1InputValue: Deploy1InputValue
-    };
+    // MxCellMapper[cellId].data = {
+    //   weightsValue: weightsValue,
+    //   cfgValue: cfgValue,
+    //   dataClassValue: dataClassValue,
+    //   hypValue: hypValue,
+    //   epochsValue: epochsValue,
+    //   batchSizeValue: batchSizeValue,
+    //   imgszValue: imgszValue,
+    //   resumeValue: resumeValue,
+    //   optimizerValue: optimizerValue,
+    //   labelSmoothingValue: labelSmoothingValue,
+    //   freezeValue: freezeValue
+    // };
   }
 
-  return MxCellMapper[cellId].data
+  return MxCellMapper[cellId]
+}
+
+function uploadXML(xmlData) {
+  let xml = xmlData;
+
+  if (xml == "") {
+      return;
+  }
+  let doc = mxUtils.parseXml(xml);
+  let codec = new mxCodec(doc);
+
+  if (universalGraph && universalGraph !== "") {
+      codec.decode(doc.documentElement, universalGraph.getModel());
+  }
+
+  //MxCellMapper에 값 불러오기
+  edUI.editor.graph.getChildCells().forEach(function (parsCell) {
+    // edge가 아닌 cell인 경우
+    if(parsCell.class){
+      MxCellMapper[parsCell.id] = parsCell.kpstCellData
+    }
+	});
 }
