@@ -498,57 +498,8 @@ def db_acc_result(mariadb_pool):
 
         return json_result
 
-
-# def db_company_list(mariadb_pool_origin):
-#     connection = mariadb_pool_origin.get_connection()
-#     cursor = connection.cursor()
-#     query = f"SELECT * from tb_company;"
-#     cursor.execute(query)
-#     result = cursor.fetchall() 
-#     return result
-
-def db_save_xml(mariadb_pool, xml_string, tr_idx_value):
-    try:
-        json_result = make_response_json([])
-
 def db_agency_result(mariadb_pool):
     """
-    기업 리스트 정보
-    data[0]=기업이름
-    data[1]=공장이름
-    data[2]=레드존
-    data[3]=재해유형
-    data[4]=스냅샷
-    data[5]=발생시간
-    """
-    try:
-        json_result = make_response_json([])
-
-        connection = mariadb_pool.get_connection()
-        cursor = connection.cursor()
-        query = f"UPDATE tb_prj_training SET tr_xml = %s WHERE tr_idx = %s;"
-        cursor.execute(query, (xml_string,tr_idx_value,))
-        cursor.fetchone()
-        connection.commit()
-        json_result = success_message_json(json_result)
-    except Exception as e:
-        print(e)
-        json_result = fail_message_json(json_result)
-    finally:
-        if cursor: cursor.close()
-        if connection: connection.close()
-
-        return json_result
-
-def db_agencylist_result(mariadb_pool):
-    """
-    기업 리스트 정보
-    data[0]=기업이름
-    data[1]=공장이름
-    data[2]=레드존
-    data[3]=재해유형
-    data[4]=스냅샷
-    data[5]=발생시간
     """
     try:
         json_result = make_response_json([])
@@ -573,6 +524,26 @@ def db_agencylist_result(mariadb_pool):
 
         return json_result
 
+#xml관련
+def db_save_xml(mariadb_pool, xml_string, tr_idx_value):
+    try:
+        json_result = make_response_json([])
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+        query = f"UPDATE tb_prj_training SET tr_xml = %s WHERE tr_idx = %s;"
+        cursor.execute(query, (xml_string,tr_idx_value,))
+        cursor.fetchone()
+        connection.commit()
+        json_result = success_message_json(json_result)
+    except Exception as e:
+        print(e)
+        json_result = fail_message_json(json_result)
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+        return json_result
 
 def db_load_xml(mariadb_pool, tr_idx_value):
     cursor = None
