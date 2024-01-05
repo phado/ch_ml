@@ -9,9 +9,8 @@ import os
 from werkzeug.utils import secure_filename
 from common_management import make_response_json, success_message_json, fail_message_json
 from db_conn import get_pool_conn,get_pool_conn_origin
-from db_query import db_ds_get_list,db_ds_get_detail,db_ds_create,db_ds_delete,db_train_list,db_train_detail,db_train_create,db_train_delete,db_deploy_list,db_deploy_detail,db_cctv_list,db_acc_result
-
-
+from db_query import db_ds_get_list, db_ds_get_detail, db_ds_create, db_ds_delete, db_train_list, db_train_detail, \
+    db_train_create, db_train_delete, db_deploy_list, db_deploy_detail, db_cctv_list, db_acc_result, db_agency_result
 
 app = Flask(__name__)
 mariadb_pool = get_pool_conn()
@@ -90,12 +89,11 @@ def cctv_tab ():
 
 @app.route('/cctv_event_tab')
 def cctv_event_tab ():
-    return render_template('tab/cctvEvemtManagement.html')
+    return render_template('tab/cctvEventManagement.html')
 
-
-@app.route('/modelingRun')
-def modelingRun ():
-    return render_template('tab/modelingRun.html')
+@app.route('/development_environment')
+def development_environment ():
+    return render_template('tab/developmentEnviroment.html')
 '''
 장재명 데이터 처리 관련 코드
 '''
@@ -414,7 +412,6 @@ def database_acc_result():
     """
 
     try:
-        # result_json = make_response_json([])
         result_json = db_acc_result(mariadb_pool_origin)
 
     except ValueError as e:
@@ -424,7 +421,20 @@ def database_acc_result():
     return result_json
 
 
+@app.route('/common/agency_list', methods=['POST'])
+def database_agency_result():
+    """
+    재해 결과 로그 가져오기
+    """
 
+    try:
+        result_json = db_agency_result(mariadb_pool_origin)
+
+    except ValueError as e:
+        print(e)
+        result_json = fail_message_json(result_json)
+
+    return result_json
 
 
 

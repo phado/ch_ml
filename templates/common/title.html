@@ -15,19 +15,19 @@
         >데이터셋</a
       >
       <a href="/project_tab" class="title-text title-tab project-text"
-        >프로젝트 관리</a
+        >M/L 관리</a
       >
       <a href="/distribution_tab" class="title-text title-tab deployment-text"
         >배포 관리</a
       >
       <a href="/resource_tab2" class="title-text title-tab resource-text2"
-      >리소스 관리</a
+      >데이터셋 저장소 </a
       >
       <a href="/aas_tab" class="title-text title-tab aax-text"
       >AAS</a
       >
       <a href="/grafana_tab" class="title-text title-tab grafana-text"
-      >Grafana</a
+      >자원 관리</a
       >
       <a href="/cctv_tab" class="title-text title-tab cctv-text"
       >CCTV 관리</a
@@ -38,13 +38,54 @@
       <img
         src="{{url_for('static', filename='/javascript/src/images/userName.svg')}}"
         alt="Image"
-        class="username-img"
+        class="username-img" id="userImage"
       />
+      <div id="menuList" class="menu-list" >
+        <a href="/dataset_tab" class="menu">데이터셋</a>
+        <a href="/project_tab" class="menu">M/L 관리</a>
+        <a href="/distribution_tab" class="menu">배포 관리</a>
+        <a href="/resource_tab2" class="menu">데이터셋 저장소 </a>
+        <a href="/aas_tab" class="menu">AAS</a>
+        <a href="/grafana_tab" class="menu">자원 관리</a>
+        <a href="/cctv_tab" class="menu">CCTV 관리</a>
+        <a href="/cctv_event_tab" class="menu">CCTV 이벤트</a>
+        <a href="/development_environment" class="menu">개발 환경</a>
+      </div>
     </header>
   <script>
       function goHome(){
           location.replace("/dataset_tab")
       }
+
+      document.addEventListener('click', function (event) {
+        var userImage = document.getElementById('userImage');
+        var menuList = document.getElementById('menuList');
+
+        if (event.target !== userImage && event.target.parentNode !== menuList) {
+          menuList.style.display = 'none';
+        }
+      });
+
+      document.getElementById('userImage').addEventListener('click', function (event) {
+        var menuList = document.getElementById('menuList');
+        if (menuList.style.display === 'block') {
+          menuList.style.display = 'none';
+        } else {
+          menuList.style.display = 'block';
+        }
+        event.stopPropagation();
+      });
+
+      var menuItems = document.querySelectorAll('.menu-list a');
+      menuItems.forEach(function (item) {
+        item.addEventListener('click', function (event) {
+          var href = item.getAttribute('href');
+          if (href) {
+            window.location.href = href; // 페이지 이동 로직
+          }
+        });
+      });
+
   </script>
   </body>
 </html>

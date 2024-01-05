@@ -37,6 +37,7 @@ header {
   font-weight: 600;
   line-height: 42px;
   text-align: center;
+  cursor: pointer;
 }
 
 .title-tab {
@@ -44,6 +45,7 @@ header {
   font-size: 17px;
   font-weight: 600;
   line-height: 21px;
+  width: 120px;
 }
 
 .dataset-text {
@@ -58,24 +60,22 @@ header {
 
 .deployment-text {
   top: 36px;
-  left: 660px;
+  left: 640px;
 }
 
 .aax-text{
   top: 36px;
-  left: 780px;
+  left: 760px;
 }
 
 .resource-text2{
   top: 36px;
-  left: 860px;
-  width: 104px;
+  left: 840px
 }
 
 .grafana-text{
   top: 36px;
   left: 980px;
-  width: 104px;
 }
 
 .cctv-text{
@@ -90,12 +90,14 @@ header {
 @media screen and (max-width: 1560px) {
   .username-img {
     display: none;
+    cursor: pointer;
   }
 }
 
 
 @media screen and (min-width: 1101px) {
   .username-img {
+    cursor: pointer;
     position: absolute;
     top: 25px;
     right: 37px; /* 오른쪽에서 37px 위치 */
@@ -106,4 +108,38 @@ header {
     line-height: 35px;
     color: #fff;
   }
+}
+
+.menu-list {
+  width: 123px;
+  height: 269px;
+  background-color:white;
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+
+  position: absolute;
+  top: 63px;
+  right: 37px;
+}
+
+.menu-list a {
+  display: block;
+  text-decoration: none;
+  color: #333;
+  padding: 4px;
+}
+
+.menu-list a:hover {
+  background-color: #f4f4f4;
+}
+
+.menu{
+  font-family: RobotoFont;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0em;
+  text-align: center;
 }

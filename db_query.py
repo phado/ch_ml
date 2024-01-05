@@ -497,9 +497,43 @@ def db_acc_result(mariadb_pool):
         if connection: connection.close()
 
         return json_result
-    
 
-    
+
+
+def db_agency_result(mariadb_pool):
+    """
+    기업 리스트 정보
+    data[0]=기업이름
+    data[1]=공장이름
+    data[2]=레드존
+    data[3]=재해유형
+    data[4]=스냅샷
+    data[5]=발생시간
+    """
+    try:
+        json_result = make_response_json([])
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+
+        query = f"SELECT cp_name from tbl_info_company;"
+
+        cursor.execute(query)
+        json_result['data'] = cursor.fetchall()
+        connection.commit()
+
+        json_result = success_message_json(json_result)
+    except Exception as e:
+        print(e)
+        json_result = fail_message_json(json_result)
+
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+        return json_result
+
+
 
 
 if __name__ == "__main__":

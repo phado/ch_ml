@@ -158,44 +158,19 @@
               alt="Image"
             />
             <img
-              style="margin-left: 6px; margin-top: 20px"
-              src="{{url_for('static', filename='/javascript/src/images/addbox.svg')}}"
-              alt="Image"
+                    style="margin-left: 6px; margin-top: 20px; cursor: pointer;"
+                    src="{{url_for('static', filename='/javascript/src/images/addbox.svg')}}"
+                    alt="Image"
+                    onclick="openFileUploader()"
             />
           </div>
+          <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload()">
           <div class="table-area">
-            <table class="datasetCreateModal-table">
+
+            <table class="datasetCreateModal-table" id="dataTable">
               <tbody>
-                <!-- {% for _ in range(7) %}
-                <tr>
-                  <td>
-                    <img
-                      src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
-                      alt="Image"
-                    />
-                  </td>
-                  <td>Data Path 1</td>
-                </tr>
-                {% endfor %} -->
-                <tr>
-                  <td>
-                    <img
-                      src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
-                      alt="Image"
-                    />
-                  </td>
-                  <td>금진_끼임</td>
-                </tr>
-                <tr>
-                  <td>
-                    <img
-                      src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
-                      alt="Image"
-                    />
-                  </td>
-                  <td>금진_낙하</td>
-                </tr>
               </tbody>
+
             </table>
           </div>
 
