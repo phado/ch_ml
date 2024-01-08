@@ -9,7 +9,7 @@ import os
 from werkzeug.utils import secure_filename
 from common_management import make_response_json, success_message_json, fail_message_json
 from db_conn import get_pool_conn,get_pool_conn_origin
-from db_query import db_ds_get_list, db_ds_get_detail, db_ds_create, db_ds_delete, db_train_list, db_train_detail, \
+from db_query import db_ds_get_list, db_ds_get_detail, db_ds_create, db_ds_delete, db_get_ds_by_company_index, db_train_list, db_train_detail, \
     db_train_create, db_train_delete, db_deploy_list, db_deploy_detail, db_cctv_list, db_acc_result, db_agency_result\
 ,db_load_xml, db_save_xml
 app = Flask(__name__)
@@ -111,16 +111,19 @@ def runSubmit():
     now_xml = data['nowXml']
     mx_cell_mapper = data["MxCellMapper"]
     mx_arrow_mapper = data["MxArrowMapper"]
-    tr_idx = data['tr_idx_value']
+    dataset_info = data['datasetInfo']
+    project_idx = data['projectIdx']
 
     try:
         response_data = {
             'now_xml': now_xml,
             'mx_cell_mapper': json.dumps(mx_cell_mapper),
             'mx_arrow_mapper':json.dumps(mx_arrow_mapper),
-            'redirect_url': '/modelingRun'
+            'redirect_url': '/modelingRun',
+            'dataset_info' : dataset_info,
+            'project_idx' : project_idx
         }
-        db_save_xml(mariadb_pool, now_xml, tr_idx)
+        db_save_xml(mariadb_pool, now_xml, dataset_info, project_idx)
     except ValueError as e:
         print(e)
     return jsonify(response_data)
@@ -287,6 +290,23 @@ def db_dataset_delete():
 
     return result_json
 
+@app.route('/dataset/db_get_ds_by_company_index', methods=['GET', 'POST'])
+def db_dataset_by_company():
+    try:
+        data = request.get_json()
+        company_name = data["companyName"]
+
+        # result_json = make_response_json([])
+        result_json = db_get_ds_by_company_index(mariadb_pool,company_name)
+
+    except ValueError as e:
+        print(e)
+        result_json = fail_message_json(result_json)
+
+    return result_json
+
+    
+    
 @app.route('/train_project/db_train_list', methods=['POST'])
 def database_train_list():
     """

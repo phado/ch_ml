@@ -28,10 +28,9 @@ function getProjectTableData() {
   })
       .then((response) => response.json())
       .then((data) => {
-        var datasetList = data.data;
-
+        var projectList = data.data;
         var tableBody = document.getElementById("ProjectTableBody");
-        for (var i = 0; i < datasetList.length; i++) {
+        for (var i = 0; i < projectList.length; i++) {
           var row = tableBody.insertRow(i);
           var cell1 = row.insertCell(0);
           var cell2 = row.insertCell(1);
@@ -57,14 +56,14 @@ function getProjectTableData() {
           cell10.classList.add("data-cell", "center");
           cell11.classList.add("data-cell", "center");
 
-          cell1.innerHTML = '<img style="margin-left: 24px; margin-right: 16px" src="/static/javascript/src/images/box.svg" alt="Image" />' + datasetList[i][1];
-          cell2.innerHTML = datasetList[i][2];
-          cell3.innerHTML = datasetList[i][3];
-          cell4.innerHTML = datasetList[i][4];
-          cell5.innerHTML = convertDateType(datasetList[i][5]);
-          cell6.innerHTML = datasetList[i][6]
-          cell7.innerHTML = datasetList[i][7]
-          cell8.innerHTML = convertDateType(datasetList[i][8])
+          cell1.innerHTML = '<img style="margin-left: 24px; margin-right: 16px" src="/static/javascript/src/images/box.svg" alt="Image" />' + projectList[i][1];
+          cell2.innerHTML = projectList[i][2];
+          cell3.innerHTML = projectList[i][3];
+          cell4.innerHTML = projectList[i][4];
+          cell5.innerHTML = convertDateType(projectList[i][5]);
+          cell6.innerHTML = projectList[i][6]
+          cell7.innerHTML = projectList[i][7]
+          cell8.innerHTML = convertDateType(projectList[i][8])
 
           var detailImageSrc = "/static/javascript/src/images/detail.svg";
           var detailImage = document.createElement("img");
@@ -73,7 +72,7 @@ function getProjectTableData() {
           detailImage.setAttribute("alt", "Image");
           detailImage.onclick = (function(index) {
             return function() {
-              detailProject(datasetList[index][0]); // 이 부분에서 인덱스를 사용
+              detailProject(projectList[index][0]); // 이 부분에서 인덱스를 사용
             };
           })(i);
           cell9.appendChild(detailImage);
@@ -85,7 +84,7 @@ function getProjectTableData() {
           deleteImage.setAttribute("alt", "Image");
           deleteImage.onclick = (function(index) {
             return function() {
-              deleteProject(datasetList[index][0]); // 이 부분에서 인덱스를 사용
+              deleteProject(projectList[index][0]); // 이 부분에서 인덱스를 사용
             };
           })(i);
           cell11.appendChild(deleteImage);
@@ -160,7 +159,7 @@ function deleteProject(index) {
     var isConfirmed = confirm("프로젝트를 삭제하시겠습니까?");
     if (isConfirmed) {
         var requestData = {
-            ds_idx: index
+            tr_idx: index
         };
 
         fetch("/train_project/db_train_delete", {
@@ -206,6 +205,7 @@ function createProject(){
         .then(response => response.json())
         .then(data => {
             localStorage.setItem('projectName', projectName);
+            localStorage.setItem('projectIdx', data['tr_idx']);
             window.location.href = '/modeling';
         })
         .catch(error => {

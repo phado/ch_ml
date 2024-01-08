@@ -1,4 +1,5 @@
 let MxCellFormMapper = {};
+let companyList = [];
 
 const arrowMapper = {"id" : -1 , 'source' : -1 , 'target' : -1 }
 
@@ -30,7 +31,7 @@ let mapperList = {
 };
 
 document.addEventListener("DOMContentLoaded", function() {
-  var dataToSend = { 'tr_idx': 1 };
+  var dataToSend = { 'tr_idx': localStorage.getItem('projectIdx') };
 
   fetch('/diagramDataLoad', {
     method: "POST",
@@ -56,6 +57,20 @@ document.addEventListener("DOMContentLoaded", function() {
   .catch(error => {
     console.error('Error during fetch:', error);
   });
+
+  fetch('/common/agency_list', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      companyList = data.data;
+      })
+    .catch(error => {
+        console.error('데이터 가져오기 오류:', error);
+    });
 });
  
 
@@ -134,6 +149,16 @@ var smallInputBoxStyle = {
   borderRadius: "5px",
   border: "1px solid #9B9B9B",
 };
+
+// 셀렉트 박스에 선택 없음 생성 함수
+function addDefaultOption(selectElement, text) {
+  var defaultOption = document.createElement('option');
+  defaultOption.value = ''; 
+  defaultOption.textContent = text || '--- 선택하세요 ---'; // 원하는 텍스트로 설정
+  selectElement.appendChild(defaultOption);
+}
+
+
 function ImageData(mapperData,cellId) {
   var div = document.createElement("div");
 
@@ -153,7 +178,11 @@ function ImageData(mapperData,cellId) {
   var ImageDataSelect1 = document.createElement("select");
   ImageDataSelect1.id = "ImageDataSelect1";
 
-  var mainCategoryOptions = ["선택 없음", "카테1", "카테2", "카테3", "카테4"];
+  var mainCategoryOptions = companyList;
+  if(!mainCategoryOptions.includes('선택 없음')){
+    mainCategoryOptions.unshift('선택 없음');
+  }
+
   mainCategoryOptions.forEach(function (optionText) {
     var option = document.createElement("option");
     option.value = optionText;
@@ -162,23 +191,66 @@ function ImageData(mapperData,cellId) {
     applyStyles(ImageDataSelect1, selectBoxStyle);
   });
 
+  function handleImageDataSelectChange() {
+    try{
+      var selectedCompanyName = document.getElementById('ImageDataSelect1').value;
+      
+      var requestData = {'companyName': selectedCompanyName};
+      fetch('/dataset/db_get_ds_by_company_index',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          if(data.data.length == 0){
+            ImageDataSelect2.innerHTML ='';
+          }
+          else{
+            while (ImageDataSelect2.options.length > 1) {
+              ImageDataSelect2.remove(1);
+            }
+          }
+          subCategoryOptions = data['data'];
+          subCategoryOptions.forEach(function (optionText) {
+            try{
+              if(optionText[0] != ImageDataSelect2.options[0].value){
+                var option = document.createElement("option");
+                option.value = optionText;
+                option.text = optionText;
+                ImageDataSelect2.appendChild(option);
+                applyStyles(ImageDataSelect2, selectBoxStyle);
+              }
+            }catch{
+              var option = document.createElement("option");
+              option.value = optionText;
+              option.text = optionText;
+              ImageDataSelect2.appendChild(option);
+              applyStyles(ImageDataSelect2, selectBoxStyle);
+            }
+          });
+        })
+        .catch(error => {
+          console.error("Error:", error);
+      });
+    }catch{}
+  }
+
+  var subCategoryOptions = [];
+  ImageDataSelect1.addEventListener("change", handleImageDataSelectChange);
+
   var ImageDataLabel2 = document.createElement("label");
   labelText = document.createTextNode("데이터셋 선택");
   ImageDataLabel2.appendChild(labelText);
   applyStyles(ImageDataLabel2, Roboto16Style);
 
-
   var ImageDataSelect2 = document.createElement("select");
   ImageDataSelect2.id = "ImageDataSelect2";
+  applyStyles(ImageDataSelect2, selectBoxStyle);
 
-  var subCategoryOptions = ["선택 없음", "서브카테1", "서브카테2", "서브카테3"];
-  subCategoryOptions.forEach(function (optionText) {
-    var option = document.createElement("option");
-    option.value = optionText;
-    option.text = optionText;
-    ImageDataSelect2.appendChild(option);
-    applyStyles(ImageDataSelect2, selectBoxStyle);
-  });
+  ImageDataSelect2.addEventListener("mousedown", handleImageDataSelectChange);
 
   var ImageDataLabel3 = document.createElement("label");
   labelText = document.createTextNode("메모");
@@ -195,7 +267,10 @@ function ImageData(mapperData,cellId) {
     ImageDataSelect1.value = mapperData.data.image1SelectedValue;
   }
   if (mapperData.data && mapperData.data.image2SelectedValue !== undefined) {
-    ImageDataSelect2.value = mapperData.data.image2SelectedValue;
+    var option = document.createElement('option');
+    option.value = mapperData.data.image2SelectedValue;
+    option.innerHTML = mapperData.data.image2SelectedValue;
+    ImageDataSelect2.appendChild(option);
   }
   if (mapperData.data && mapperData.data.image1InputValue !== undefined) {
     ImageDataInput1.value = mapperData.data.image1InputValue;
@@ -767,5 +842,74 @@ function uploadXML(xmlData) {
     if(parsCell.class){
       MxCellMapper[parsCell.id] = parsCell.kpstCellData
     }
+	});
+}
+
+function save(){
+	var nowXml = edUI.editor.getGraphXml();
+	var datasetNameList = [];
+	edUI.editor.graph.getChildCells().forEach(function (parsCell) {
+		if (parsCell.style == "endArrow=classic;html=1;" || parsCell.style.includes('edgeStyle=orthogonalEdgeStyle;') ){
+			//화살표 정보 맵핑
+			var arrowId = (parsCell.id !== undefined && parsCell.id !== null) ? parsCell.id : -1;
+			var arrowMxId = (parsCell.mxObjectId !== undefined && parsCell.mxObjectId !== null) ? parsCell.mxObjectId : -1;
+			var arrowSource = (parsCell.source !== undefined && parsCell.source !== null) ? parsCell.source.id : -1;
+			var arrowTarget = (parsCell.target !== undefined && parsCell.target !== null) ? parsCell.target.id : -1;
+
+			var arrowMap = {"id" : arrowId ,'MxObjId' : arrowMxId, "source" : arrowSource , "target" : arrowTarget }
+			// console.log(arrowMap) // KPST 연결된 맵퍼 표시
+			MxArrowMapper[arrowId] = arrowMap
+			// console.log(arrowMap)
+		}else if(parsCell.class){
+			MxCellMapper[parsCell.id] = parsCell.kpstCellData
+			// data정보 확인
+			if(parsCell.value.includes('Data')){
+				try{
+					const datasetName = Object.keys(parsCell.kpstCellData.data)[1]
+					datasetNameList.push(parsCell.kpstCellData.data[datasetName]);
+				}
+				catch{}
+			}
+		}
+	});
+	var uniqueSet = new Set(datasetNameList);
+	var uniqueArray = Array.from(uniqueSet);
+
+	var xmlString = XMLToString(nowXml);
+	const dataToSend = { 
+		"nowXml" : xmlString, 
+		"MxCellMapper" : MxCellMapper, 
+		"MxArrowMapper" : MxArrowMapper, 
+		"projectName": localStorage.getItem('projectName'),
+		"datasetInfo" : uniqueArray,
+		"projectIdx" : localStorage.getItem('projectIdx')
+	}; 
+
+	fetch('/diagramDataSave',{
+		method: "POST",
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(dataToSend)
+	})
+	.then(response => {
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+	
+		return response.json();
+	})
+	.then(data => {
+		const redirectUrl = data.redirect_url;
+		// nowXml , MxCellMapper , MxArrowMapper // 로컬 스토리지 저장
+		localStorage.setItem('nowXml', xmlString);
+		localStorage.setItem('MxCellMapper', JSON.stringify(MxCellMapper));
+		localStorage.setItem('MxArrowMapper',JSON.stringify(MxArrowMapper));
+		
+		//modelingRun으로 이동
+		window.location.href = redirectUrl;
+	})
+	.catch(error => {
+		console.error('Error during fetch:', error);
 	});
 }
