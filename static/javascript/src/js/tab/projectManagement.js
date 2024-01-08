@@ -267,10 +267,10 @@ function deleteProject(index) {
 }
 
 function createProject(){
-    var datasetCreateIdx = document.getElementById("datasetCreateIdx").value;
-    var datasetCreateName = document.getElementById("datasetCreateName").value;
-    var datasetCreateCycle = document.getElementById("datasetCreateCycle").value;
-    var datasetCreateDescription = document.getElementById("datasetCreateDescription").value;
+    var projectName = document.getElementById("projectName").value;
+    var projectModelName = document.getElementById("projectModelName").value;
+    var projectCycle = document.getElementById("projectCycle").value;
+    var projectDescription = document.getElementById("projectDescription").value;
 
     // 데이터를 서버로 전송
     fetch('/train_project/db_train_create', {
@@ -279,16 +279,16 @@ function createProject(){
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            tr_name: datasetCreateName,
-            tr_deploy_cycle: datasetCreateCycle,
-            tr_description: datasetCreateDescription,
-            ds_idx: datasetCreateIdx,
-            tr_name_air : "/../..",
-            company_idx : 2,
+          tr_name: projectName,
+          tr_name_air: projectModelName,
+          tr_deploy_cycle: projectCycle,
+          tr_description: projectDescription,
+          // ds_idx: datasetCreateIdx,
         }),
     })
         .then(response => response.json())
         .then(data => {
+            localStorage.setItem('projectName', projectName);
             window.location.href = '/modeling';
         })
         .catch(error => {

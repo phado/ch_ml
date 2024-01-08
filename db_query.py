@@ -248,7 +248,7 @@ def db_train_detail(mariadb_pool, tr_idx):
 
         return json_result
     
-def db_train_create(mariadb_pool,tr_name,tr_name_air,company_idx,tr_deploy_cycle,tr_description,ds_idx):
+def db_train_create(mariadb_pool,tr_name,tr_name_air,tr_deploy_cycle,tr_description):
     """
     데이터셋 목록 조회
     tr_name  :학습 프로젝트 이름
@@ -265,8 +265,8 @@ def db_train_create(mariadb_pool,tr_name,tr_name_air,company_idx,tr_deploy_cycle
         cursor = connection.cursor()
 
         query = f"INSERT INTO tb_prj_training\
-                ( tr_name, tr_name_air, company_idx, tr_deploy_cycle, tr_description)\
-                VALUES('{tr_name}','{tr_name_air}','{company_idx}','{tr_deploy_cycle}','{tr_description}');"
+                ( tr_name, tr_name_air,  tr_deploy_cycle, tr_description)\
+                VALUES('{tr_name}','{tr_name_air}','{tr_deploy_cycle}','{tr_description}');"
         cursor.execute(query)
 
         query = f"SELECT LAST_INSERT_ID();"
@@ -275,15 +275,7 @@ def db_train_create(mariadb_pool,tr_name,tr_name_air,company_idx,tr_deploy_cycle
         data = cursor.fetchall()
         print(data)
                 
-        '''
-        맵핑 테이블 에서 배열의 갯수만큼 아래 ds_type_idx가 맵핑 되어야함
-        for 문 활용해 처리 예정
-        # '''
-        query = f"INSERT INTO tb_ds_tr_map\
-                (tr_idx, ds_idx)\
-                VALUES({data[0][0]}, {ds_idx});"
-                
-        cursor.execute(query)
+        
         
         
         # """ 
@@ -497,6 +489,7 @@ def db_acc_result(mariadb_pool):
         if connection: connection.close()
 
         return json_result
+    
 
 def db_agency_result(mariadb_pool):
     """
@@ -531,11 +524,27 @@ def db_save_xml(mariadb_pool, xml_string, tr_idx_value):
 
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor()
-        query = f"UPDATE tb_prj_training SET tr_xml = %s WHERE tr_idx = %s;"
-        cursor.execute(query, (xml_string,tr_idx_value,))
+        query = f"UPDATE tb_prj_training SET tr_xml = %s WHERE tr_name = %s;"
+        cursor.execute(query, (xml_string, projectName,))
         cursor.fetchone()
         connection.commit()
         json_result = success_message_json(json_result)
+
+
+        query = f"SELECT LAST_INSERT_ID();"
+        cursor.execute(query)
+
+        data = cursor.fetchall()
+        '''
+        맵핑 테이블 에서 배열의 갯수만큼 아래 ds_type_idx가 맵핑 되어야함
+        for 문 활용해 처리 예정
+        # '''
+        query = f"INSERT INTO tb_ds_tr_map\
+                (tr_idx, ds_idx)\
+                VALUES({data[0][0]}, {ds_idx});"
+                
+        cursor.execute(query)
+
     except Exception as e:
         print(e)
         json_result = fail_message_json(json_result)

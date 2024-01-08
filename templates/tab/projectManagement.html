@@ -93,23 +93,23 @@
     <div id="projectCreateModal" class="projectCreateModal">
       <div class="projectCreateModal-content">
         <div class="projectCreateModal-title">
-          <div class="projectCreateModal-title-name">데이터 생성</div>
+          <div class="projectCreateModal-title-name">프로젝트 생성</div>
           <span class="projectCreateModal-close" onclick="createModalClose()"
             >&times;</span
           >
         </div>
         <div class="projectCreateModal-input-area">
-          <div class="input-title">데이터셋 IDX</div>
-          <input class="input-area input-dataset" id="datasetCreateIdx"/>
+          <div class="input-title">프로젝트 이름</div>
+          <input class="input-area input-dataset" id="projectName"/>
 
           <div class="input-title">모델 이름</div>
-          <input class="input-area input-dataset" id="datasetCreateName"/>
+          <input class="input-area input-dataset" id="projectModelName"/>
 
           <div class="input-title">학습 주기</div>
-          <input class="input-area input-dataset" id="datasetCreateCycle"/>
+          <input class="input-area input-dataset" id="projectCycle"/>
 
           <div class="input-title">설명</div>
-          <textarea class="input-area detail-textarea" id="datasetCreateDescription"></textarea>
+          <textarea class="input-area detail-textarea" id="projectDescription"></textarea>
 
           <img
             src="{{url_for('static', filename='/javascript/src/images/border.svg')}}"

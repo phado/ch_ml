@@ -357,12 +357,10 @@ def database_train_create():
         data = request.get_json()
         tr_name= data["tr_name"]
         tr_name_air= data["tr_name_air"]
-        company_idx= data["company_idx"]
         tr_deploy_cycle= data["tr_deploy_cycle"]
         tr_description= data["tr_description"]
-        ds_idx= data["ds_idx"]
         # result_json = make_response_json([])
-        result_json = db_train_create(mariadb_pool,tr_name,tr_name_air,company_idx,tr_deploy_cycle,tr_description,ds_idx)
+        result_json = db_train_create(mariadb_pool,tr_name,tr_name_air,tr_deploy_cycle,tr_description)
 
     except ValueError as e:
         print(e)
