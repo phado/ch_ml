@@ -164,3 +164,10 @@ td.mxPopupMenuIcon {
 	opacity: 0.2 !important;
 	cursor:default !important;
 }
+
+img{
+	cursor: pointer;
+}
+button{
+	cursor: pointer;
+}

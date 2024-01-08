@@ -126,6 +126,13 @@ select {
   background-color: white;
 }
 
+.center{
+  text-align: center;
+}
+
+.firstcell{
+  padding-left: 30px;
+}
 .data-table .data-cell {
   border-bottom: 1px solid #ccc;
   height: 50px;
@@ -383,6 +390,19 @@ select {
   margin-top: 8px;
   margin-bottom: 8px;
 }
+
+.output-modify-button {
+  width: 70px;
+  height: 28px;
+  color: white;
+  background: #9a9a9;
+  color: #526eff;
+  border: none;
+  padding: 3px, 10px, 3px, 10px;
+  border-radius: 5px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
 .area1 {
   height: 526px;
   width: 478px;
@@ -408,4 +428,10 @@ select {
   padding-left: 11px;
   resize: none;
   overflow-y: auto;
+}
+img{
+  cursor: pointer;
+}
+button{
+  cursor: pointer;
 }

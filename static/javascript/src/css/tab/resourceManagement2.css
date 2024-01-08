@@ -16,3 +16,9 @@ body {
     position: relative;
     overflow: hidden;
 }
+img{
+    cursor: pointer;
+}
+button{
+    cursor: pointer;
+}

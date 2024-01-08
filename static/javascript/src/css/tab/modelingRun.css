@@ -73,3 +73,10 @@ body {
 .iframe{
     margin-top: 10px;
 }
+
+img{
+    cursor: pointer;
+}
+button{
+    cursor: pointer;
+}

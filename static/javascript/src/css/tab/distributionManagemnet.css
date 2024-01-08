@@ -433,3 +433,9 @@ select {
   margin-left: 2px;
   background: #3d5eec;
 }
+img{
+  cursor: pointer;
+}
+button{
+  cursor: pointer;
+}

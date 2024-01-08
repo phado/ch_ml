@@ -111,8 +111,10 @@ header {
 }
 
 .menu-list {
+  border-radius: 5px;
+
   width: 123px;
-  height: 269px;
+  height: 277px;
   background-color:white;
   display: none;
   position: absolute;
@@ -129,17 +131,18 @@ header {
   display: block;
   text-decoration: none;
   color: #333;
-  padding: 4px;
+  padding: 7px;
 }
 
 .menu-list a:hover {
+  border-radius: 5px;
   background-color: #f4f4f4;
 }
 
 .menu{
   font-family: RobotoFont;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   letter-spacing: 0em;
   text-align: center;
 }
