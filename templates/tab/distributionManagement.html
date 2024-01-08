@@ -40,12 +40,10 @@
         <table class="data-table">
           <thead>
             <tr class="data-table-title">
-              <th class="data-cell" style="width: 300px">
-                <img
-                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"
-                  style="margin-left: 24px; margin-right: 18px"
-                  alt="Image"
-                />서비스 이름
+              <th class="data-cell" style="width: 300px;padding-left: 27px;">
+                No. &nbsp;
+                서비스이름
+              </th>
               </th>
               <th class="data-cell center">타입</th>
               <th class="data-cell center">상태</th>
@@ -85,6 +83,7 @@
               </td>
               <td class="data-cell center">
                 <img
+                  onclick=" detailDistribution() "
                   src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"
                   alt="Image"
                 />
@@ -120,6 +119,7 @@
               </td>
               <td class="data-cell center">
                 <img
+                  onclick=" detailDistribution() "
                   src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"
                   alt="Image"
                 />
@@ -155,6 +155,7 @@
               </td>
               <td class="data-cell center">
                 <img
+                  onclick=" detailDistribution() "
                   src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"
                   alt="Image"
                 />
@@ -190,6 +191,7 @@
               </td>
               <td class="data-cell center">
                 <img
+                  onclick=" detailDistribution() "
                   src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"
                   alt="Image"
                 />
@@ -229,7 +231,7 @@
       <div class="distributionCreateModal-content">
         <div class="distributionCreateModal-title">
           <div class="distributionCreateModal-title-name">
-            [서비스명]상세정보
+            배포관리 생성
           </div>
           <span
             class="distributionCreateModal-close"
@@ -285,20 +287,20 @@
         </div>
         <div class="distributionDetailModal-input-area">
           <div class="input-title">서비스명</div>
-          <input class="input-area input-dataset" />
+          <input class="input-area input-dataset"  id="serviceNameInput" />
 
           <div class="input-title">재해유형 추론 서비스</div>
-          <select class="input-area selectbox">
-            <option>금진</option>
-          </select>
-
-          <div class="input-title">모델명</div>
           <select class="input-area selectbox">
             <option>끼임</option>
           </select>
 
+          <div class="input-title">모델명</div>
+          <select class="input-area selectbox">
+            <option>게시판 서비스 이름_끼임</option>
+          </select>
+
           <div class="input-title">CCTV</div>
-          <input class="input-area input-dataset" />
+          <input class="input-area input-dataset" id="cctvInput" />
 
           <img
             src="{{url_for('static', filename='/javascript/src/images/border.svg')}}"
