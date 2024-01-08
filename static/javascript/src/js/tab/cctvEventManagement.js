@@ -71,10 +71,9 @@ fetch('/cctv/db_acc_result', {
 
 function displayBlobImage(base64Data, container) {
     try {
-        var binaryData = atob(base64Data);
 
         var img = document.createElement('img');
-        img.src = "data:image/png;base64," + binaryData;
+        img.src = "data:image/png;base64," + base64Data;
 
 
         img.onload = function() {

@@ -1,5 +1,5 @@
 from common_management import make_response_json, success_message_json, fail_message_json
-import postgres_curd
+import postgres_curd, base64
 import db_conn
 
 def aifflowdata(usr_id, usr_pwd):
@@ -473,13 +473,16 @@ def db_acc_result(mariadb_pool):
                 LEFT JOIN tbl_rel_redzone_sensor_data AS trrsd ON ttar.rz_sen_dt_idx  = trrsd.rz_sen_dt_idx \
                 LEFT JOIN tbl_info_sensor_data AS tisd ON trrsd.sen_dt_idx =tisd.sen_dt_idx \
                 LEFT JOIN tbl_rel_redzone_sensor AS trrs ON trrsd.rz_sen_idx  = trrs.rz_sen_idx \
-                LEFT JOIN tbl_info_sensor  AS tis ON trrs.sen_idx  = tis.sen_idx ORDER BY ttar.acc_detection_time DESC LIMIT 300; "
+                LEFT JOIN tbl_info_sensor  AS tis ON trrs.sen_idx  = tis.sen_idx ORDER BY ttar.acc_detection_time DESC LIMIT 3; "
 
         cursor.execute(query)
         json_result['data'] = cursor.fetchall()
         connection.commit()
-
         json_result = success_message_json(json_result)
+
+        for idx,val in enumerate(json_result['data']):
+            json_result['data'][idx][4] =  base64.urlsafe_b64decode(json_result['data'][idx][4]);
+
     except Exception as e:
         print(e)
         json_result = fail_message_json(json_result)

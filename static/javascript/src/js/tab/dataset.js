@@ -37,7 +37,7 @@ function getDatasetTableData() {
           cell8.classList.add("data-cell", "center");
           cell9.classList.add("data-cell", "center");
 
-          cell1.innerHTML = i + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
+          cell1.innerHTML = (i+1) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
           cell2.innerHTML = datasetList[i][2]; // datasetType
           cell4.innerHTML =  convertDateType(datasetList[i][4]);// datasetModifyTime
           // cell5.innerHTML = convertDateType(datasetList[i][5]); // datasetDownloadTime

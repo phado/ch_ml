@@ -57,7 +57,7 @@ function getProjectTableData() {
           cell10.classList.add("data-cell", "center");
           cell11.classList.add("data-cell", "center");
 
-          cell1.innerHTML =  i + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
+          cell1.innerHTML =  (i+1) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
           cell2.innerHTML = datasetList[i][2];
           cell3.innerHTML = datasetList[i][3];
           cell4.innerHTML = datasetList[i][4];

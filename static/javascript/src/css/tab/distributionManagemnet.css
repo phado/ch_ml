@@ -21,6 +21,13 @@ body {
   width: 100%;
   overflow: auto;
 }
+.center{
+  text-align: center;
+}
+
+.firstcell{
+  padding-left: 30px;
+}
 .search-content {
   height: 111px;
   width: 100%;
@@ -114,6 +121,8 @@ select {
   padding: 0%;
 }
 .data-table {
+  font-family: RobotoFont;
+  font-size: 15px;
   position: absolute;
   top: 140px;
   left: 40px;
