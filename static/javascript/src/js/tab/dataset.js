@@ -27,7 +27,7 @@ function getDatasetTableData() {
           var cell8 = row.insertCell(7);
           var cell9 = row.insertCell(8);
 
-          cell1.classList.add("data-cell");
+          cell1.classList.add("data-cell","firstcell");
           cell2.classList.add("data-cell", "center");
           cell3.classList.add("data-cell", "center");
           cell4.classList.add("data-cell", "center");
@@ -37,14 +37,12 @@ function getDatasetTableData() {
           cell8.classList.add("data-cell", "center");
           cell9.classList.add("data-cell", "center");
 
-          // 데이터셋 정보 채우기
-          cell1.innerHTML = '<img style="margin-left: 24px; margin-right: 16px" src="/static/javascript/src/images/box.svg" alt="Image" />' + datasetList[i][1]; // datasetName
+          cell1.innerHTML = i + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
           cell2.innerHTML = datasetList[i][2]; // datasetType
           cell4.innerHTML =  convertDateType(datasetList[i][4]);// datasetModifyTime
           // cell5.innerHTML = convertDateType(datasetList[i][5]); // datasetDownloadTime
           cell5.innerHTML = 0; // datasetDownloadTime
 
-          // 이미지 엘리먼트 생성
           var detailImageSrc = "/static/javascript/src/images/detail.svg";
           var detailImage = document.createElement("img");
           detailImage.setAttribute("style", "margin-left: 24px; margin-right: 16px");
@@ -57,7 +55,18 @@ function getDatasetTableData() {
           })(i);
           cell6.appendChild(detailImage);
 
-          cell7.innerHTML = '<img style="margin-left: 24px; margin-right: 16px" src="/static/javascript/src/images/modify.svg" alt="Image" />' ;
+          var modifyImageSrc = "/static/javascript/src/images/modify.svg";
+          var modifyImage = document.createElement("img");
+          modifyImage.setAttribute("style", "margin-left: 24px; margin-right: 16px");
+          modifyImage.setAttribute("src", modifyImageSrc);
+          modifyImage.setAttribute("alt", "Image");
+          modifyImage.onclick = (function(index) {
+              return function() {
+                  detailDataset(datasetList[index][0]); // 이 부분에서 인덱스를 사용
+              };
+          })(i);
+          cell7.appendChild(modifyImage);
+
           cell8.innerHTML = '<img style="margin-left: 24px; margin-right: 16px" src="/static/javascript/src/images/download_2.svg" alt="Image" />' ;
           var deleteImageSrc = "/static/javascript/src/images/delete_2.svg";
           var deleteImage = document.createElement("img");
@@ -96,9 +105,8 @@ function deleteDataset(index) {
             .then(response => response.json())
             .then(data => {
                 console.log("Server response:", data);
-                alert("삭제완료");
+                alert("데이터셋 삭제가 완료되었습니다.");
                 location.reload();
-                alert("삭제완료");
             })
             .catch(error => {
                 console.error("Error:", error);
@@ -115,8 +123,17 @@ function createDataset() {
 }
 
 function createModalClose() {
-  var createModal = document.getElementById("datasetCreateModal");
-  createModal.style.display = "none";
+    selectedFiles = [];
+    document.getElementById("agencySelect").value = "";
+    document.getElementById("datasetCreateName").value = "";
+    document.getElementById("fileInput").value = "";
+    document.getElementById("datasetCreateComment").value = "";
+
+    var table = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
+    table.innerHTML = "";
+
+    var createModal = document.getElementById("datasetCreateModal");
+    createModal.style.display = "none";
 }
 
 
@@ -158,35 +175,109 @@ function detailDataset(index) {
           var datasetModifyTimeInput = document.getElementById("datasetModifyTime");
           var datasetDownloadCountInput = document.getElementById("datasetDownloadCount");
           var datasetCommentsTextarea = document.getElementById("datasetComments");
+          var datasetDetailModalOkButton = document.getElementById("datasetDetailModalOkButton");
+
+          if (datasetDetailModalOkButton) {
+              datasetDetailModalOkButton.disabled = true;
+          }
 
           if (datasetNameInput) {
-              datasetNameInput.value = datasetDetailData[0];
+              datasetNameInput.value = datasetDetailData[1];
+              datasetNameInput.readOnly = true;
           }
 
           if (datasetTypeInput) {
-              datasetTypeInput.value = datasetDetailData[1];
+              datasetTypeInput.value = datasetDetailData[2];
+              datasetTypeInput.readOnly = true;
           }
 
           if (datasetUploadTimeInput) {
-              datasetUploadTimeInput.value = convertDateType(datasetDetailData[2]);
+              datasetUploadTimeInput.value = convertDateType(datasetDetailData[3]);
+              datasetUploadTimeInput.readOnly = true;
           }
 
           if (datasetModifyTimeInput) {
-              datasetModifyTimeInput.value = convertDateType(datasetDetailData[3]);
+              datasetModifyTimeInput.value = convertDateType(datasetDetailData[4]);
+              datasetModifyTimeInput.readOnly = true;
           }
 
           if (datasetDownloadCountInput) {
-              datasetDownloadCountInput.value = datasetDetailData[4];
+              datasetDownloadCountInput.value = datasetDetailData[5];
+              datasetDownloadCountInput.readOnly = true;
           }
 
           if (datasetCommentsTextarea) {
-              datasetCommentsTextarea.value = datasetDetailData[5];
+              datasetCommentsTextarea.value = datasetDetailData[6];
+              datasetCommentsTextarea.readOnly = true;
           }
       })
       .catch((error) => {
         console.error("Error:", error);
       });
 }
+
+//dataset 상세정보 조회 함수
+function detailDataset(index) {
+    var detailModal = document.getElementById("datasetDetailModal");
+    detailModal.style.display = "block";
+
+    index = index.toString()
+    // 예를 들어, 해당 인덱스로 서버에 요청을 보낼 수 있습니다.
+    fetch("/dataset/db_ds_get_detail", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            ds_idx: index,
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            datasetDetailData = data.data[0]
+            datasetIdx = datasetDetailData[0]
+            datasetType = datasetDetailData[1]
+            datasetUploadTime = datasetDetailData[2]
+            datasetModifyTime = datasetDetailData[3]
+            datasetDownloadCount = datasetDetailData[4]
+            datasetComments = datasetDetailData[5]
+
+            var datasetNameInput = document.getElementById("datasetName");
+            var datasetTypeInput = document.getElementById("datasetType");
+            var datasetUploadTimeInput = document.getElementById("datasetUploadTime");
+            var datasetModifyTimeInput = document.getElementById("datasetModifyTime");
+            var datasetDownloadCountInput = document.getElementById("datasetDownloadCount");
+            var datasetCommentsTextarea = document.getElementById("datasetComments");
+
+            if (datasetNameInput) {
+                datasetNameInput.value = datasetDetailData[1];
+            }
+
+            if (datasetTypeInput) {
+                datasetTypeInput.value = datasetDetailData[2];
+            }
+
+            if (datasetUploadTimeInput) {
+                datasetUploadTimeInput.value = convertDateType(datasetDetailData[3]);
+            }
+
+            if (datasetModifyTimeInput) {
+                datasetModifyTimeInput.value = convertDateType(datasetDetailData[4]);
+            }
+
+            if (datasetDownloadCountInput) {
+                datasetDownloadCountInput.value = datasetDetailData[5];
+            }
+
+            if (datasetCommentsTextarea) {
+                datasetCommentsTextarea.value = datasetDetailData[6];
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+}
+
 
 function datasetCreate() {
     var agencySelect = document.getElementById("agencySelect");
@@ -198,9 +289,20 @@ function datasetCreate() {
     var datasetCreateComment = document.getElementById("datasetCreateComment");
     var ds_description = datasetCreateComment.value;
 
-    if (company_name === '금진') {
-        company_idx = 2;
-    }
+    const companyIndices = {
+        '그린광학': 1,
+        '금진': 2,
+        '라파코': 3,
+        '산전정밀': 4,
+        '새한': 5,
+        'AND전자저울': 6,
+        '이킴': 7,
+        '킹텍스': 8,
+        '한길EST': 9,
+        '화인텍코리아': 10
+    };
+
+    var company_idx = companyIndices[company_name];
     var ds_path = "/../../..";
     var ds_type_idx = 11;
 
@@ -222,7 +324,9 @@ function datasetCreate() {
         .then(response => response.json())
         .then(data => {
             console.log("Server response:", data);
-            alert("정보 추가 완료!")
+            alert("정보추가가 완료되었습니다.");
+            createModalClose();
+            location.reload();
         })
         .catch(error => {
             console.error("Error:", error);
@@ -261,29 +365,58 @@ function openFileUploader() {
     document.getElementById('fileInput').click();
 }
 
-// 파일이 선택되면 호출되는 함수
+var selectedFiles = []; // 전역 변수로 선언
 function handleFileUpload() {
     var fileInput = document.getElementById('fileInput');
     var selectedFile = fileInput.files[0];
-
     if (selectedFile) {
-        // 선택된 파일에 대한 추가 처리
         console.log('Selected file:', selectedFile);
 
-        // 새로운 행을 만들어 테이블에 첫 번째 자식으로 추가
         var table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
         var newRow = table.insertRow(0);
         var cell1 = newRow.insertCell(0);
         var cell2 = newRow.insertCell(1);
 
-        // 이미지 엘리먼트 생성 및 속성 설정
         var imgElement = document.createElement('img');
-        imgElement.src = URL.createObjectURL(selectedFile);
-        imgElement.alt = 'Uploaded Image';
+        imgElement.src = 'static/javascript/src/images/sbox.svg';
+        imgElement.alt = 'Default Image';
         cell1.appendChild(imgElement);
 
-        // 텍스트 엘리먼트 생성 및 파일 이름 표시
+        imgElement.addEventListener('click', function () {
+            if (imgElement.src.endsWith('sbox.svg')) {
+                imgElement.src = 'static/javascript/src/images/sbox_check.svg';
+                selectedFiles.push(selectedFile.name);
+            } else {
+                imgElement.src = 'static/javascript/src/images/sbox.svg';
+                var index = selectedFiles.indexOf(selectedFile.name);
+                if (index !== -1) {
+                    selectedFiles.splice(index, 1);
+                }
+            }
+        });
+
         var textNode = document.createTextNode(selectedFile.name);
         cell2.appendChild(textNode);
     }
+
+}
+
+function deleteDatasets() {
+    var table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+    for (var i = 0; i < selectedFiles.length; i++) {
+        var fileNameToDelete = selectedFiles[i];
+
+        for (var j = 0; j < table.rows.length; j++) {
+            var rowFileName = table.rows[j].cells[1].innerText;
+            if (fileNameToDelete === rowFileName) {
+                table.deleteRow(j);
+                break;
+            }
+        }
+    }
+    selectedFiles = [];
+}
+
+function modifyDetailData(){
+    console.log("데이터 수정")
 }

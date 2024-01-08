@@ -152,6 +152,10 @@ select {
 .center{
   text-align: center;
 }
+
+.firstcell{
+  padding-left: 30px;
+}
 .data-table td {
   border-bottom: 1px solid #ccc;
   height: 40px;
@@ -406,4 +410,10 @@ select {
   height: 28px;
   color: white;
   background: #526eff;
+}
+img{
+  cursor: pointer;
+}
+button{
+  cursor: pointer;
 }

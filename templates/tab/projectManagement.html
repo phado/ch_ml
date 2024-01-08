@@ -20,6 +20,7 @@
             type="text/javascript"
             src="{{ url_for('static', filename='/javascript/src/js/tab/commonUse.js') }}"
     ></script>
+    <script src="../../static/javascript/src/js/tab/projectManagement.js"></script>
   </head>
   <body>
     {% include 'common/title.html' %}
@@ -55,16 +56,16 @@
                   alt="Image"
                 />프로젝트명
               </th>
-              <th class="data-cell">알고리즘</th>
-              <th class="data-cell">상태</th>
-              <th class="data-cell">오류코드</th>
-              <th class="data-cell">생성일</th>
-              <th class="data-cell">mAP</th>
-              <th class="data-cell">배포주기</th>
-              <th class="data-cell">마지막 수정일</th>
-              <th class="data-cell">상세정보</th>
-              <th class="data-cell">수정</th>
-              <th class="data-cell">
+              <th class="data-cell center">알고리즘</th>
+              <th class="data-cell center">상태</th>
+              <th class="data-cell center">오류코드</th>
+              <th class="data-cell center">생성일</th>
+              <th class="data-cell center">mAP</th>
+              <th class="data-cell center">배포주기</th>
+              <th class="data-cell center">마지막 수정일</th>
+              <th class="data-cell center">상세정보</th>
+              <th class="data-cell center">수정</th>
+              <th class="data-cell center">
                 <img
                   src="{{url_for('static', filename='/javascript/src/images/delete.svg')}}"
                   alt="Image"
@@ -159,6 +160,7 @@
 
               <div class="input-title">mlFlow</div>
               <button class="output-view-button">결과보기</button>
+              <button class="output-modify-button">수정하기</button>
             </div>
           </div>
           <div class="area2">
@@ -178,7 +180,7 @@
           >
             취소
           </button>
-          <button class="projectDetailModalOkButton">확인</button>
+          <button class="projectDetailModalOkButton" id="projectDetailModalOkButton" onclick="projectDetialModify()">수정</button>
         </div>
       </div>
     </div>

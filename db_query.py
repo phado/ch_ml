@@ -83,7 +83,7 @@ def db_ds_get_detail(mariadb_pool, ds_idx):
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor()
 
-        query = f"select tpd.ds_idx,GROUP_CONCAT(tdt.ds_type_name) as `ds_type_names`,\
+        query = f"select tpd.ds_idx,tpd.ds_name,GROUP_CONCAT(tdt.ds_type_name) as `ds_type_names`,\
                 tpd.ds_create_date, tpd.ds_modify_date, tpd.ds_cnt_download ,tpd.ds_description\
                 from tb_prj_dataset tpd\
                 inner join tb_ds_state tds on tpd.ds_stat_idx  = tds.ds_stat_idx\

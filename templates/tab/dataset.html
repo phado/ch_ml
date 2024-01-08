@@ -76,47 +76,6 @@
             </tr>
           </thead>
           <tbody  id="datasetTableBody">
-<!--        {% for _ in range(10) %}-->
-<!--            <tr>-->
-<!--              <td class="data-cell">-->
-<!--                <img-->
-<!--                  style="margin-left: 24px; margin-right: 16px"-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/box.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />dataset name-->
-<!--              </td>-->
-<!--              <td class="data-cell center">type</td>-->
-<!--              <td class="data-cell center">dataset</td>-->
-<!--              <td class="data-cell center">last modify date</td>-->
-<!--              <td class="data-cell center">download count</td>-->
-<!--              <td class="data-cell center">-->
-<!--                <img-->
-<!--                  onclick=" detailDataset() "-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/detail.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--              <td class="data-cell center">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/modify.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-
-<!--              <td class="data-cell center">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/download_2.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--              <td class="data-cell center">-->
-<!--                <img-->
-<!--                  src="{{url_for('static', filename='/javascript/src/images/delete_2.svg')}}"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </td>-->
-<!--            </tr>-->
-<!--            {% endfor %}-->
           </tbody>
         </table>
       </div>
@@ -144,7 +103,6 @@
         <div class="datasetCreateModal-input-area">
           <div class="input-title">기관명</div>
           <select class="input-area" id="agencySelect">
-            <option>금진</option>
           </select>
 
           <div class="input-title">데이터셋 명</div>
@@ -153,7 +111,7 @@
           <div class="input-title-container">
             <div class="input-title">데이터셋</div>
             <img
-              style="margin-left: 348px; margin-top: 20px"
+              style="margin-left: 348px; margin-top: 20px" onclick="deleteDatasets()"
               src="{{url_for('static', filename='/javascript/src/images/deletebox.svg')}}"
               alt="Image"
             />
@@ -194,11 +152,11 @@
         </div>
       </div>
     </div>
-    <!-- detail 모달 -->
+    <!-- detail 조회 모달 -->
     <div id="datasetDetailModal" class="datasetDetailModal">
       <div class="datasetDetailModal-content">
         <div class="datasetDetailModal-title">
-          <div class="datasetDetailModal-title-name">[데이터 명]상세정보</div>
+          <div class="datasetDetailModal-title-name" id="detailModalTitle">[데이터 명]상세정보</div>
           <span class="datasetDetailModal-close" onclick="detailModalClose()"
             >&times;</span
           >
@@ -235,7 +193,7 @@
           >
             취소
           </button>
-          <button class="datasetDetailModalOkButton">생성</button>
+          <button class="datasetDetailModalOkButton" id="datasetDetailModalOkButton" onclick="modifyDetailData()">수정</button>
         </div>
       </div>
     </div>
