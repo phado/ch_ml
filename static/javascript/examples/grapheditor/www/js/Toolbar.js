@@ -183,70 +183,7 @@ Toolbar.prototype.init = function()
 	this.addTableDropDown();
 
 	// this.addButton('run',null, null,) // kpst 실행 버튼 생성
-	this.addButton('geIcon run',null , function()
-	{
-
-		if(confirm('생성 된 프로젝트를 실행 하시겠습니까?')){
-			// kpst 실행 단계로 이동
-			// MxCellMapper 전체 바인딩
-			// MxArrowMapper 전체 바인딩
-			// xml 가져가기
-			var nowXml = edUI.editor.getGraphXml()
-			edUI.editor.graph.getChildCells().forEach(function (parsCell) {
-			if (parsCell.style == "endArrow=classic;html=1;" || parsCell.style.includes('edgeStyle=orthogonalEdgeStyle;') ){
-						//화살표 정보 맵핑
-				var arrowId = (parsCell.id !== undefined && parsCell.id !== null) ? parsCell.id : -1;
-				var arrowMxId = (parsCell.mxObjectId !== undefined && parsCell.mxObjectId !== null) ? parsCell.mxObjectId : -1;
-				var arrowSource = (parsCell.source !== undefined && parsCell.source !== null) ? parsCell.source.id : -1;
-				var arrowTarget = (parsCell.target !== undefined && parsCell.target !== null) ? parsCell.target.id : -1;
-
-				var arrowMap = {"id" : arrowId ,'MxObjId' : arrowMxId, "source" : arrowSource , "target" : arrowTarget }
-				// console.log(arrowMap) // KPST 연결된 맵퍼 표시
-				MxArrowMapper[arrowId] = arrowMap
-				// console.log(arrowMap)
-			}else if(parsCell.class){
-				MxCellMapper[parsCell.id] = parsCell.kpstCellData
-			}
-			});
-			
-			var xmlString = XMLToString(nowXml);
-			const dataToSend = { 
-				"nowXml" : xmlString, 
-				"MxCellMapper" : MxCellMapper, 
-				"MxArrowMapper" : MxArrowMapper, 
-				"projectName": localStorage.getItem('projectName'),
-				"ds_idx" : '2'
-			}; 
-
-			fetch('/diagramDataSave',{
-				method: "POST",
-				headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dataToSend)
-			})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(`HTTP error! Status: ${response.status}`);
-				}
-			
-				return response.json();
-			})
-			.then(data => {
-				const redirectUrl = data.redirect_url;
-				// nowXml , MxCellMapper , MxArrowMapper // 로컬 스토리지 저장
-				localStorage.setItem('nowXml', xmlString);
-				localStorage.setItem('MxCellMapper', JSON.stringify(MxCellMapper));
-				localStorage.setItem('MxArrowMapper',JSON.stringify(MxArrowMapper));
-
-				//modelingRun으로 이동
-				window.location.href = redirectUrl;
-			})
-			.catch(error => {
-				console.error('Error during fetch:', error);
-			});
-		}
-	});
+	this.addButton('geIcon run',null , save);
 };
 
 /**

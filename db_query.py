@@ -178,6 +178,30 @@ def db_ds_delete(mariadb_pool, ds_idx):
 
         return json_result
     
+def db_get_ds_by_company_index(mariadb_pool, company_name):
+    cursor = None
+    connection = None
+    try:
+        json_result = make_response_json([])
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+
+        query = f"SELECT ds_name FROM tb_prj_dataset JOIN tb_company ON tb_prj_dataset.company_idx = tb_company.company_idx where tb_company.company_nm ='{company_name}';"
+        cursor.execute(query)
+
+        json_result = success_message_json(json_result)
+        json_result['data'] = cursor.fetchall()
+    except Exception as e:
+        print(e)
+        json_result = fail_message_json(json_result)
+
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+        return json_result
+
 """
    학습데이터셋 관리
 """
@@ -273,7 +297,7 @@ def db_train_create(mariadb_pool,tr_name,tr_name_air,tr_deploy_cycle,tr_descript
         cursor.execute(query)
 
         data = cursor.fetchall()
-        print(data)
+        tr_idx = data[0][0]
                 
         
         
@@ -285,6 +309,7 @@ def db_train_create(mariadb_pool,tr_name,tr_name_air,tr_deploy_cycle,tr_descript
         connection.commit()
 
         json_result = success_message_json(json_result)
+        json_result['tr_idx'] = tr_idx
     except Exception as e:
         print(e)
         json_result = fail_message_json(json_result)
@@ -521,14 +546,14 @@ def db_agency_result(mariadb_pool):
         return json_result
 
 #xml관련
-def db_save_xml(mariadb_pool, xml_string, tr_idx_value):
+def db_save_xml(mariadb_pool, xml_string, dataset_info, tr_idx_value):
     try:
         json_result = make_response_json([])
 
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor()
-        query = f"UPDATE tb_prj_training SET tr_xml = %s WHERE tr_name = %s;"
-        cursor.execute(query, (xml_string, projectName,))
+        query = f"UPDATE tb_prj_training SET tr_xml = %s WHERE tr_idx = %s;"
+        cursor.execute(query, (xml_string, tr_idx_value,))
         cursor.fetchone()
         connection.commit()
         json_result = success_message_json(json_result)
@@ -542,11 +567,10 @@ def db_save_xml(mariadb_pool, xml_string, tr_idx_value):
         맵핑 테이블 에서 배열의 갯수만큼 아래 ds_type_idx가 맵핑 되어야함
         for 문 활용해 처리 예정
         # '''
-        query = f"INSERT INTO tb_ds_tr_map\
-                (tr_idx, ds_idx)\
-                VALUES({data[0][0]}, {ds_idx});"
-                
-        cursor.execute(query)
+        for i in range(len(dataset_info)):
+            query = f"INSERT INTO tb_ds_tr_map (tr_idx, ds_idx) SELECT {tr_idx_value}, ds.ds_idx FROM tb_prj_dataset ds WHERE ds.ds_name = '{dataset_info[i]}';"
+            cursor.execute(query)
+            connection.commit()
 
     except Exception as e:
         print(e)
