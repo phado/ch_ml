@@ -47,7 +47,7 @@ function getProjectTableData() {
 
         var tableBody = document.getElementById("ProjectTableBody");
         for (var i = 0; i < datasetList.length; i++) {
-          var row = tableBody.insertRow(i);
+          var row = tableBody.insertRow(0);
           var cell1 = row.insertCell(0);
           var cell2 = row.insertCell(1);
           var cell3 = row.insertCell(2);
@@ -72,7 +72,7 @@ function getProjectTableData() {
           cell10.classList.add("data-cell", "center");
           cell11.classList.add("data-cell", "center");
 
-          cell1.innerHTML =  (i+1) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
+          cell1.innerHTML =  (datasetList.length - i) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
           cell2.innerHTML = datasetList[i][2];
           cell3.innerHTML = datasetList[i][3];
           cell4.innerHTML = datasetList[i][4];

@@ -312,7 +312,7 @@ function datasetCreate() {
 
     var company_idx = companyIndices[company_name];
     var ds_path = "/../../..";
-    var ds_type_idx = 11;
+    var ds_type_idx = Math.floor(Math.random() * 13) + 1;;
 
     var requestData = {
         ds_name: ds_name,
