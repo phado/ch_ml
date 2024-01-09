@@ -548,7 +548,7 @@ function Classification(mapperData,cellId) {
   });
 
   var ClassificationLabel1 = document.createElement("label");
-  var labelText = document.createTextNode("기업 선택");
+  var labelText = document.createTextNode("분류 모델 선택");
   ClassificationLabel1.appendChild(labelText);
   applyStyles(ClassificationLabel1, Roboto16Style);
 
@@ -564,22 +564,6 @@ function Classification(mapperData,cellId) {
     applyStyles(ClassificationSelect1, selectBoxStyle);
   });
 
-  var ClassificationLabel2 = document.createElement("label");
-  labelText = document.createTextNode("데이터셋 선택");
-  ClassificationLabel2.appendChild(labelText);
-  applyStyles(ClassificationLabel2, Roboto16Style);
-
-  var ClassificationSelect2 = document.createElement("select");
-  ClassificationSelect2.id = "ClassificationSelect2";
-
-  var subCategoryOptions = ["선택 없음", "서브카테1", "서브카테2", "서브카테3"];
-  subCategoryOptions.forEach(function (optionText) {
-    var option = document.createElement("option");
-    option.value = optionText;
-    option.text = optionText;
-    ClassificationSelect2.appendChild(option);
-    applyStyles(ClassificationSelect2, selectBoxStyle);
-  });
 
   var ClassificationLabel3 = document.createElement("label");
   labelText = document.createTextNode("메모");
@@ -596,9 +580,7 @@ function Classification(mapperData,cellId) {
   if (mapperData.data && mapperData.data.ClassificationSelect1 !== undefined) {
     ClassificationSelect1.value = mapperData.data.keypoint1SelectedValue;
   }
-  if (mapperData.data && mapperData.data.keypoint2SelectedValue !== undefined) {
-    ClassificationSelect2.value = mapperData.data.keypoint2SelectedValue;
-  }
+
   if (mapperData.data && mapperData.data.keypoint1InputValue !== undefined) {
     ClassificationInput1.value = mapperData.data.keypoint1InputValue;
   }
@@ -607,10 +589,6 @@ function Classification(mapperData,cellId) {
   modal.appendChild(ClassificationLabel1);
   modal.appendChild(mxUtils.br(div));
   modal.appendChild(ClassificationSelect1);
-  modal.appendChild(mxUtils.br(div));
-  modal.appendChild(ClassificationLabel2);
-  modal.appendChild(mxUtils.br(div));
-  modal.appendChild(ClassificationSelect2);
   modal.appendChild(mxUtils.br(div));
   modal.appendChild(ClassificationLabel3);
   modal.appendChild(mxUtils.br(div));

@@ -288,6 +288,7 @@ function deleteProject(index) {
     }
 }
 
+
 function createProject(){
     var projectName = document.getElementById("projectName").value;
     var projectModelName = document.getElementById("projectModelName").value;
@@ -311,12 +312,14 @@ function createProject(){
         .then(response => response.json())
         .then(data => {
             localStorage.setItem('projectName', projectName);
+            localStorage.setItem('projectIdx', data['tr_idx']);
             window.location.href = '/modeling';
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
+
 
 function projectDetialModify(){
     console.log("수정!!")
