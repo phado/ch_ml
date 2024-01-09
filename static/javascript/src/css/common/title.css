@@ -78,13 +78,18 @@ header {
   left: 980px;
 }
 
+.grafana-text2{
+  top: 36px;
+  left: 1100px;
+}
+
 .cctv-text{
   top: 36px;
-  left: 1080px;
+  left: 1220px;
 }
 .cctv-event-text{
   top: 36px;
-  left: 1200px;
+  left: 1340px;
 }
 
 @media screen and (max-width: 1560px) {
@@ -114,7 +119,7 @@ header {
   border-radius: 5px;
 
   width: 123px;
-  height: 277px;
+  height: 308px;
   background-color:white;
   display: none;
   position: absolute;

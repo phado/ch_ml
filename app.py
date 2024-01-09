@@ -83,6 +83,10 @@ def aas_tab ():
 def grafana_tab ():
     return render_template('tab/grafana.html')
 
+@app.route('/grafana_tab2')
+def grafana_tab2 ():
+    return render_template('tab/grafana2.html')
+
 @app.route('/cctv_tab')
 def cctv_tab ():
     return render_template('tab/cctvManagement.html')

@@ -73,7 +73,6 @@ function getProjectTableData() {
 
           var detailImageSrc = "/static/javascript/src/images/detail.svg";
           var detailImage = document.createElement("img");
-          detailImage.setAttribute("style", "margin-left: 15px;");
           detailImage.setAttribute("src", detailImageSrc);
           detailImage.setAttribute("alt", "Image");
           detailImage.onclick = (function(index) {

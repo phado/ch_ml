@@ -62,7 +62,7 @@ function getDatasetTableData() {
           modifyImage.setAttribute("alt", "Image");
           modifyImage.onclick = (function(index) {
               return function() {
-                  detailDataset(datasetList[index][0]); // 이 부분에서 인덱스를 사용
+                  modifyDataset(datasetList[index][0]); // 이 부분에서 인덱스를 사용
               };
           })(i);
           cell7.appendChild(modifyImage);
@@ -216,8 +216,7 @@ function detailDataset(index) {
       });
 }
 
-//dataset 상세정보 조회 함수
-function detailDataset(index) {
+function modifyDataset(index) {
     var detailModal = document.getElementById("datasetDetailModal");
     detailModal.style.display = "block";
 
