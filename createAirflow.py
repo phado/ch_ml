@@ -31,7 +31,7 @@ from kubernetes.client import models as k8s
 #from airflow.providers.cncf.kubernetes.backcompat.volume_mount import VolumeMount
 
 default_args = {
-    'owner': 'airflow',
+    'owner': '""" +'KG000'+ """',
     'depends_on_past': False,
     'start_date': datetime.utcnow(),
     'email': ['airflow@example.com'],
@@ -45,7 +45,7 @@ pvc_name = "airflow-pipeline-pvc"
 volume_mount_path = "/mnt"
 
 
-dag = DAG('k8s-yolov5-pipeline-v3', default_args=default_args, schedule_interval=timedelta(minutes=5))
+dag = DAG( '"""+'KG000-'+ 'MB01-' + prj_info['model_name']+ '-' + str(prj_info['prj_key']) + """' , default_args=default_args, schedule_interval=timedelta(minutes=5))
 
 first_task = DummyOperator(task_id='first-task', dag=dag)
 
@@ -67,15 +67,15 @@ second_task = KubernetesPodOperator(
     image="ultralytics/yolov5:mlflow",
     cmds=["bash", "-c"],
     arguments=[
-        'python train.py --img {{ dag_run.conf.train_img | d("640") }} \
-        --batch {{ dag_run.conf.train_batch | d("2") }} \
-        --epochs {{ dag_run.conf.train_epochs | d("1") }} \
+        'python train.py --img 640 \
+        --batch 8 \
+        --epochs 10 \
         --data /usr/src/app/data/coco128.yaml  \
         --cfg ./models/yolov5s.yaml \
         --weights yolov5s.pt  \
-        --name """+ prj_info['model_name']+ '_' + str(prj_info['prj_key']) +""" \
+        --name """ +'KG000-'+ 'MB01-' + prj_info['model_name']+ '-' + str(prj_info['prj_key']) + """ \
         --project /mnt/train \
-        --mlip {{ dag_run.conf.mlflow_ip | d("http://172.25.0.15:31101")}} \
+        --mlip "http://172.25.0.15:31101" '
         
     ],
     labels={"foo": "bar"},
@@ -92,7 +92,7 @@ second_task = KubernetesPodOperator(
 first_task >> second_task
 """
 
-file_path = prj_info['model_name']+ '_' + str(prj_info['prj_key'])+".py"
+file_path = 'airflow-'+prj_info['model_name']+ '-' + str(prj_info['prj_key'])+".py"
 
 with open(file_path, "w") as file:
     file.write(file_content)
