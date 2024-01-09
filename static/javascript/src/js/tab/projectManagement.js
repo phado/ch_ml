@@ -15,6 +15,13 @@ function createModalClose() {
 
 
 function detailModalClose() {
+    document.getElementById("projectIndex").value = "";
+    document.getElementById("projectDate").value = "";
+    document.getElementById("projectDataset").value = "";
+    document.getElementById("projectMap").value = "";
+    document.getElementById("projectHyper").value = "";
+    document.getElementById("projectMlflow").value = "";
+
   var detailModal = document.getElementById("projectDetailModal");
   detailModal.style.display = "none";
 }
@@ -212,30 +219,41 @@ function modifyProject(index) {
             var projectMapInput = document.getElementById("projectMap");
             var projectHyperInput = document.getElementById("projectHyper");
             var projectMlflowTextarea = document.getElementById("projectMlflow");
+            var projectDetailModalOkButton = document.getElementById("projectDetailModalOkButton");
+
+            if (projectDetailModalOkButton) {
+                projectDetailModalOkButton.disabled = false;
+            }
 
             if (projectIndexInput) {
                 projectIndexInput.value = projectIdx;
+                projectIndexInput.readOnly = false;
             }
 
             if (projectDateInput) {
                 projectDateInput.value =  convertDateType(projectUploadTime);
+                projectDateInput.readOnly = false;
 
             }
 
             if (projectDatasetInput) {
                 projectDatasetInput.value = projectDataset;
+                projectDatasetInput.readOnly = false;
             }
 
             if (projectMapInput) {
                 projectMapInput.value = projectMAP;
+                projectMapInput.readOnly = false;
             }
 
             if (projectHyperInput) {
                 projectHyperInput.value = "hyper";
+                projectHyperInput.readOnly = false;
             }
 
             if (projectMlflowTextarea) {
                 projectMlflowTextarea.value = projectMlflow;
+                projectMlflowTextarea.readOnly = false;
             }
         })
         .catch((error) => {

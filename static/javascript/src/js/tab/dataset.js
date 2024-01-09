@@ -247,29 +247,40 @@ function modifyDataset(index) {
             var datasetModifyTimeInput = document.getElementById("datasetModifyTime");
             var datasetDownloadCountInput = document.getElementById("datasetDownloadCount");
             var datasetCommentsTextarea = document.getElementById("datasetComments");
+            var datasetDetailModalOkButton = document.getElementById("datasetDetailModalOkButton");
+
+            if (datasetDetailModalOkButton) {
+                datasetDetailModalOkButton.disabled = false;
+            }
 
             if (datasetNameInput) {
                 datasetNameInput.value = datasetDetailData[1];
+                datasetNameInput.readOnly = false;
             }
 
             if (datasetTypeInput) {
                 datasetTypeInput.value = datasetDetailData[2];
+                datasetTypeInput.readOnly = false;
             }
 
             if (datasetUploadTimeInput) {
                 datasetUploadTimeInput.value = convertDateType(datasetDetailData[3]);
+                datasetUploadTimeInput.readOnly = false;
             }
 
             if (datasetModifyTimeInput) {
                 datasetModifyTimeInput.value = convertDateType(datasetDetailData[4]);
+                datasetModifyTimeInput.readOnly = false;
             }
 
             if (datasetDownloadCountInput) {
                 datasetDownloadCountInput.value = datasetDetailData[5];
+                datasetDownloadCountInput.readOnly = false;
             }
 
             if (datasetCommentsTextarea) {
                 datasetCommentsTextarea.value = datasetDetailData[6];
+                datasetCommentsTextarea.readOnly = false;
             }
         })
         .catch((error) => {
