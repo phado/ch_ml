@@ -11,7 +11,7 @@ from common_management import make_response_json, success_message_json, fail_mes
 from db_conn import get_pool_conn,get_pool_conn_origin
 from db_query import db_ds_get_list, db_ds_get_detail, db_ds_create, db_ds_delete, db_get_ds_by_company_index, db_train_list, db_train_detail, \
     db_train_create, db_train_delete, db_deploy_list, db_deploy_detail, db_cctv_list, db_acc_result, db_agency_result\
-,db_load_xml, db_save_xml
+,db_load_xml, db_save_xml,db_image_detail
 app = Flask(__name__)
 mariadb_pool = get_pool_conn()
 mariadb_pool_origin = get_pool_conn_origin()
@@ -480,6 +480,23 @@ def database_acc_result():
 
     try:
         result_json = db_acc_result(mariadb_pool_origin)
+
+    except ValueError as e:
+        print(e)
+        result_json = fail_message_json(result_json)
+
+    return result_json
+
+@app.route('/cctv/db_image_result', methods=['POST'])
+def database_img_result():
+    """
+    재해 결과 이미지 가져오기
+    """
+
+    try:
+        data = request.get_json()
+        accIdx= data["accIndex"]
+        result_json = db_image_detail(mariadb_pool_origin,accIdx)
 
     except ValueError as e:
         print(e)

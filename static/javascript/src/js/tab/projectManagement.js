@@ -22,6 +22,9 @@ function detailModalClose() {
     document.getElementById("projectHyper").value = "";
     document.getElementById("projectMlflow").value = "";
 
+    var projectMlflowTextarea = document.getElementById("projectMlflow");
+    projectMlflowTextarea.innerHTML = "";
+
   var detailModal = document.getElementById("projectDetailModal");
   detailModal.style.display = "none";
 }
@@ -44,7 +47,7 @@ function getProjectTableData() {
 
         var tableBody = document.getElementById("ProjectTableBody");
         for (var i = 0; i < datasetList.length; i++) {
-          var row = tableBody.insertRow(i);
+          var row = tableBody.insertRow(0);
           var cell1 = row.insertCell(0);
           var cell2 = row.insertCell(1);
           var cell3 = row.insertCell(2);
@@ -69,7 +72,7 @@ function getProjectTableData() {
           cell10.classList.add("data-cell", "center");
           cell11.classList.add("data-cell", "center");
 
-          cell1.innerHTML =  (i+1) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
+          cell1.innerHTML =  (datasetList.length - i) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
           cell2.innerHTML = datasetList[i][2];
           cell3.innerHTML = datasetList[i][3];
           cell4.innerHTML = datasetList[i][4];
@@ -118,77 +121,160 @@ function getProjectTableData() {
       });
 }
 
+// function detailProject(index) {
+//   var detailModal = document.getElementById("projectDetailModal");
+//   detailModal.style.display = "block";
+//
+//   index = index.toString()
+//   fetch("/train_project/db_train_detail", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//         tr_idx: index,
+//     }),
+//   })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         projectDetailData = data.data[0]
+//         projectIdx = projectDetailData[0]
+//         projectUploadTime = projectDetailData[1]
+//         projectDataset = projectDetailData[2]
+//         projectMAP = projectDetailData[3]
+//         projectMlflow = projectDetailData[4]
+//
+//         var projectIndexInput = document.getElementById("projectIndex");
+//         var projectDateInput = document.getElementById("projectDate");
+//         var projectDatasetInput = document.getElementById("projectDataset");
+//         var projectMapInput = document.getElementById("projectMap");
+//         var projectHyperInput = document.getElementById("projectHyper");
+//         var projectMlflowTextarea = document.getElementById("projectMlflow");
+//         var projectDetailModalOkButton = document.getElementById("projectDetailModalOkButton");
+//
+//         if (projectDetailModalOkButton) {
+//             projectDetailModalOkButton.disabled = true;
+//         }
+//
+//         if (projectIndexInput) {
+//           projectIndexInput.value = projectIdx;
+//           projectIndexInput.readOnly = true;
+//         }
+//
+//         if (projectDateInput) {
+//           projectDateInput.value =  convertDateType(projectUploadTime);
+//           projectDateInput.readOnly = true;
+//
+//         }
+//
+//         if (projectDatasetInput) {
+//           projectDatasetInput.value = projectDataset;
+//           projectDatasetInput.readOnly = true;
+//         }
+//
+//         if (projectMapInput) {
+//           projectMapInput.value = projectMAP;
+//           projectMapInput.readOnly = true;
+//         }
+//
+//         if (projectHyperInput) {
+//           projectHyperInput.value = "hyper";
+//           projectHyperInput.readOnly = true;
+//         }
+//
+//         if (projectMlflowTextarea) {
+//           projectMlflowTextarea.value = projectMlflow;
+//           projectMlflowTextarea.readOnly = true;
+//         }
+//       })
+//       .catch((error) => {
+//         console.error("Error:", error);
+//       });
+//
+// }
+
 function detailProject(index) {
-  var detailModal = document.getElementById("projectDetailModal");
-  detailModal.style.display = "block";
+    var detailModal = document.getElementById("projectDetailModal");
+    detailModal.style.display = "block";
 
-  index = index.toString()
-  fetch("/train_project/db_train_detail", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-        tr_idx: index,
-    }),
-  })
-      .then((response) => response.json())
-      .then((data) => {
-        projectDetailData = data.data[0]
-        projectIdx = projectDetailData[0]
-        projectUploadTime = projectDetailData[1]
-        projectDataset = projectDetailData[2]
-        projectMAP = projectDetailData[3]
-        projectMlflow = projectDetailData[4]
+    index = index.toString();
+    var projectIndexInput = document.getElementById("projectIndex");
+    var projectDateInput = document.getElementById("projectDate");
+    var projectDatasetInput = document.getElementById("projectDataset");
+    var projectMapInput = document.getElementById("projectMap");
+    var projectHyperInput = document.getElementById("projectHyper");
+    var projectMlflowTextarea = document.getElementById("projectMlflow");
+    var projectDetailModalOkButton = document.getElementById("projectDetailModalOkButton");
 
-        var projectIndexInput = document.getElementById("projectIndex");
-        var projectDateInput = document.getElementById("projectDate");
-        var projectDatasetInput = document.getElementById("projectDataset");
-        var projectMapInput = document.getElementById("projectMap");
-        var projectHyperInput = document.getElementById("projectHyper");
-        var projectMlflowTextarea = document.getElementById("projectMlflow");
-        var projectDetailModalOkButton = document.getElementById("projectDetailModalOkButton");
+    if (projectDetailModalOkButton) {
+        projectDetailModalOkButton.disabled = true;
+    }
 
-        if (projectDetailModalOkButton) {
-            projectDetailModalOkButton.disabled = true;
+    if (projectIndexInput) {
+        projectIndexInput.readOnly = true;
+    }
+
+    if (projectDateInput) {
+        projectDateInput.readOnly = true;
+    }
+
+    if (projectDatasetInput) {
+        projectDatasetInput.readOnly = true;
+    }
+
+    if (projectMapInput) {
+        projectMapInput.readOnly = true;
+    }
+
+    if (projectHyperInput) {
+        projectHyperInput.readOnly = true;
+    }
+
+    if (projectMlflowTextarea) {
+        projectMlflowTextarea.readOnly = true;
+        projectMlflowTextarea.value = "";  // 기존 내용 초기화
+
+        var projects = [
+            {0:'1', 1:'21/12/2023, 12:00:00 AM', 2:'Object-Detection', 3:'0.87', 4:'epoch 300, data coco128, weights small.pt' , 5:'http://210.178.0.65:31101/#/models1'},
+            {0:'2', 1:'27/12/2023, 12:00:00 AM', 2:'Object-Detection', 3:'0.82', 4:'epoch 300, data coco128, weights small.pt' , 5:'http://210.178.0.65:31101/#/models2'},
+            {0:'3', 1:'02/01/2024, 12:00:00 AM', 2:'Object-Detection', 3:'0.76', 4:'epoch 300, data coco128, weights small.pt' , 5:'http://210.178.0.65:31101/#/models3'},
+            {0:'4', 1:'07/01/2024, 12:00:00 AM', 2:'Object-Detection', 3:'0.94', 4:'epoch 300, data coco128, weights small.pt' , 5:'http://210.178.0.65:31101/#/models4'}
+        ];
+
+        // 조회된 데이터의 5번째 URL을 표시
+        for (var i = 0; i < projects.length; i++) {
+            var fifthUrl = projects[i][5];
+            var listItem = document.createElement('div');
+            listItem.className = 'eventListOne';
+            listItem.textContent = fifthUrl;
+
+            // 클릭 이벤트를 추가하고 클릭되었을 때 데이터를 표시하는 함수를 호출
+            listItem.addEventListener('click', function() {
+                handleUrlClick(this.textContent);
+            });
+
+            projectMlflowTextarea.appendChild(listItem);
         }
+    }
 
-        if (projectIndexInput) {
-          projectIndexInput.value = projectIdx;
-          projectIndexInput.readOnly = true;
+    function handleUrlClick(clickedUrl) {
+        // projects 배열에서 해당 URL을 찾아서 데이터를 가져옴
+        var clickedData = projects.find(function(data) {
+            return data[5] === clickedUrl;
+        });
+
+        // 가져온 데이터를 각 인풋 필드에 표시
+        if (clickedData) {
+            projectIndexInput.value = clickedData[0];
+            projectDateInput.value = clickedData[1];
+            projectDatasetInput.value = clickedData[2];
+            projectMapInput.value = clickedData[3];
+            projectHyperInput.value = clickedData[4];
         }
-
-        if (projectDateInput) {
-          projectDateInput.value =  convertDateType(projectUploadTime);
-          projectDateInput.readOnly = true;
-
-        }
-
-        if (projectDatasetInput) {
-          projectDatasetInput.value = projectDataset;
-          projectDatasetInput.readOnly = true;
-        }
-
-        if (projectMapInput) {
-          projectMapInput.value = projectMAP;
-          projectMapInput.readOnly = true;
-        }
-
-        if (projectHyperInput) {
-          projectHyperInput.value = "hyper";
-          projectHyperInput.readOnly = true;
-        }
-
-        if (projectMlflowTextarea) {
-          projectMlflowTextarea.value = projectMlflow;
-          projectMlflowTextarea.readOnly = true;
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-
+    }
 }
+
+
 
 function modifyProject(index) {
     var detailModal = document.getElementById("projectDetailModal");

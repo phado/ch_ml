@@ -23,20 +23,23 @@ fetch('/cctv/db_acc_result', {
                 var accDisaster = acc[index][3];
                 accDisaster = accDisaster !== null ? accDisaster : " ";
 
-                var accSnapShot = acc[index][4];
-                accSnapShot = accSnapShot !== null ? accSnapShot : " ";
+                // var accSnapShot = acc[index][4];
+                // accSnapShot = accSnapShot !== null ? accSnapShot : " ";
 
-                var accGenerationTime = acc[index][5];
+                var accGenerationTime = acc[index][4];
                 accGenerationTime = accGenerationTime !== null ? accGenerationTime : " ";
+
+                var accIndex = acc[index][5];
+                accIndex = accIndex !== null ? accIndex : " ";
 
                 var listItem = document.createElement('div');
                 listItem.className = 'eventListOne';
-                listItem.textContent = accCompanyName + '_' + accFactoryName + '_' + convertDateType(accGenerationTime);
+                listItem.textContent = accCompanyName + '_'  + convertDateType(accGenerationTime);
                 eventListContainer.appendChild(listItem);
 
                 listItem.addEventListener('click', function() {
                     showEventDetails();
-                    showEventPhoto(accSnapShot);
+                    showEventPhoto(accIndex);
                 });
                 listItem.style.cursor = 'pointer';
 
@@ -53,11 +56,11 @@ fetch('/cctv/db_acc_result', {
                     eventDetailContainer.appendChild(detailInfo);
                 }
 
-                function showEventPhoto(base64Image) {
+                function showEventPhoto(accIndex) {
                     var imageContainer = document.getElementById('imageContainer');
                     imageContainer.innerHTML = '';
                     if (imageContainer) {
-                        displayBlobImage(base64Image, imageContainer);
+                        displayBlobImage(accIndex, imageContainer);
                     } else {
                         console.error('imageContainer를 찾을 수 없습니다.');
                     }
@@ -69,28 +72,48 @@ fetch('/cctv/db_acc_result', {
         console.error('데이터 가져오기 오류:', error);
     });
 
-function displayBlobImage(base64Data, container) {
-    try {
+function displayBlobImage(accIndex, container) {
+    var requestData = {
+        accIndex: accIndex
+    };
 
-        var img = document.createElement('img');
-        img.src = "data:image/png;base64," + base64Data;
+    fetch("/cctv/db_image_result", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            // 이미지 조회 쿼리
+            try {
+
+                var img = document.createElement('img');
+                img.src = "data:image/png;base64," + data.data[0];
 
 
-        img.onload = function() {
-            if (img.height > img.width) {
-                img.style.height = "100%";
-            } else {
-                img.style.width = "100%";
+                img.onload = function() {
+                    if (img.height > img.width) {
+                        img.style.height = "100%";
+                    } else {
+                        img.style.width = "100%";
+                    }
+                    img.style.objectFit = "cover";
+                };
+
+                img.alt = "등록된 이미지가 없습니다.";
+                container.appendChild(img);
+
+                img.style.objectFit = "cover";
+            } catch (error) {
+                console.error("Error displaying image:", error);
             }
-            img.style.objectFit = "cover";
-        };
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
 
-        img.alt = "등록된 이미지가 없습니다.";
-        container.appendChild(img);
 
-        img.style.objectFit = "cover";
-    } catch (error) {
-        console.error("Error displaying image:", error);
-    }
 }
 

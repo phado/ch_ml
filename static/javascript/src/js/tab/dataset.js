@@ -16,7 +16,7 @@ function getDatasetTableData() {
 
         var tableBody = document.getElementById("datasetTableBody");
         for (var i = 0; i < datasetList.length; i++) {
-          var row = tableBody.insertRow(i);
+          var row = tableBody.insertRow(0);
           var cell1 = row.insertCell(0);
           var cell2 = row.insertCell(1);
           var cell3 = row.insertCell(2);
@@ -37,7 +37,7 @@ function getDatasetTableData() {
           cell8.classList.add("data-cell", "center");
           cell9.classList.add("data-cell", "center");
 
-          cell1.innerHTML = (i+1) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
+            cell1.innerHTML = (datasetList.length - i) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + datasetList[i][1];
           cell2.innerHTML = datasetList[i][2]; // datasetType
           cell4.innerHTML =  convertDateType(datasetList[i][4]);// datasetModifyTime
           // cell5.innerHTML = convertDateType(datasetList[i][5]); // datasetDownloadTime
@@ -45,7 +45,6 @@ function getDatasetTableData() {
 
           var detailImageSrc = "/static/javascript/src/images/detail.svg";
           var detailImage = document.createElement("img");
-          detailImage.setAttribute("style", "margin-left: 24px; margin-right: 16px");
           detailImage.setAttribute("src", detailImageSrc);
           detailImage.setAttribute("alt", "Image");
           detailImage.onclick = (function(index) {
@@ -57,7 +56,6 @@ function getDatasetTableData() {
 
           var modifyImageSrc = "/static/javascript/src/images/modify.svg";
           var modifyImage = document.createElement("img");
-          modifyImage.setAttribute("style", "margin-left: 24px; margin-right: 16px");
           modifyImage.setAttribute("src", modifyImageSrc);
           modifyImage.setAttribute("alt", "Image");
           modifyImage.onclick = (function(index) {
@@ -302,19 +300,19 @@ function datasetCreate() {
     const companyIndices = {
         '그린광학': 1,
         '금진': 2,
-        '라파코': 3,
+        '리파코': 3,
         '산전정밀': 4,
         '새한': 5,
         'AND전자저울': 6,
         '이킴': 7,
         '킹텍스': 8,
-        '한길EST': 9,
+        '한길이에스티': 9,
         '화인텍코리아': 10
     };
 
     var company_idx = companyIndices[company_name];
     var ds_path = "/../../..";
-    var ds_type_idx = 11;
+    var ds_type_idx = Math.floor(Math.random() * 13) + 1;;
 
     var requestData = {
         ds_name: ds_name,
