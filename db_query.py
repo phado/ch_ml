@@ -486,31 +486,23 @@ def db_acc_result(mariadb_pool):
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor()
 
-        query = f"SELECT tic2.cp_name ,tiwp.wp_name ,tir.rz_name, tia.acc_name1, ttar.cctv_sanpshot,ttar.acc_detection_time \
-                FROM tbl_trend_analysis_result AS ttar\
-                LEFT JOIN tbl_rel_redzone_accident AS trra ON trra.rz_acc_idx  = ttar.rz_acc_idx\
-                LEFT JOIN tbl_info_accident AS tia ON trra.acc_idx   = tia.acc_idx \
-                LEFT JOIN tbl_info_redzone AS tir ON trra.acc_idx  = tir.rz_idx \
-                LEFT JOIN tbl_info_work_place AS tiwp ON tir.wp_idx  = tiwp.wp_idx\
-                LEFT JOIN tbl_info_company AS tic2 ON tiwp.cp_idx  = tic2.cp_idx \
-                LEFT JOIN tbl_rel_redzone_cctv AS trrc ON ttar.rz_cctv_idx = trrc.rz_cctv_idx\
-                LEFT JOIN tbl_info_cctv AS tic ON trrc.cctv_idx = tic.cctv_idx \
-                LEFT JOIN tbl_rel_redzone_sensor_data AS trrsd ON ttar.rz_sen_dt_idx  = trrsd.rz_sen_dt_idx \
-                LEFT JOIN tbl_info_sensor_data AS tisd ON trrsd.sen_dt_idx =tisd.sen_dt_idx \
-                LEFT JOIN tbl_rel_redzone_sensor AS trrs ON trrsd.rz_sen_idx  = trrs.rz_sen_idx \
-                LEFT JOIN tbl_info_sensor  AS tis ON trrs.sen_idx  = tis.sen_idx ORDER BY ttar.acc_detection_time DESC LIMIT 30;"
+        query = """SELECT 
+        F.cp_name, E.wp_name, C.rz_name, D.acc_name1, A.acc_detection_time, A.ar_idx
+            
+        FROM tbl_trend_analysis_result AS A
+        LEFT JOIN tbl_rel_redzone_accident AS B ON B.rz_acc_idx = A.rz_acc_idx
+        LEFT JOIN tbl_info_redzone AS C ON C.rz_idx = B.rz_idx
+        LEFT JOIN tbl_info_accident AS D ON D.acc_idx = B.acc_idx
+        LEFT JOIN tbl_info_work_place AS E ON E.wp_idx = C.wp_idx
+        LEFT JOIN tbl_info_company AS F ON F.cp_idx = E.cp_idx   
+        LEFT JOIN tbl_rel_redzone_cctv AS G ON G.rz_cctv_idx = A.rz_cctv_idx
+        LEFT JOIN tbl_info_cctv AS H ON H.cctv_idx = G.cctv_idx  
+        ORDER BY A.acc_detection_time DESC LIMIT 30;"""
 
         cursor.execute(query)
         json_result['data'] = cursor.fetchall()
         connection.commit()
         json_result = success_message_json(json_result)
-
-        for idx,val in enumerate(json_result['data']):
-            _ = list(val)
-            import json
-            _[4] =  base64.urlsafe_b64decode(_[4])
-            _[4] =  base64.b64encode(_[4]).decode('utf-8')
-            json_result['data'][idx] = tuple(_)
 
     except Exception as e:
         print(e)
@@ -521,7 +513,59 @@ def db_acc_result(mariadb_pool):
         if connection: connection.close()
 
         return json_result
-    
+
+def db_image_detail(mariadb_pool, accIdx):
+    """
+    이미지 상세정보
+    """
+    try:
+        json_result = make_response_json([])
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+
+        query = f"""
+        SELECT
+          A.cctv_sanpshot
+        FROM
+          tbl_trend_analysis_result AS A
+        LEFT JOIN tbl_rel_redzone_accident AS B ON B.rz_acc_idx = A.rz_acc_idx
+        LEFT JOIN tbl_info_redzone AS C ON C.rz_idx = B.rz_idx
+        LEFT JOIN tbl_info_accident AS D ON D.acc_idx = B.acc_idx
+        LEFT JOIN tbl_info_work_place AS E ON E.wp_idx = C.wp_idx
+        LEFT JOIN tbl_info_company AS F ON F.cp_idx = E.cp_idx
+        LEFT JOIN tbl_rel_redzone_cctv AS G ON G.rz_cctv_idx = A.rz_cctv_idx
+        LEFT JOIN tbl_info_cctv AS H ON H.cctv_idx = G.cctv_idx
+        WHERE A.ar_idx = {accIdx};
+        """
+
+        cursor.execute(query)
+        json_result['data'] = cursor.fetchall()
+        connection.commit()
+
+        json_result = success_message_json(json_result)
+
+        _ = list(json_result['data'][0])
+        _ = base64.urlsafe_b64decode(_[0])
+        _ = base64.b64encode(_).decode('utf-8')
+        json_result['data'][0] = (_,)
+        # 0109s
+        # for idx,val in enumerate(json_result['data']):
+        #     _ = list(val)
+        #     import json
+        #     _[0] =  base64.urlsafe_b64decode(_[0])
+        #     _[0] =  base64.b64encode(_[0]).decode('utf-8')
+        #     json_result['data'][idx] = tuple(_)
+    except Exception as e:
+        print(e)
+        json_result = fail_message_json(json_result)
+
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+        return json_result
+
 
 def db_agency_result(mariadb_pool):
     """

@@ -425,7 +425,6 @@ select {
   border-radius: 5px;
   border: 1px solid #9b9b9b;
   padding-top: 7px;
-  padding-left: 11px;
   resize: none;
   overflow-y: auto;
 }
@@ -434,4 +433,12 @@ img{
 }
 button{
   cursor: pointer;
+}
+
+.eventListOne{
+  cursor: pointer;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

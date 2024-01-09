@@ -191,6 +191,7 @@ function ImageData(mapperData,cellId) {
     applyStyles(ImageDataSelect1, selectBoxStyle);
   });
 
+  //순우님 수정해주세요!!!
   function handleImageDataSelectChange() {
     try{
       var selectedCompanyName = document.getElementById('ImageDataSelect1').value;
@@ -206,7 +207,7 @@ function ImageData(mapperData,cellId) {
         .then(response => response.json())
         .then(data => {
           if(data.data.length == 0){
-            ImageDataSelect2.innerHTML ='';
+              ImageDataSelect2.innerHTML ='';
           }
           else{
             while (ImageDataSelect2.options.length > 1) {
