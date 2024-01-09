@@ -21,17 +21,26 @@ body {
 .section {
 }
 
+/*#section1 {*/
+/*    margin-left: 32px;*/
+/*    flex: 0 0 800px;*/
+/*}*/
+
+/*#section2 {*/
+/*    flex: 0 0 800px;*/
+/*}*/
+
+/*#section3 {*/
+/*    flex: 0 0 250px;*/
+/*}*/
+
 #section1 {
     margin-left: 32px;
-    flex: 0 0 800px;
+    flex: 0 0 930px;
 }
 
 #section2 {
-    flex: 0 0 800px;
-}
-
-#section3 {
-    flex: 0 0 250px;
+    flex: 0 0 930px;
 }
 
 .section_title{
@@ -45,7 +54,8 @@ body {
 }
 
 .airflowIframe{
-    width: 780px;
+    /*width: 780px;*/
+    width: 910px;
     height: 800px;
     border-radius: 5px;
     background: #F3F3F3;
@@ -54,7 +64,8 @@ body {
 }
 
 .MLflowIframe{
-    width: 780px;
+    /*width: 780px;*/
+    width: 910px;
     height: 800px;
     border-radius: 5px;
     background: #F3F3F3;

@@ -4,8 +4,13 @@ function createDataset() {
 }
 
 function createModalClose() {
-  var createModal = document.getElementById("projectCreateModal");
-  createModal.style.display = "none";
+    document.getElementById("projectName").value = "";
+    document.getElementById("projectModelName").value = "";
+    document.getElementById("projectCycle").value = "";
+    document.getElementById("projectDescription").value = "";
+
+    var createModal = document.getElementById("projectCreateModal");
+    createModal.style.display = "none";
 }
 
 
